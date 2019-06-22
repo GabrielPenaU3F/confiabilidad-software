@@ -1,6 +1,9 @@
 import numpy as np
 import scipy.optimize as opt
+from functools import partial
 
+from scipy.optimize.nonlin import NoConvergence
+from colorama import Fore, Back, Style
 
 class EstimadorGoelOkumoto:
 
@@ -15,9 +18,13 @@ class EstimadorGoelOkumoto:
             return self.func_media(np.array(tiempos), a, b)
 
     def estimar_parametros_por_maxima_verosimilitud(self, tiempos, fallas_acumuladas):
-        return opt.fsolve(self.ecuaciones_mv, (1, 1), args=(tiempos, fallas_acumuladas))
+        try:
+            return opt.broyden1(partial(self.ecuaciones_mv, tiempos, fallas_acumuladas), [1, 1])
+        except NoConvergence:
+            print(Fore.RED + 'El sistema es incompatible')
+            return None
 
-    def ecuaciones_mv(self, vec, tiempos, fallas_acumuladas):
+    def ecuaciones_mv(self, tiempos, fallas_acumuladas, vec):
         a, b = vec
         return (self.ecuacion_mv_1(a, b, tiempos, fallas_acumuladas),
                 self.ecuacion_mv_2(a, b, tiempos, fallas_acumuladas))

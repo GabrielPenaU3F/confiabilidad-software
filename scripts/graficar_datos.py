@@ -28,8 +28,10 @@ ax.grid(color='black', linestyle='--', linewidth=0.5)
 ax.plot(x, y, linewidth=1, color='#263859', linestyle='--', label='Datos reales')
 ax.plot(x, go.calcular_numero_medio_de_fallas(x, params_go_lsq[0], params_go_lsq[1]),
         linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f' % tuple(params_go_lsq))
-ax.plot(x, go.calcular_numero_medio_de_fallas(x, params_go_mv[0], params_go_mv[1]),
-        linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
+if params_go_mv is not None:
+        ax.plot(x, go.calcular_numero_medio_de_fallas(x, params_go_mv[0], params_go_mv[1]),
+                linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
+
 ax.legend()
 
 ax.plot()
