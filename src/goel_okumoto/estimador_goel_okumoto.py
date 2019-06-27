@@ -17,9 +17,13 @@ class EstimadorGoelOkumoto:
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):
             return self.func_media(np.array(tiempos), a, b)
 
+    # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
+    # Para más detalles, consultar la documentación:
+    # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
     def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial):
         try:
-            return opt.fsolve(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial)
+            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial,
+                            method='krylov').x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
