@@ -20,10 +20,10 @@ class EstimadorGoelOkumoto:
     # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
     # Para más detalles, consultar la documentación:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial):
+    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial, metodo_resolucion):
         try:
             return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial,
-                            method='krylov').x
+                            method=metodo_resolucion).x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
