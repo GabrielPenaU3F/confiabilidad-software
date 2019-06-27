@@ -1,9 +1,9 @@
 import numpy as np
 import scipy.optimize as opt
 from functools import partial
-
 from scipy.optimize.nonlin import NoConvergence
 from colorama import Fore, Back, Style
+
 
 class EstimadorGoelOkumoto:
 
@@ -17,22 +17,47 @@ class EstimadorGoelOkumoto:
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):
             return self.func_media(np.array(tiempos), a, b)
 
-    def estimar_parametros_por_maxima_verosimilitud(self, tiempos, fallas_acumuladas):
+    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial):
         try:
-            return opt.broyden1(partial(self.ecuaciones_mv, tiempos, fallas_acumuladas), [1, 1])
+            return opt.fsolve(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial)
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
-    def ecuaciones_mv(self, tiempos, fallas_acumuladas, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
         a, b = vec
-        return (self.ecuacion_mv_1(a, b, tiempos, fallas_acumuladas),
-                self.ecuacion_mv_2(a, b, tiempos, fallas_acumuladas))
+        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
+                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))
 
-    def ecuacion_mv_1(self, a, b, tiempos, fallas_acumuladas):
+    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n_fallas = len(tiempos)
+        t_ultima_falla = tiempos[-1]
+        return a * (1 - np.exp(-b * t_ultima_falla)) - n_fallas
+
+    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n_fallas = len(tiempos)
+        t_ultima_falla = tiempos[-1]
+        suma_tiempos_falla = np.sum(tiempos)
+        return suma_tiempos_falla + t_ultima_falla * a * np.exp(-b * t_ultima_falla) - (n_fallas / b)
+
+    def estimar_parametros_por_maxima_verosimilitud_datos_agrupados(self, tiempos, fallas_acumuladas):
+        try:
+            return opt.broyden1(partial(self.ecuaciones_mv_datos_agrupados, tiempos, fallas_acumuladas), [1, 1])
+        except NoConvergence:
+            print(Fore.RED + 'El sistema es incompatible')
+            return None
+
+    def ecuaciones_mv_datos_agrupados(self, tiempos, fallas_acumuladas, vec):
+        a, b = vec
+        return (self.ecuacion_mv_1_datos_agrupados(a, b, tiempos, fallas_acumuladas),
+                self.ecuacion_mv_2_datos_agrupados(a, b, tiempos, fallas_acumuladas))
+
+    # Corregir
+    def ecuacion_mv_1_datos_agrupados(self, a, b, tiempos, fallas_acumuladas):
         return fallas_acumuladas[-1] - a * (1 - np.exp(-b * tiempos[-1]))
 
-    def ecuacion_mv_2(self, a, b, tiempos, fallas_acumuladas):
+    # Corregir
+    def ecuacion_mv_2_datos_agrupados(self, a, b, tiempos, fallas_acumuladas):
         suma_phi = 0
         for i in range(len(tiempos)):
             if i == 0:

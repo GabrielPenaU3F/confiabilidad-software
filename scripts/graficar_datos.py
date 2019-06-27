@@ -11,7 +11,7 @@ go = EstimadorGoelOkumoto()
 
 params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(x, y)
 
-params_go_mv = go.estimar_parametros_por_maxima_verosimilitud(x, y)
+params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(x, params_go_lsq)
 
 fig, ax = plt.subplots()
 
