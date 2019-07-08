@@ -20,26 +20,24 @@ class EstimadorGoelOkumoto:
     # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
     # Para más detalles, consultar la documentación:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial, metodo_resolucion):
+    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, n_fallas, aprox_inicial, metodo_resolucion):
         try:
-            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial,
+            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos, n_fallas), aprox_inicial,
                             method=metodo_resolucion).x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
-    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
-                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))
+        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos, n_fallas),
+                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos, n_fallas))
 
-    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos):
-        n_fallas = len(tiempos)
+    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
         t_ultima_falla = tiempos[-1]
         return a * (1 - np.exp(-b * t_ultima_falla)) - n_fallas
 
-    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos):
-        n_fallas = len(tiempos)
+    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
         t_ultima_falla = tiempos[-1]
         suma_tiempos_falla = np.sum(tiempos)
         return suma_tiempos_falla + t_ultima_falla * a * np.exp(-b * t_ultima_falla) - (n_fallas / b)

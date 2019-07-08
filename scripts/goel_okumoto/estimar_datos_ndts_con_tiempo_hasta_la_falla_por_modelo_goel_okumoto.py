@@ -3,15 +3,16 @@ from matplotlib import pyplot as plt
 from datos.repositorio_datos import RepositorioDatos
 from src.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 
-datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
-t = datos.get_tiempos_de_falla()
-fallas_acumuladas = datos.get_fallas_acumuladas()
+datos_ttf = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
+ttf = datos_ttf.get_tiempos_de_falla()
+fallas_acumuladas = datos_ttf.get_fallas_acumuladas()
 
 go = EstimadorGoelOkumoto()
 
-params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(t, fallas_acumuladas)
+params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas)
 
-params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(t, params_go_lsq,
+params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf[1:], fallas_acumuladas[-1],
+                                                                                    params_go_lsq,
                                                                                     metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
@@ -26,11 +27,11 @@ ax.patch.set_linewidth('1')
 ax.set_facecolor("#ffffff")
 ax.grid(color='black', linestyle='--', linewidth=0.5)
 
-ax.plot(t, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--', label='Datos reales')
-ax.plot(t, go.calcular_numero_medio_de_fallas(t, params_go_lsq[0], params_go_lsq[1]),
+ax.plot(ttf, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--', label='Datos reales')
+ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_lsq[0], params_go_lsq[1]),
         linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f' % tuple(params_go_lsq))
 if params_go_mv is not None:
-        ax.plot(t, go.calcular_numero_medio_de_fallas(t, params_go_mv[0], params_go_mv[1]),
+        ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_mv[0], params_go_mv[1]),
                 linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
 
 ax.legend()
