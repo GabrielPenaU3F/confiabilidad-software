@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from datos.repositorio_datos import RepositorioDatos
 from src.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
 
-datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS()
+datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 t = datos.get_tiempos_de_falla()
 fallas_acumuladas = datos.get_fallas_acumuladas()
 

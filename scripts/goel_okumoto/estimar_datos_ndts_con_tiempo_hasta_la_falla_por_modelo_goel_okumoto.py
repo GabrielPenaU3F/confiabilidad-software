@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from datos.repositorio_datos import RepositorioDatos
 from src.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 
-datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS()
+datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 t = datos.get_tiempos_de_falla()
 fallas_acumuladas = datos.get_fallas_acumuladas()
 
