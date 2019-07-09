@@ -15,3 +15,6 @@ class TablaDeDatosObservados:
 
     def get_fallas_acumuladas(self):
         return self.fallas
+
+    def get_cantidad_datos(self):
+        return self.fallas[-1]

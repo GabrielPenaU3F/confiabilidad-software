@@ -20,31 +20,26 @@ class EstimadorDelayedSShaped:
     # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
     # Para más detalles, consultar la documentación:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial, metodo_resolucion):
+    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, n_fallas, aprox_inicial,
+                                                                          metodo_resolucion):
         try:
-            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial,
+            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos, n_fallas), aprox_inicial,
                             method=metodo_resolucion).x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
-    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
-                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))
+        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos, n_fallas),
+                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos, n_fallas))
 
-    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos):
-        suma = 0
-        for r in range(len(tiempos)):
-            suma += (r/a + (1 + b*tiempos[r])*np.exp(-b*tiempos[r]) - 1)
-        return suma
+    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
+        return n_fallas/a + (1 + b * tiempos[-1]) * np.exp(-b * tiempos[-1]) - 1
 
-    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos):
-        suma = 0
-        for r in range(len(tiempos)):
-            suma += ((tiempos[r]**2) * np.exp(-b*tiempos[r]) *
-                     ((r / (1 - (1 + b*tiempos[r]) * np.exp(-b*tiempos[r]))) - a))
-        return b * suma
+    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
+        suma_ti = np.sum(tiempos)
+        return (2 * n_fallas / b) - suma_ti - a * b * (tiempos[-1]**2) * np.exp(-b * tiempos[-1])
 
 
 
