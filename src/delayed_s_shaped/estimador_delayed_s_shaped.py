@@ -8,7 +8,7 @@ from colorama import Fore, Back, Style
 class EstimadorDelayedSShaped:
 
     def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas):
-        # Probar con condiciones iniciales a=0, b=2
+        # Probar con condiciones iniciales a=0, b=2. Resultado: a=61.3964 y b=0.003714
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas)
         return parametros
 
