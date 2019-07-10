@@ -26,7 +26,7 @@ params_ds_lsq = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fal
         son muy poquitos datos. 
 '''
 params_ds_mv = ds.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf[1:], fallas_acumuladas[-1],
-                                                                                    [30, 0.003],
+                                                                                    [32, 0.01],
                                                                                     metodo_resolucion='krylov')
 
 
