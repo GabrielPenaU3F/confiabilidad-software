@@ -74,7 +74,7 @@ class RepositorioDatos:
 
         datos_observados = []
 
-        if formato == 'ttf':
+        if formato == 'fpd':
             datos_mixed_waterfall_agile = cls.datos_fpd['mixed_waterfall_agile']
             for k in range(len(datos_mixed_waterfall_agile)):
                 datos_observados.append(Dato(k+1, datos_mixed_waterfall_agile[k]))
