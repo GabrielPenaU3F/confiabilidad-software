@@ -1,5 +1,7 @@
-from src.dato import Dato
-from src.tabla_de_datos_observados import TablaDeDatosObservados
+from src.dato_dia_fallas import DatoDiaFallas
+from src.dato_falla_tiempo import DatoFallaTiempo
+from src.tabla_de_datos_dia_fallas import TablaDeDatosDiaFallas
+from src.tabla_de_datos_falla_tiempo import TablaDeDatosFallaTiempo
 
 
 class RepositorioDatos:
@@ -45,13 +47,13 @@ class RepositorioDatos:
 
         if formato == 'ttf':
             for k in range(len(datos_ntds)):
-                datos_observados.append(Dato(k, datos_ntds[k]))
-            return TablaDeDatosObservados(datos_observados)
+                datos_observados.append(DatoFallaTiempo(k, datos_ntds[k]))
+            return TablaDeDatosFallaTiempo(datos_observados)
 
         elif formato == 'tbf':
             for k in range(1, len(datos_ntds)):
-                datos_observados.append(Dato(k, datos_ntds[k] - datos_ntds[k-1]))
-            return TablaDeDatosObservados(datos_observados)
+                datos_observados.append(DatoFallaTiempo(k, datos_ntds[k] - datos_ntds[k - 1]))
+            return TablaDeDatosFallaTiempo(datos_observados)
 
     @classmethod
     def proveer_datos_observados_proyecto_agile_nro_1(cls, formato):
@@ -61,13 +63,13 @@ class RepositorioDatos:
 
         if formato == 'ttf':
             for k in range(len(datos_agile_nro_1)):
-                datos_observados.append(Dato(k, datos_agile_nro_1[k]))
-            return TablaDeDatosObservados(datos_observados)
+                datos_observados.append(DatoFallaTiempo(k, datos_agile_nro_1[k]))
+            return TablaDeDatosFallaTiempo(datos_observados)
 
         elif formato == 'tbf':
             for k in range(1, len(datos_agile_nro_1)):
-                datos_observados.append(Dato(k, datos_agile_nro_1[k] - datos_agile_nro_1[k-1]))
-            return TablaDeDatosObservados(datos_observados)
+                datos_observados.append(DatoFallaTiempo(k, datos_agile_nro_1[k] - datos_agile_nro_1[k - 1]))
+            return TablaDeDatosFallaTiempo(datos_observados)
 
     @classmethod
     def proveer_datos_observados_proyecto_mixed_waterfall_agile(cls, formato):
@@ -77,6 +79,6 @@ class RepositorioDatos:
         if formato == 'fpd':
             datos_mixed_waterfall_agile = cls.datos_fpd['mixed_waterfall_agile']
             for k in range(len(datos_mixed_waterfall_agile)):
-                datos_observados.append(Dato(k+1, datos_mixed_waterfall_agile[k]))
-            return TablaDeDatosObservados(datos_observados)
+                datos_observados.append(DatoDiaFallas(k + 1, datos_mixed_waterfall_agile[k]))
+            return TablaDeDatosDiaFallas(datos_observados)
 

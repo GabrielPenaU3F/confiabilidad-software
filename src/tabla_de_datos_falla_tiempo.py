@@ -1,4 +1,4 @@
-class TablaDeDatosObservados:
+class TablaDeDatosFallaTiempo:
 
     def __init__(self, datos):
         fallas = []

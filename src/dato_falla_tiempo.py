@@ -1,4 +1,4 @@
-class Dato:
+class DatoFallaTiempo:
 
     def __init__(self, n, t):
         self.numero_falla = n
