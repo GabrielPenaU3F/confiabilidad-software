@@ -42,33 +42,33 @@ class EstimadorDelayedSShaped:
         suma_ti = np.sum(tiempos)
         return (2 * n_fallas / b) - suma_ti - a * b * (tiempos[-1]**2) * np.exp(-b * tiempos[-1])
 
-    def estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(self, dias, fallas_por_dia, aprox_inicial,
-                                                                   metodo_resolucion):
+    def estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia,
+                                                                             aprox_inicial, metodo_resolucion):
         try:
-            return opt.root(partial(self.ecuaciones_mv_fallas_por_dia, dias, fallas_por_dia), aprox_inicial,
-                            method=metodo_resolucion).x
+            return opt.root(partial(self.ecuaciones_mv_fallas_acumuladas_al_dia, dias, fallas_acumuladas_al_dia),
+                            aprox_inicial, method=metodo_resolucion).x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
-    def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
+    def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_fallas_por_dia(a, b, dias, fallas_por_dia),
-                self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_por_dia))
+        return (self.ecuacion_mv_1_fallas_acumuladas_al_dia(a, b, dias, fallas_acumuladas_al_dia),
+                self.ecuacion_mv_2_fallas_acumuladas_al_dia(a, b, dias, fallas_acumuladas_al_dia))
 
-    def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
-        suma_k = np.sum(fallas_por_dia)
+    def ecuacion_mv_1_fallas_acumuladas_al_dia(self, a, b, dias, fallas_acumuladas_al_dia):
+        suma_k = np.sum(fallas_acumuladas_al_dia)
         segundo_termino = 0
         for i in range(len(dias)):
             t = dias[i]
             segundo_termino += (1 - (1 + b*t) * np.exp(-b*t))
         return suma_k/a - segundo_termino
 
-    def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
+    def ecuacion_mv_2_fallas_acumuladas_al_dia(self, a, b, dias, fallas_acumuladas_al_dia):
         suma = 0
         for i in range(len(dias)):
             t = dias[i]
-            k = fallas_por_dia[i]
+            k = fallas_acumuladas_al_dia[i]
             corchete = (k / (1 - (1 + b * t) * np.exp(-b * t)) - a)
             suma += (t ** 2) * np.exp(-b * t) * corchete 
         return b * suma 
