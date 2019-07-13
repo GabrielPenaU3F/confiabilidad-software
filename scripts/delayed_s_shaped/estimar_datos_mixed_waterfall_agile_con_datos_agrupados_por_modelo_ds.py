@@ -1,14 +1,14 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
+from src.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
 
 datos_fpd = RepositorioDatos.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()
 fallas_por_dia = datos_fpd.get_fallas_por_dia()
 fallas_acumuladas = datos_fpd.get_fallas_acumuladas()
 
-go = EstimadorGoelOkumoto()
+go = EstimadorDelayedSShaped()
 
 aprox_inicial = (1, 0.5)
 params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)

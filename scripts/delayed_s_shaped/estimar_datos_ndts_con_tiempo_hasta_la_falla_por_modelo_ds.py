@@ -9,7 +9,8 @@ fallas_acumuladas = datos.get_fallas_acumuladas()
 
 ds = EstimadorDelayedSShaped()
 
-params_ds_lsq = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas)
+aprox_inicial = (1, 0.5)
+params_ds_lsq = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
 
 params_ds_mv = ds.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf, fallas_acumuladas[-1],
                                                                                     params_ds_lsq,

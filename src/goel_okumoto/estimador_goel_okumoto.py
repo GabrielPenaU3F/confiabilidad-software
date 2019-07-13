@@ -7,8 +7,8 @@ from colorama import Fore, Back, Style
 
 class EstimadorGoelOkumoto:
 
-    def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas):
-        parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas)
+    def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
+        parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, aprox_inicial)
         return parametros
 
     def func_media(self, x, a, b):

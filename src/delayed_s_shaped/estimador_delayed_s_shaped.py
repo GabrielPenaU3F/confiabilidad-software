@@ -7,9 +7,9 @@ from colorama import Fore, Back, Style
 
 class EstimadorDelayedSShaped:
 
-    def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas):
+    def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
         # Probar con condiciones iniciales a=0, b=2. Resultado: a=61.3964 y b=0.003714
-        parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas)
+        parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, p0=aprox_inicial)
         return parametros
 
     def func_media(self, x, a, b):
@@ -42,5 +42,35 @@ class EstimadorDelayedSShaped:
         suma_ti = np.sum(tiempos)
         return (2 * n_fallas / b) - suma_ti - a * b * (tiempos[-1]**2) * np.exp(-b * tiempos[-1])
 
+    def estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(self, dias, fallas_por_dia, aprox_inicial,
+                                                                   metodo_resolucion):
+        try:
+            return opt.root(partial(self.ecuaciones_mv_fallas_por_dia, dias, fallas_por_dia), aprox_inicial,
+                            method=metodo_resolucion).x
+        except NoConvergence:
+            print(Fore.RED + 'El sistema es incompatible')
+            return None
+
+    def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
+        a, b = vec
+        return (self.ecuacion_mv_1_fallas_por_dia(a, b, dias, fallas_por_dia),
+                self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_por_dia))
+
+    def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
+        suma_k = np.sum(fallas_por_dia)
+        segundo_termino = 0
+        for i in range(len(dias)):
+            t = dias[i]
+            segundo_termino += (1 - (1 + b*t) * np.exp(-b*t))
+        return suma_k/a - segundo_termino
+
+    def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
+        suma = 0
+        for i in range(len(dias)):
+            t = dias[i]
+            k = fallas_por_dia[i]
+            corchete = (k / (1 - (1 + b * t) * np.exp(-b * t)) - a)
+            suma += (t ** 2) * np.exp(-b * t) * corchete 
+        return b * suma 
 
 

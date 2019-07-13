@@ -9,7 +9,8 @@ fallas_acumuladas = datos_ttf.get_fallas_acumuladas()
 
 go = EstimadorGoelOkumoto()
 
-params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas)
+aprox_inicial = (1, 0.5)
+params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
 
 params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf[1:], fallas_acumuladas[-1],
                                                                                     params_go_lsq,
