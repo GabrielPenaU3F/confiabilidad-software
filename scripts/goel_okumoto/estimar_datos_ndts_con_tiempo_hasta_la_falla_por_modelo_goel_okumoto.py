@@ -28,7 +28,7 @@ ax.patch.set_linewidth('1')
 ax.set_facecolor("#ffffff")
 ax.grid(color='black', linestyle='--', linewidth=0.5)
 
-ax.plot(ttf, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--', label='Datos reales')
+ax.plot(ttf, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--', label='Datos reales (NTDS)')
 ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_lsq[0], params_go_lsq[1]),
         linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f' % tuple(params_go_lsq))
 if params_go_mv is not None:
