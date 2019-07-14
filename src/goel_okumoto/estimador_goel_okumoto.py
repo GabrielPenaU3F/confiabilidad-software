@@ -11,8 +11,8 @@ class EstimadorGoelOkumoto:
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, aprox_inicial)
         return parametros
 
-    def func_media(self, x, a, b):
-        return a * (1 - np.exp(-b * x))
+    def func_media(self, t, a, b):
+        return a * (1 - np.exp(-b * t))
 
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):
             return self.func_media(np.array(tiempos), a, b)

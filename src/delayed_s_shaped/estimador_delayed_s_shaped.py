@@ -12,8 +12,8 @@ class EstimadorDelayedSShaped:
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, p0=aprox_inicial)
         return parametros
 
-    def func_media(self, x, a, b):
-        return a * (1 - (1 + b*x) * np.exp(-b * x))
+    def func_media(self, t, a, b):
+        return a * (1 - (1 + b*t) * np.exp(-b * t))
 
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):
         return self.func_media(np.array(tiempos), a, b)
