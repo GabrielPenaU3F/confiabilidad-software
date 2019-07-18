@@ -36,11 +36,13 @@ class EstimadorDelayedSShaped:
                 self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos, n_fallas))
 
     def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
-        return n_fallas/a + (1 + b * tiempos[-1]) * np.exp(-b * tiempos[-1]) - 1
+        t_n = tiempos[-1]
+        return n_fallas/a + (1 + b * t_n) * np.exp(-b * t_n) - 1
 
     def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
-        suma_ti = np.sum(tiempos)
-        return (2 * n_fallas / b) - suma_ti - a * b * (tiempos[-1]**2) * np.exp(-b * tiempos[-1])
+        suma_t_k = np.sum(tiempos)
+        t_n = tiempos[-1]
+        return (2 * n_fallas / b) - suma_t_k - a * b * (t_n**2) * np.exp(-b * t_n)
 
     def estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia,
                                                                              aprox_inicial, metodo_resolucion):
@@ -60,17 +62,17 @@ class EstimadorDelayedSShaped:
         suma_k = np.sum(fallas_acumuladas_al_dia)
         segundo_termino = 0
         for i in range(len(dias)):
-            t = dias[i]
-            segundo_termino += (1 - (1 + b*t) * np.exp(-b*t))
+            t_i = dias[i]
+            segundo_termino += (1 - (1 + b * t_i) * np.exp(-b * t_i))
         return suma_k/a - segundo_termino
 
     def ecuacion_mv_2_fallas_acumuladas_al_dia(self, a, b, dias, fallas_acumuladas_al_dia):
         suma = 0
         for i in range(len(dias)):
-            t = dias[i]
-            k = fallas_acumuladas_al_dia[i]
-            corchete = (k / (1 - (1 + b * t) * np.exp(-b * t)) - a)
-            suma += (t ** 2) * np.exp(-b * t) * corchete 
+            t_i = dias[i]
+            k_i = fallas_acumuladas_al_dia[i]
+            corchete = (k_i / (1 - (1 + b * t_i) * np.exp(-b * t_i)) - a)
+            suma += (t_i ** 2) * np.exp(-b * t_i) * corchete
         return b * suma 
 
 
