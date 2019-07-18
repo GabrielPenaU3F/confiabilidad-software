@@ -1,3 +1,5 @@
+import traceback
+
 import numpy as np
 import scipy.optimize as opt
 from functools import partial
@@ -101,10 +103,6 @@ class EstimadorLogistico:
         segundo_termino = b * phi_t_k_menos_1 / ((1 + phi_t_k_menos_1)**2)
         return - primer_termino + segundo_termino
 
-
-
-    '''
-
     def estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(self, dias, fallas_por_dia, aprox_inicial,
                                                                    metodo_resolucion):
         try:
@@ -121,15 +119,38 @@ class EstimadorLogistico:
                 self.ecuacion_mv_3_fallas_por_dia(a, b, c, dias, fallas_por_dia))
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        pass
+        suma_ki = np.sum(fallas_por_dia)
+        suma_segundo_termino = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            suma_segundo_termino += (1 / self.calcular_phi(b, c, t_i))
+
+        return suma_ki/a - suma_segundo_termino
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        pass
-        
-    def ecuacion_mv_3_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        pass
+        suma = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            k_i = fallas_por_dia[i]
+            phi_i = self.calcular_phi(b, c, t_i)
+            primer_factor = (t_i - c)/(1 + phi_i)
+            corchete = k_i + (a / (1 + phi_i))
+            suma += primer_factor * corchete
 
-    '''
+        return suma
+
+    def ecuacion_mv_3_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
+        suma = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            k_i = fallas_por_dia[i]
+            phi_i = self.calcular_phi(b, c, t_i)
+            primer_factor = b / (1 + phi_i)
+            corchete = -k_i + (a / (1 + phi_i))
+            suma += primer_factor * corchete
+
+        return suma
+
 
 
 
