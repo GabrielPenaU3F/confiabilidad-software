@@ -37,35 +37,44 @@ class EstimadorLogistico:
 
     def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
         suma_g = 0
-        tiempos_desde_cero = [0] + tiempos
-        for i in range(1, len(tiempos_desde_cero)):
-            suma_g += self.calcular_g(b, c, tiempos_desde_cero[i], tiempos_desde_cero[i-1])
+        t = [0] + tiempos
+        for i in range(1, len(t)):
+            t_k = t[i]
+            t_k_menos_1 = t[i - 1]
+            suma_g += self.calcular_g(b, c, t_k, t_k_menos_1)
 
         return n_fallas/a - suma_g
 
     def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
         suma_h = 0
-        tiempos_desde_cero = [0] + tiempos
-        for i in range(1, len(tiempos_desde_cero)):
-            suma_h += self.calcular_h(b, c, tiempos_desde_cero[i], tiempos_desde_cero[i-1])
+        t = [0] + tiempos
+        for i in range(1, len(t)):
+            t_k = t[i]
+            t_k_menos_1 = t[i - 1]
+            suma_h += self.calcular_h(b, c, t_k, t_k_menos_1)
 
+        suma_tk = np.sum(tiempos)
         suma_cuarto_termino = 0
-        for i in range(len(tiempos)):
-            phi_t_i = self.calcular_phi(b, c, tiempos[i])
-            suma_cuarto_termino += ((tiempos[i] - c) * phi_t_i) / (1 + phi_t_i)
+        for i in range(1, len(t)):
+            t_k = t[i]
+            phi_t_k = self.calcular_phi(b, c, t_k)
+            suma_cuarto_termino += ((t_k - c) * phi_t_k) / (1 + phi_t_k)
 
-        return n_fallas/b - np.sum(tiempos) + n_fallas*c + 2*suma_cuarto_termino - a*suma_h
+        return n_fallas/b - suma_tk + n_fallas*c + 2*suma_cuarto_termino - a*suma_h
 
     def ecuacion_mv_3_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
         suma_j = 0
-        tiempos_desde_cero = [0] + tiempos
-        for i in range(1, len(tiempos_desde_cero)):
-            suma_j += self.calcular_j(b, c, tiempos_desde_cero[i], tiempos_desde_cero[i - 1])
+        t = [0] + tiempos
+        for i in range(1, len(t)):
+            t_k = t[i]
+            t_k_menos_1 = t[i - 1]
+            suma_j += self.calcular_j(b, c, t_k, t_k_menos_1)
 
         suma_segundo_termino = 0
-        for i in range(len(tiempos)):
-            phi_t_i = self.calcular_phi(b, c, tiempos[i])
-            suma_segundo_termino += (b * phi_t_i) / (1 + phi_t_i)
+        for i in range(1, len(t)):
+            t_k = t[i]
+            phi_t_k = self.calcular_phi(b, c, t_k)
+            suma_segundo_termino += (b * phi_t_k) / (1 + phi_t_k)
 
         return n_fallas*b - 2*suma_segundo_termino - a*suma_j
 
@@ -73,23 +82,23 @@ class EstimadorLogistico:
     def calcular_phi(self, b, c, t):
         return np.exp(-b * (t - c))
 
-    def calcular_g(self, b, c, t_i, t_i_menos_1):
-        primer_termino = 1/(1 + self.calcular_phi(b, c, t_i))
-        segundo_termino = 1/(1 + self.calcular_phi(b, c, t_i_menos_1))
+    def calcular_g(self, b, c, t_k, t_k_menos_1):
+        primer_termino = 1/(1 + self.calcular_phi(b, c, t_k))
+        segundo_termino = 1/(1 + self.calcular_phi(b, c, t_k_menos_1))
         return primer_termino - segundo_termino
 
-    def calcular_h(self, b, c, t_i, t_i_menos_1):
-        phi_t_i = self.calcular_phi(b, c, t_i)
-        phi_t_i_menos_1 = self.calcular_phi(b, c, t_i_menos_1)
-        primer_termino = ((t_i - c) * phi_t_i) / ((1 + phi_t_i)**2)
-        segundo_termino = ((t_i_menos_1 - c) * phi_t_i_menos_1) / ((1 + phi_t_i_menos_1)**2)
+    def calcular_h(self, b, c, t_k, t_k_menos_1):
+        phi_t_k = self.calcular_phi(b, c, t_k)
+        phi_t_k_menos_1 = self.calcular_phi(b, c, t_k_menos_1)
+        primer_termino = ((t_k - c) * phi_t_k) / ((1 + phi_t_k)**2)
+        segundo_termino = ((t_k_menos_1 - c) * phi_t_k_menos_1) / ((1 + phi_t_k_menos_1)**2)
         return primer_termino - segundo_termino
 
-    def calcular_j(self, b, c, t_i, t_i_menos_1):
-        phi_t_i = self.calcular_phi(b, c, t_i)
-        phi_t_i_menos_1 = self.calcular_phi(b, c, t_i_menos_1)
-        primer_termino = b * phi_t_i / ((1 + phi_t_i)**2)
-        segundo_termino = b * phi_t_i_menos_1 / ((1 + phi_t_i_menos_1)**2)
+    def calcular_j(self, b, c, t_k, t_k_menos_1):
+        phi_t_k = self.calcular_phi(b, c, t_k)
+        phi_t_k_menos_1 = self.calcular_phi(b, c, t_k_menos_1)
+        primer_termino = b * phi_t_k / ((1 + phi_t_k)**2)
+        segundo_termino = b * phi_t_k_menos_1 / ((1 + phi_t_k_menos_1)**2)
         return - primer_termino + segundo_termino
 
 
