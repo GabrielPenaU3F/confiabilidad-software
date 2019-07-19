@@ -52,13 +52,12 @@ class EstimadorGoelOkumoto:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
-
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
         a, b = vec
         return (self.ecuacion_mv_1_fallas_por_dia(a, b, dias, fallas_por_dia),
                 self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_por_dia))
 
-    #Ecuaciones del paper
+    # Ecuaciones del paper
     
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         suma_k = np.sum(fallas_por_dia)
@@ -70,10 +69,10 @@ class EstimadorGoelOkumoto:
         for i in range(len(dias)):
             t_k = dias[i]
             if i == 0:
-                suma_phi += self.calcular_phi_paper(b, 0, t_k)
+                t_k_menos_1 = 0
             else:
                 t_k_menos_1 = dias[i - 1]
-                suma_phi += self.calcular_phi_paper(b, t_k_menos_1, t_k)
+            suma_phi += self.calcular_phi_paper(b, t_k_menos_1, t_k)
         return np.sum(fallas_por_dia) * suma_phi - dias[-1] * a * np.exp(-b * dias[-1])
         
     def calcular_phi_paper(self, b, t_k_menos_1, t_k):
