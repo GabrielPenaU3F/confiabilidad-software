@@ -44,5 +44,8 @@ prr_mv = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1
 print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
 print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
 
+aic_mv = go.calcular_aic_tiempo_hasta_la_falla(ttf, fallas_acumuladas[-1], params_go_mv[0], params_go_mv[1])
+print(Fore.GREEN + ('AIC (TTF): ' + aic_mv.__str__()))
+
 plt.show()
 

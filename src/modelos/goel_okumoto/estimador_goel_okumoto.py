@@ -75,6 +75,17 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         return suma
     '''
 
+    # Del paper
+    def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
+        a, b = parametros_modelo
+        suma_ti = np.sum(tiempos)
+        t_n = tiempos[-1]
+        mu_tn = a * (1 - np.exp(-b * t_n))
+        return n_fallas * np.log(a * b) - (b * suma_ti) - mu_tn
+
+    def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
+        pass
+
     def calcular_phi(self, b, t):
         return np.exp(-b * t)
 

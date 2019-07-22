@@ -60,3 +60,16 @@ class EstimadorModelo(ABC):
             prr += (1 - fallas_acumuladas[i] / fallas_estimadas[i]) ** 2
         return prr
 
+    def calcular_aic_tiempo_hasta_la_falla(self, tiempos, n_fallas, *parametros_modelo):
+        return -2 * self.log_likelihood_ttf(tiempos, n_fallas, *parametros_modelo) + (2 * len(parametros_modelo))
+
+    def calcular_aic_fallas_por_dia(self, dias, fallas_por_dia, *parametros_modelo):
+        return -2 * self.log_likelihood_fpd(dias, fallas_por_dia, *parametros_modelo) + (2 * len(parametros_modelo))
+
+    @abstractmethod
+    def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
+        pass
+
+    @abstractmethod
+    def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
+        pass
