@@ -43,4 +43,8 @@ if params_go_mv is not None:
 ax.legend()
 
 ax.plot()
+
+prr = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1])
+print(prr)
+
 plt.show()

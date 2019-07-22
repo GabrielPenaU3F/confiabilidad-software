@@ -39,4 +39,8 @@ if params_log_mv is not None:
 ax.legend()
 
 ax.plot()
+
+prr = log.calcular_prr(dias, fallas_acumuladas, params_log_mv[0], params_log_mv[1], params_log_mv[2])
+print(prr)
+
 plt.show()
