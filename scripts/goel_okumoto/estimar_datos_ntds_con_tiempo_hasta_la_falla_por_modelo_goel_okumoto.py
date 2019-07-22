@@ -32,10 +32,14 @@ ax.plot(ttf, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--', la
 ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_lsq[0], params_go_lsq[1]),
         linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f' % tuple(params_go_lsq))
 if params_go_mv is not None:
-        ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_mv[0], params_go_mv[1]),
-                linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
-
+    ax.plot(ttf, go.calcular_numero_medio_de_fallas(ttf, params_go_mv[0], params_go_mv[1]),
+            linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
 ax.legend()
 
 ax.plot()
+
+prr = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1])
+print(prr)
+
 plt.show()
+
