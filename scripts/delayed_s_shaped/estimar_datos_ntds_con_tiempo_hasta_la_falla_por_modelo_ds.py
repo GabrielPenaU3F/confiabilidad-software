@@ -38,4 +38,9 @@ if params_ds_mv is not None:
 ax.legend()
 
 ax.plot()
+
+prr = ds.calcular_prr(ttf, fallas_acumuladas, params_ds_mv[0], params_ds_mv[1])
+print(prr)
+
 plt.show()
+
