@@ -1,36 +1,13 @@
 import numpy as np
-import scipy.optimize as opt
-from functools import partial
-from scipy.optimize.nonlin import NoConvergence
-from colorama import Fore, Back, Style
 
 from src.modelos.estimador_modelo import EstimadorModelo
 
 
 class EstimadorGoelOkumoto(EstimadorModelo):
 
-    def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
-        parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, aprox_inicial)
-        return parametros
-
     def func_media(self, t, *parametros_modelo):
         a, b = parametros_modelo
         return a * (1 - self.calcular_phi(b, t))
-
-    def calcular_numero_medio_de_fallas(self, tiempos, a, b):
-        return self.func_media(np.array(tiempos), a, b)
-
-    # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
-    # Para más detalles, consultar la documentación:
-    # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, n_fallas, aprox_inicial,
-                                                                          metodo_resolucion):
-        try:
-            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos, n_fallas), aprox_inicial,
-                            method=metodo_resolucion).x
-        except NoConvergence:
-            print(Fore.RED + 'El sistema es incompatible')
-            return None
 
     def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
         a, b = vec
@@ -45,15 +22,6 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         t_n = tiempos[-1]
         suma_t = np.sum(tiempos)
         return suma_t + t_n * a * self.calcular_phi(b, t_n) - (n_fallas / b)
-
-    def estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(self, dias, fallas_por_dia, aprox_inicial,
-                                                                   metodo_resolucion):
-        try:
-            return opt.root(partial(self.ecuaciones_mv_fallas_por_dia, dias, fallas_por_dia), aprox_inicial,
-                            method=metodo_resolucion).x
-        except NoConvergence:
-            print(Fore.RED + 'El sistema es incompatible')
-            return None
 
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
         a, b = vec

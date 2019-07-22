@@ -14,8 +14,8 @@ ds = EstimadorDelayedSShaped()
 aprox_inicial = (1, 0.5)
 params_ds_lsq = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
 
-params_ds_mv = ds.estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(
-    dias, fallas_acumuladas, params_ds_lsq, metodo_resolucion='krylov')
+params_ds_mv = ds.estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(
+    dias, fallas_por_dia, params_ds_lsq, metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
 
