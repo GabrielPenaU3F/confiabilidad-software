@@ -90,23 +90,23 @@ class EstimadorLogistico(EstimadorModelo):
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma_ki = np.sum(fallas_acumuladas_al_dia)
+        suma_yi = np.sum(fallas_acumuladas_al_dia)
         suma_segundo_termino = 0
         for i in range(len(dias)):
             t_i = dias[i]
             suma_segundo_termino += (1 / self.calcular_phi(b, c, t_i))
 
-        return suma_ki/a - suma_segundo_termino
+        return suma_yi/a - suma_segundo_termino
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
         suma = 0
         for i in range(len(dias)):
             t_i = dias[i]
-            k_i = fallas_acumuladas_al_dia[i]
+            y_i = fallas_acumuladas_al_dia[i]
             phi_i = self.calcular_phi(b, c, t_i)
             primer_factor = (t_i - c)/(1 + phi_i)
-            corchete = k_i + (a / (1 + phi_i))
+            corchete = y_i + (a / (1 + phi_i))
             suma += primer_factor * corchete
 
         return suma
@@ -116,10 +116,10 @@ class EstimadorLogistico(EstimadorModelo):
         suma = 0
         for i in range(len(dias)):
             t_i = dias[i]
-            k_i = fallas_acumuladas_al_dia[i]
+            y_i = fallas_acumuladas_al_dia[i]
             phi_i = self.calcular_phi(b, c, t_i)
             primer_factor = b / (1 + phi_i)
-            corchete = -k_i + (a / (1 + phi_i))
+            corchete = -y_i + (a / (1 + phi_i))
             suma += primer_factor * corchete
 
         return suma

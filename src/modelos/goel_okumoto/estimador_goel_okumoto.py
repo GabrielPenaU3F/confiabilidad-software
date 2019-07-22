@@ -46,7 +46,7 @@ class EstimadorGoelOkumoto(EstimadorModelo):
             else:
                 t_k_menos_1 = dias[i - 1]
             suma_phi += self.calcular_phi_paper(b, t_k_menos_1, t_k)
-        return -np.sum(fallas_por_dia) * suma_phi - t_n * a * np.exp(-b * t_n)
+        return -np.sum(fallas_por_dia) * suma_phi - t_n * a * self.calcular_phi(b, t_n)
         
     def calcular_phi_paper(self, b, t_k_menos_1, t_k):
         num = t_k_menos_1 * self.calcular_phi(b, t_k_menos_1) - t_k * self.calcular_phi(b, t_k)

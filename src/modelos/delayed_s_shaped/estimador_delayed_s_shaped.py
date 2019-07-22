@@ -30,20 +30,20 @@ class EstimadorDelayedSShaped(EstimadorModelo):
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma_ki = np.sum(fallas_acumuladas_al_dia)
+        suma_yi = np.sum(fallas_acumuladas_al_dia)
         segundo_termino = 0
         for i in range(len(dias)):
             t_i = dias[i]
             segundo_termino += (1 - (1 + b * t_i) * np.exp(-b * t_i))
-        return suma_ki/a - segundo_termino
+        return suma_yi/a - segundo_termino
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
         suma = 0
         for i in range(len(dias)):
             t_i = dias[i]
-            k_i = fallas_acumuladas_al_dia[i]
-            corchete = (k_i / (1 - (1 + b * t_i) * np.exp(-b * t_i)) - a)
+            yi = fallas_acumuladas_al_dia[i]
+            corchete = (yi / (1 - (1 + b * t_i) * np.exp(-b * t_i)) - a)
             suma += (t_i ** 2) * np.exp(-b * t_i) * corchete
         return b * suma
 
