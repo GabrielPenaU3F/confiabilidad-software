@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
+from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 
 datos = RepositorioDatos.proveer_datos_observados_proyecto_agile_nro_1('ttf')
 inicio = 0

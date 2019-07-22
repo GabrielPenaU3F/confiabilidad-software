@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.logistico.estimador_logistico import EstimadorLogistico
+from src.modelos.logistico.estimador_logistico import EstimadorLogistico
 
 datos_fpd = RepositorioDatos.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()

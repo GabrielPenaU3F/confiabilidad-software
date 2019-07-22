@@ -1,19 +1,20 @@
-import traceback
-
 import numpy as np
 import scipy.optimize as opt
 from functools import partial
 from scipy.optimize.nonlin import NoConvergence
 from colorama import Fore, Back, Style
 
+from src.modelos.estimador_modelo import EstimadorModelo
 
-class EstimadorLogistico:
+
+class EstimadorLogistico(EstimadorModelo):
 
     def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, aprox_inicial)
         return parametros
 
-    def func_media(self, t, a, b, c):
+    def func_media(self, t, *parametros_modelo):
+        a, b, c = parametros_modelo
         return a / (1 + np.exp(-b * (t - c)))
 
     def calcular_numero_medio_de_fallas(self, tiempos, a, b, c):

@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.logistico.estimador_logistico import EstimadorLogistico
+from src.modelos.logistico.estimador_logistico import EstimadorLogistico
 
 datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 ttf = datos.get_tiempos_de_falla()

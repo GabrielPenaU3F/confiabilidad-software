@@ -4,15 +4,18 @@ from functools import partial
 from scipy.optimize.nonlin import NoConvergence
 from colorama import Fore, Back, Style
 
+from src.modelos.estimador_modelo import EstimadorModelo
 
-class EstimadorDelayedSShaped:
+
+class EstimadorDelayedSShaped(EstimadorModelo):
 
     def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
         # Probar con condiciones iniciales a=0, b=2. Resultado: a=61.3964 y b=0.003714
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, p0=aprox_inicial)
         return parametros
 
-    def func_media(self, t, a, b):
+    def func_media(self, t, *parametros_modelo):
+        a, b = parametros_modelo
         return a * (1 - (1 + b*t) * np.exp(-b * t))
 
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):

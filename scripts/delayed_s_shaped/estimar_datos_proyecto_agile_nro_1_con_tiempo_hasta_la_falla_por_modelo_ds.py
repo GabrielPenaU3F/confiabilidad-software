@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
+from src.modelos.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
 
 datos = RepositorioDatos.proveer_datos_observados_proyecto_agile_nro_1('ttf')
 inicio = 0

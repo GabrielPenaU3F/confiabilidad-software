@@ -4,14 +4,17 @@ from functools import partial
 from scipy.optimize.nonlin import NoConvergence
 from colorama import Fore, Back, Style
 
+from src.modelos.estimador_modelo import EstimadorModelo
 
-class EstimadorGoelOkumoto:
+
+class EstimadorGoelOkumoto(EstimadorModelo):
 
     def ajustar_numero_medio_de_fallas_por_minimos_cuadrados(self, tiempos, fallas_acumuladas, aprox_inicial):
         parametros, cov = opt.curve_fit(self.func_media, tiempos, fallas_acumuladas, aprox_inicial)
         return parametros
 
-    def func_media(self, t, a, b):
+    def func_media(self, t, *parametros_modelo):
+        a, b = parametros_modelo
         return a * (1 - self.calcular_phi(b, t))
 
     def calcular_numero_medio_de_fallas(self, tiempos, a, b):
@@ -106,16 +109,6 @@ class EstimadorGoelOkumoto:
 
     def calcular_phi(self, b, t):
         return np.exp(-b * t)
-
-    def calcular_prr(self, tiempos, fallas_acumuladas, a, b):
-        # El primer valor siempre es 0. Lo elimino para que pueda efectuarse la division
-        tiempos = tiempos[1:]
-        fallas_acumuladas = fallas_acumuladas[1:]
-        fallas_estimadas = [self.func_media(tiempos[i], a, b) for i in range(len(tiempos))]
-        prr = 0
-        for i in range(len(tiempos)):
-            prr += (1 - fallas_acumuladas[i]/fallas_estimadas[i])**2
-        return prr
 
 
 

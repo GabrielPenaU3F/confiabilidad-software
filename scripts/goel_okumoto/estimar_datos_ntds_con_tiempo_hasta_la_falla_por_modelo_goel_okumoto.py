@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
-from src.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
+from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 
 datos_ttf = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 ttf = datos_ttf.get_tiempos_de_falla()
