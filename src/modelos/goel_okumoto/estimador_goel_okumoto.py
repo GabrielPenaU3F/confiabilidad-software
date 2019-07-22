@@ -31,11 +31,13 @@ class EstimadorGoelOkumoto(EstimadorModelo):
     # Ecuaciones del paper
     
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
-        suma_k = np.sum(fallas_por_dia)
+        delta_k = fallas_por_dia
+        suma_delta_k = np.sum(delta_k)
         t_n = dias[-1]
-        return suma_k - a * (1 - self.calcular_phi(b, t_n))
+        return suma_delta_k - a * (1 - self.calcular_phi(b, t_n))
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
+        t_n = dias[-1]
         suma_phi = 0
         for i in range(len(dias)):
             t_k = dias[i]
@@ -44,7 +46,7 @@ class EstimadorGoelOkumoto(EstimadorModelo):
             else:
                 t_k_menos_1 = dias[i - 1]
             suma_phi += self.calcular_phi_paper(b, t_k_menos_1, t_k)
-        return np.sum(fallas_por_dia) * suma_phi - dias[-1] * a * np.exp(-b * dias[-1])
+        return -np.sum(fallas_por_dia) * suma_phi - t_n * a * np.exp(-b * t_n)
         
     def calcular_phi_paper(self, b, t_k_menos_1, t_k):
         num = t_k_menos_1 * self.calcular_phi(b, t_k_menos_1) - t_k * self.calcular_phi(b, t_k)
@@ -83,11 +85,14 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         mu_tn = a * (1 - np.exp(-b * t_n))
         return n_fallas * np.log(a * b) - (b * suma_ti) - mu_tn
 
+    # Del paper
     def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
         pass
 
     def calcular_phi(self, b, t):
         return np.exp(-b * t)
+
+
 
 
 

@@ -49,6 +49,12 @@ class EstimadorModelo(ABC):
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_acumuladas_al_dia, vec):
         pass
 
+    def calcular_fallas_acumuladas(self, fallas_por_dia):
+        fallas_acumuladas = [fallas_por_dia[0]]
+        for i in range(1, len(fallas_por_dia)):
+            fallas_acumuladas.append(fallas_por_dia[i] + fallas_acumuladas[i - 1])
+        return fallas_acumuladas
+
     def calcular_prr(self, tiempos, fallas_acumuladas, *parametros_modelo):
         # El primer valor siempre es 0. Lo elimino para que pueda efectuarse la division
         tiempos = tiempos[1:]

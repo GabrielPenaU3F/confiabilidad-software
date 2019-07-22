@@ -30,12 +30,12 @@ class EstimadorDelayedSShaped(EstimadorModelo):
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma_k = np.sum(fallas_acumuladas_al_dia)
+        suma_ki = np.sum(fallas_acumuladas_al_dia)
         segundo_termino = 0
         for i in range(len(dias)):
             t_i = dias[i]
             segundo_termino += (1 - (1 + b * t_i) * np.exp(-b * t_i))
-        return suma_k/a - segundo_termino
+        return suma_ki/a - segundo_termino
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
@@ -47,10 +47,9 @@ class EstimadorDelayedSShaped(EstimadorModelo):
             suma += (t_i ** 2) * np.exp(-b * t_i) * corchete
         return b * suma
 
-    def calcular_fallas_acumuladas(self, fallas_por_dia):
-        fallas_acumuladas = [fallas_por_dia[0]]
-        for i in range(1, len(fallas_por_dia)):
-            fallas_acumuladas.append(fallas_por_dia[i] + fallas_acumuladas[i - 1])
-        return fallas_acumuladas
+    def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
+        pass
 
+    def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
+        pass
 
