@@ -1,3 +1,4 @@
+from colorama import Fore
 from matplotlib import pyplot as plt
 
 from datos.repositorio_datos import RepositorioDatos
@@ -44,7 +45,9 @@ ax.legend()
 
 ax.plot()
 
-prr = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1])
-print(prr)
+prr_lsq = go.calcular_prr(ttf, fallas_acumuladas, params_go_lsq[0], params_go_lsq[1])
+prr_mv = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1])
+print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
+print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
 
 plt.show()
