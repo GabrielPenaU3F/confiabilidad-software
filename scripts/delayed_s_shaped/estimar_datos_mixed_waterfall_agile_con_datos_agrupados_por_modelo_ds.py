@@ -46,4 +46,7 @@ prr_mv = ds.calcular_prr(dias, fallas_acumuladas, params_ds_mv[0], params_ds_mv[
 print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
 print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
 
+aic_mv = ds.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_ds_mv[0], params_ds_mv[1])
+print(Fore.GREEN + ('AIC (FPD): ' + aic_mv.__str__()))
+
 plt.show()

@@ -61,5 +61,16 @@ class EstimadorDelayedSShaped(EstimadorModelo):
         return primer_termino + segundo_termino + tercer_termino + cuarto_termino + quinto_termino
 
     def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
-        pass
+        a, b = parametros_modelo
+        fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
+        sumatoria = 0
+        for i in range(len(dias)):
+            k_i = fallas_acumuladas_al_dia[i]
+            t_i = dias[i]
+            primer_termino = k_i * np.log(a)
+            segundo_termino = k_i * np.log(self.func_media(t_i, a, b) / a)
+            tercer_termino = -np.math.log(np.math.factorial(k_i))
+            cuarto_termino = -self.func_media(t_i, a, b)
+            sumatoria += (primer_termino + segundo_termino + tercer_termino + cuarto_termino)
+        return sumatoria
 
