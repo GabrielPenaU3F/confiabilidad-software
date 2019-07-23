@@ -48,7 +48,17 @@ class EstimadorDelayedSShaped(EstimadorModelo):
         return b * suma
 
     def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
-        pass
+        a, b = parametros_modelo
+        # Elimino el cero del primer lugar
+        if tiempos[0] == 0:
+            tiempos = tiempos[1:]
+        t_n = tiempos[-1]
+        primer_termino = n_fallas * np.log(a)
+        segundo_termino = 2 * n_fallas * np.log(b)
+        tercer_termino = np.sum(np.log(tiempos))
+        cuarto_termino = -b * np.sum(tiempos)
+        quinto_termino = -a * (1 - (1 + (b * t_n)) * np.exp(-b * t_n))
+        return primer_termino + segundo_termino + tercer_termino + cuarto_termino + quinto_termino
 
     def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
         pass
