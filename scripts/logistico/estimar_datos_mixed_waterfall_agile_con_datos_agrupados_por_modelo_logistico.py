@@ -11,10 +11,10 @@ fallas_acumuladas = datos_fpd.get_fallas_acumuladas()
 
 log = EstimadorLogistico()
 
-aprox_inicial = (10, 0.05, 20)
+aprox_inicial = (100, 1, 0)
 params_log_lsq = log.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
 
-params_log_mv = log.estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, (10, 0.05, 20),
+params_log_mv = log.estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_log_lsq,
                                                                                metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
