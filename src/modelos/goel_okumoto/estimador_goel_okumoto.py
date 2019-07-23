@@ -29,6 +29,8 @@ class EstimadorGoelOkumoto(EstimadorModelo):
                 self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_por_dia))
 
     # Ecuaciones del paper
+
+    '''
     
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         delta_yi = fallas_por_dia
@@ -47,37 +49,41 @@ class EstimadorGoelOkumoto(EstimadorModelo):
                 t_k_menos_1 = dias[i - 1]
             suma_phi += self.calcular_phi_paper(b, t_k_menos_1, t_k)
         return -np.sum(fallas_por_dia) * suma_phi - t_n * a * self.calcular_phi(b, t_n)
-        
+    
+    '''
+
     def calcular_phi_paper(self, b, t_k_menos_1, t_k):
         num = t_k_menos_1 * self.calcular_phi(b, t_k_menos_1) - t_k * self.calcular_phi(b, t_k)
         den = self.calcular_phi(b, t_k_menos_1) - self.calcular_phi(b, t_k)
         return num/den
 
 
-    '''
     
     # Ecuaciones deducidas por mi
     
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         n = len(fallas_por_dia)
-        suma_k = np.sum(fallas_por_dia)
+        fallas_acumuladas = self.calcular_fallas_acumuladas(fallas_por_dia)
+        suma_ki = np.sum(fallas_acumuladas)
         suma_phi = 0
         for i in range(len(dias)):
             suma_phi += self.calcular_phi(b, dias[i])
 
-        return suma_k/a - n + suma_phi
+        return suma_ki/a - n + suma_phi
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         suma = 0
+        fallas_acumuladas = self.calcular_fallas_acumuladas(fallas_por_dia)
         for i in range(len(dias)):
             phi = self.calcular_phi(b, dias[i])
             primer_factor = dias[i] * phi
-            factor_parentesis = (fallas_por_dia[i] / (1 - phi)) - a
+            factor_parentesis = (fallas_acumuladas[i] / (1 - phi)) - a
             suma += primer_factor * factor_parentesis
         return suma
-    '''
+
 
     # Del paper
+
     def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
         a, b = parametros_modelo
         suma_ti = np.sum(tiempos)
