@@ -125,10 +125,30 @@ class EstimadorLogistico(EstimadorModelo):
         return suma
 
     def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
-        pass
+        a, b, c = parametros_modelo
+        suma_ti = np.sum(tiempos)
+        primer_termino = n_fallas * np.log(a)
+        segundo_termino = n_fallas * np.log(b)
+        tercer_termino = -b * suma_ti
+        cuarto_termino = n_fallas * b * c
+        quinto_termino = -2 * np.sum([np.log(1 + self.calcular_phi(b, c, tiempos[i])) for i in range(len(tiempos))])
+        sexto_termino = -a * np.sum([self.calcular_g(b, c, tiempos[k], tiempos[k-1]) for k in range(1, len(tiempos))])
+        return primer_termino + segundo_termino + tercer_termino + cuarto_termino + quinto_termino + sexto_termino
 
     def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
-        pass
+        a, b, c = parametros_modelo
+        fallas_acumuladas = self.calcular_fallas_acumuladas(fallas_por_dia)
+        sumatoria = 0
+        for i in range(len(dias)):
+            k_i = fallas_acumuladas[i]
+            t_i = dias[i]
+            phi_i = self.calcular_phi(b, c, t_i)
+            primer_termino = k_i * np.log(a)
+            segundo_termino = -k_i * np.log(1 + phi_i)
+            tercer_termino = -np.math.log(np.math.factorial(k_i))
+            cuarto_termino = -a / (1 + phi_i)
+            sumatoria += (primer_termino + segundo_termino + tercer_termino + cuarto_termino)
+        return sumatoria
 
 
 

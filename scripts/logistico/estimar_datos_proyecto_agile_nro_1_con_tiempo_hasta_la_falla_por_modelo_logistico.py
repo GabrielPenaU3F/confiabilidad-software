@@ -49,4 +49,8 @@ prr_mv = log.calcular_prr(ttf, fallas_acumuladas, params_log_mv[0], params_log_m
 print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
 print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
 
+aic_mv = log.calcular_aic_tiempo_hasta_la_falla(ttf, fallas_acumuladas[-1], params_log_mv[0], params_log_mv[1],
+                                                params_log_mv[2])
+print(Fore.GREEN + ('AIC (TTF): ' + aic_mv.__str__()))
+
 plt.show()

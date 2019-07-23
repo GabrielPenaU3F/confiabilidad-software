@@ -46,4 +46,8 @@ prr_mv = log.calcular_prr(dias, fallas_acumuladas, params_log_mv[0], params_log_
 print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
 print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
 
+# Como el ajuste anda mal, tampoco puede calcular el AIC
+# aic_mv = log.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_log_mv[0], params_log_mv[1], params_log_mv[2])
+# print(Fore.GREEN + ('AIC (FPD): ' + aic_mv.__str__()))
+
 plt.show()
