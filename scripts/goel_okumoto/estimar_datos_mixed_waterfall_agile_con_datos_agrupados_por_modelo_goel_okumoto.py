@@ -14,8 +14,12 @@ go = EstimadorGoelOkumoto()
 aprox_inicial = (1, 0.5)
 params_go_lsq = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
 
-params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_go_lsq,
-                                                                             metodo_resolucion='krylov')
+params_go_mv_fallas_por_dia = go.\
+    estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_go_lsq,
+                                                               metodo_resolucion='krylov')
+params_go_mv_fallas_acumuladas_al_dia = go.\
+    estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_go_lsq,
+                                                               metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
 
@@ -32,21 +36,31 @@ ax.grid(color='black', linestyle='--', linewidth=0.5)
 ax.plot(dias, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--',
         label='Datos reales (Mixed Waterfall-Agile)')
 ax.plot(dias, go.calcular_numero_medio_de_fallas(dias, params_go_lsq[0], params_go_lsq[1]),
-        linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f' % tuple(params_go_lsq))
-if params_go_mv is not None:
-    ax.plot(dias, go.calcular_numero_medio_de_fallas(dias, params_go_mv[0], params_go_mv[1]),
-            linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f' % tuple(params_go_mv))
+        linewidth=1, color='#ca3e47', linestyle='-', label='Mínimos cuadrados')
+if params_go_mv_fallas_por_dia is not None:
+    ax.plot(dias, go.calcular_numero_medio_de_fallas(dias, params_go_mv_fallas_por_dia[0],
+                                                     params_go_mv_fallas_por_dia[1]),
+            linewidth=1, color='#58b368', linestyle='-', label='Máxima verosimilitud')
 
 ax.legend()
 
 ax.plot()
 
-prr_lsq = go.calcular_prr(dias, fallas_acumuladas, params_go_lsq[0], params_go_lsq[1])
-prr_mv = go.calcular_prr(dias, fallas_acumuladas, params_go_mv[0], params_go_mv[1])
-print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
-print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
+print(Fore.BLUE + ('a = ' + params_go_mv_fallas_por_dia[0].__str__() + ' (Fallas por día)'))
+print(Fore.BLUE + ('b = ' + params_go_mv_fallas_por_dia[1].__str__() + ' (Fallas por día)'))
+print(Fore.BLUE + ('a = ' + params_go_mv_fallas_acumuladas_al_dia[0].__str__() + ' (Fallas por día)'))
+print(Fore.BLUE + ('b = ' + params_go_mv_fallas_acumuladas_al_dia[1].__str__() + ' (Fallas acumuladas)'))
 
-aic_mv = go.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_go_mv[0], params_go_mv[1])
-print(Fore.GREEN + ('AIC (FPD): ' + aic_mv.__str__()))
+prr_lsq = go.calcular_prr(dias, fallas_acumuladas, params_go_lsq[0], params_go_lsq[1])
+prr_mv = go.calcular_prr(dias, fallas_acumuladas, params_go_mv_fallas_por_dia[0], params_go_mv_fallas_por_dia[1])
+print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_lsq.__str__()))
+print(Fore.GREEN + ('PRR - Máxima verosimilitud: ' + prr_mv.__str__()))
+
+aic_mv_fpd = go.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_go_mv_fallas_por_dia[0],
+                                            params_go_mv_fallas_por_dia[1])
+aic_mv_facum = go.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_go_mv_fallas_por_dia[0],
+                                              params_go_mv_fallas_por_dia[1])
+print(Fore.GREEN + ('AIC (Fallas por día): ' + aic_mv_fpd.__str__()))
+print(Fore.GREEN + ('AIC (Fallas acumuladas): ' + aic_mv_facum.__str__()))
 
 plt.show()

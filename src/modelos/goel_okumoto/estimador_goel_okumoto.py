@@ -28,6 +28,14 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         return suma_tk + a * t_n * self.calcular_exp_menos_bt(b, t_n) - (n_datos / b)
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
+        a, b = vec
+        return (self.ecuacion_mv_1_fallas_por_dia(a, b, dias, fallas_acumuladas_al_dia),
+                self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_acumuladas_al_dia))
+
+    def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_acumuladas_al_dia):
+        pass
+
+    def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_acumuladas_al_dia):
         pass
 
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
@@ -89,7 +97,6 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         return -a * self.calcular_exp_menos_bt(b, t_n) + suma_segundo_termino
         
     '''
-
     def calcular_exp_menos_bt(self, b, t):
         return np.exp(-b * t)
 
