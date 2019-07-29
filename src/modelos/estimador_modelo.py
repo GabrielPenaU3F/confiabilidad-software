@@ -53,6 +53,19 @@ class EstimadorModelo(ABC):
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         pass
 
+    def estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(self, tiempos, fallas_por_dia, aprox_inicial,
+                                                                   metodo_resolucion):
+        try:
+            return opt.root(partial(self.ecuaciones_mv_fallas_por_dia, tiempos, fallas_por_dia), aprox_inicial,
+                            method=metodo_resolucion).x
+        except NoConvergence:
+            print(Fore.RED + 'El sistema es incompatible')
+            return None
+
+    @abstractmethod
+    def ecuaciones_mv_fallas_por_dia(self, tiempos, fallas_por_dia, vec):
+        pass
+
     def calcular_fallas_acumuladas(self, fallas_por_dia):
         fallas_acumuladas = [fallas_por_dia[0]]
         for i in range(1, len(fallas_por_dia)):

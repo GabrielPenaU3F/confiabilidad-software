@@ -36,22 +36,23 @@ class EstimadorGoelOkumoto(EstimadorModelo):
                 self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_por_dia))
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_por_dia):
-        delta_yi = fallas_por_dia
-        suma_delta_yi = np.sum(delta_yi)
+        deltas_yi = fallas_por_dia
+        suma_delta_yi = np.sum(deltas_yi)
         t_n = dias[-1]
-        return suma_delta_yi - a * (1 - self.calcular_exp_menos_bt(b, t_n))
+        return suma_delta_yi - self.calcular_media(t_n, a, b)
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         t_n = dias[-1]
-        suma_phi = 0
+        deltas_yi = fallas_por_dia
+        sumatoria = 0
         for i in range(len(dias)):
             t_i = dias[i]
             if i == 0:
                 t_i_menos_1 = 0
             else:
                 t_i_menos_1 = dias[i - 1]
-            suma_phi += self.calcular_phi(b, t_i, t_i_menos_1)
-        return -np.sum(fallas_por_dia) * suma_phi - t_n * a * self.calcular_exp_menos_bt(b, t_n)
+            sumatoria += (deltas_yi[i] * self.calcular_phi(b, t_i, t_i_menos_1))
+        return sumatoria + a * t_n * self.calcular_exp_menos_bt(b, t_n)
 
     def calcular_phi(self, b, t_i, t_i_menos_1):
         num = t_i_menos_1 * self.calcular_exp_menos_bt(b, t_i_menos_1) - t_i * self.calcular_exp_menos_bt(b, t_i)
