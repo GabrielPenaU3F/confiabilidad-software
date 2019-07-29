@@ -89,8 +89,14 @@ class EstimadorModelo(ABC):
     def calcular_aic_fallas_por_dia(self, dias, fallas_por_dia, *parametros_modelo):
         return -2 * self.log_likelihood_fpd(dias, fallas_por_dia, *parametros_modelo) + (2 * len(parametros_modelo))
 
+    def calcular_aic_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas, *parametros_modelo):
+        return -2 * self.log_likelihood_facum(dias, fallas_acumuladas, *parametros_modelo) + (2 * len(parametros_modelo))
+
     def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
         return 0
 
     def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
+        return 0
+
+    def log_likelihood_facum(self, dias, fallas_acumuladas, *parametros_modelo):
         return 0

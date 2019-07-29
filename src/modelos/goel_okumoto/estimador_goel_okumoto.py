@@ -29,14 +29,26 @@ class EstimadorGoelOkumoto(EstimadorModelo):
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_fallas_por_dia(a, b, dias, fallas_acumuladas_al_dia),
-                self.ecuacion_mv_2_fallas_por_dia(a, b, dias, fallas_acumuladas_al_dia))
+        return (self.ecuacion_mv_1_fallas_acumuladas_al_dia(a, b, dias, fallas_acumuladas_al_dia),
+                self.ecuacion_mv_2_fallas_acumuladas_al_dia(a, b, dias, fallas_acumuladas_al_dia))
 
-    def ecuacion_mv_1_fallas_por_dia(self, a, b, dias, fallas_acumuladas_al_dia):
-        pass
+    def ecuacion_mv_1_fallas_acumuladas_al_dia(self, a, b, dias, fallas_acumuladas_al_dia):
+        n = len(dias)
+        suma_yi = np.sum(fallas_acumuladas_al_dia)
+        suma_exp = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            suma_exp += self.calcular_exp_menos_bt(b, t_i)
+        return (suma_yi / a) - n + suma_exp
 
-    def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_acumuladas_al_dia):
-        pass
+    def ecuacion_mv_2_fallas_acumuladas_al_dia(self, a, b, dias, fallas_acumuladas_al_dia):
+        sumatoria = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            exp_b_ti = self.calcular_exp_menos_bt(b, t_i)
+            parentesis = (fallas_acumuladas_al_dia[i] / (1 - exp_b_ti)) - a
+            sumatoria += t_i * exp_b_ti * parentesis
+        return sumatoria
 
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
         a, b = vec
