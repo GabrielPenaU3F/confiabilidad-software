@@ -86,17 +86,47 @@ class EstimadorModelo(ABC):
     def calcular_aic_tiempo_hasta_la_falla(self, tiempos, n_fallas, *parametros_modelo):
         return -2 * self.log_likelihood_ttf(tiempos, n_fallas, *parametros_modelo) + (2 * len(parametros_modelo))
 
-    def calcular_aic_fallas_por_dia(self, dias, fallas_por_dia, *parametros_modelo):
-        return -2 * self.log_likelihood_fpd(dias, fallas_por_dia, *parametros_modelo) + (2 * len(parametros_modelo))
-
     def calcular_aic_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas, *parametros_modelo):
         return -2 * self.log_likelihood_facum(dias, fallas_acumuladas, *parametros_modelo) + (2 * len(parametros_modelo))
 
-    def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
-        return 0
+    def calcular_aic_fallas_por_dia(self, dias, fallas_por_dia, *parametros_modelo):
+        return -2 * self.log_likelihood_fpd(dias, fallas_por_dia, *parametros_modelo) + (2 * len(parametros_modelo))
 
-    def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
-        return 0
+    def log_likelihood_ttf(self, tiempos, n_fallas, *parametros_modelo):
+        t_n = tiempos[-1]
+        mu_tn = self.calcular_media(t_n, *parametros_modelo)
+        sumatoria = 0
+        for k in range(len(tiempos)):
+            t_k = tiempos[k]
+            lambda_tk = self.calcular_lambda(t_k, *parametros_modelo)
+            sumatoria += np.log(lambda_tk)
+        return -mu_tn + sumatoria
 
     def log_likelihood_facum(self, dias, fallas_acumuladas, *parametros_modelo):
-        return 0
+        sumatoria = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            y_i = fallas_acumuladas[i]
+            mu_ti = self.calcular_media(t_i, *parametros_modelo)
+            y_i_factorial = np.math.factorial(y_i)
+            sumatoria += y_i * np.log(mu_ti) - np.math.log(y_i_factorial) - mu_ti
+        return sumatoria
+
+    def log_likelihood_fpd(self, dias, fallas_por_dia, *parametros_modelo):
+        sumatoria = 0
+        deltas_yi = fallas_por_dia
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, *parametros_modelo)
+        for i in range(len(dias)):
+            t_i = dias[i]
+            delta_y_i = deltas_yi[i]
+            mu_ti = self.calcular_media(t_i, *parametros_modelo)
+            if i == 0:
+                t_i_menos_1 = 0
+            else:
+                t_i_menos_1 = dias[i - 1]
+            mu_ti_menos_1 = self.calcular_media(t_i_menos_1, *parametros_modelo)
+            delta_y_i_factorial = np.math.factorial(delta_y_i)
+            sumatoria += (delta_y_i * np.log(mu_ti - mu_ti_menos_1)) - np.math.log(delta_y_i_factorial)
+        return -mu_tn + sumatoria
+
