@@ -44,15 +44,15 @@ class EstimadorGoelOkumoto(EstimadorModelo):
     def ecuacion_mv_2_fallas_por_dia(self, a, b, dias, fallas_por_dia):
         t_n = dias[-1]
         deltas_yi = fallas_por_dia
-        sumatoria = 0
+        sumatoria_delta_por_phi = 0
         for i in range(len(dias)):
             t_i = dias[i]
             if i == 0:
                 t_i_menos_1 = 0
             else:
                 t_i_menos_1 = dias[i - 1]
-            sumatoria += (deltas_yi[i] * self.calcular_phi(b, t_i, t_i_menos_1))
-        return sumatoria + a * t_n * self.calcular_exp_menos_bt(b, t_n)
+            sumatoria_delta_por_phi += (deltas_yi[i] * self.calcular_phi(b, t_i, t_i_menos_1))
+        return sumatoria_delta_por_phi + a * t_n * self.calcular_exp_menos_bt(b, t_n)
 
     def calcular_phi(self, b, t_i, t_i_menos_1):
         num = t_i_menos_1 * self.calcular_exp_menos_bt(b, t_i_menos_1) - t_i * self.calcular_exp_menos_bt(b, t_i)
