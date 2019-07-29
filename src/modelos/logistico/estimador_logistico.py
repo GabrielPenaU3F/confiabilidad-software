@@ -6,7 +6,7 @@ from src.modelos.estimador_modelo import EstimadorModelo
 
 class EstimadorLogistico(EstimadorModelo):
 
-    def func_media(self, t, *parametros_modelo):
+    def calcular_media(self, t, *parametros_modelo):
         a, b, c = parametros_modelo
         return a / (1 + np.exp(-b * (t - c)))
 

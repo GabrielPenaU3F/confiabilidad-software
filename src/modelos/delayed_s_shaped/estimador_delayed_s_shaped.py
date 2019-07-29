@@ -5,7 +5,7 @@ from src.modelos.estimador_modelo import EstimadorModelo
 
 class EstimadorDelayedSShaped(EstimadorModelo):
 
-    def func_media(self, t, *parametros_modelo):
+    def calcular_media(self, t, *parametros_modelo):
         a, b = parametros_modelo
         return a * (1 - (1 + b*t) * np.exp(-b * t))
 
@@ -68,9 +68,9 @@ class EstimadorDelayedSShaped(EstimadorModelo):
             k_i = fallas_acumuladas_al_dia[i]
             t_i = dias[i]
             primer_termino = k_i * np.log(a)
-            segundo_termino = k_i * np.log(self.func_media(t_i, a, b) / a)
+            segundo_termino = k_i * np.log(self.calcular_media(t_i, a, b) / a)
             tercer_termino = -np.math.log(np.math.factorial(k_i))
-            cuarto_termino = -self.func_media(t_i, a, b)
+            cuarto_termino = -self.calcular_media(t_i, a, b)
             sumatoria += (primer_termino + segundo_termino + tercer_termino + cuarto_termino)
         return sumatoria
 
