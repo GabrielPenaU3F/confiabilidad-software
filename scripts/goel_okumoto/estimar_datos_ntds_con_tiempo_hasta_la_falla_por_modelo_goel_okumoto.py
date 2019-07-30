@@ -7,13 +7,15 @@ from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 datos_ttf = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 ttf = datos_ttf.get_tiempos_de_falla()
 fallas_acumuladas = datos_ttf.get_fallas_acumuladas()
+n_fallas = fallas_acumuladas[-1]
+ttf_sin_cero = ttf[1:]
 
 go = EstimadorGoelOkumoto()
 
 aprox_inicial = (1, 0.5)
 params_go_mc = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
 
-params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf[1:], fallas_acumuladas[-1],
+params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf_sin_cero, n_fallas,
                                                                                     params_go_mc,
                                                                                     metodo_resolucion='krylov')
 
@@ -50,7 +52,7 @@ prr_mv = go.calcular_prr(ttf, fallas_acumuladas, params_go_mv[0], params_go_mv[1
 print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_mc.__str__()))
 print(Fore.GREEN + ('PRR - Máxima verosimilitud: ' + prr_mv.__str__()))
 
-aic_mv = go.calcular_aic_tiempo_hasta_la_falla(ttf, fallas_acumuladas[-1], params_go_mv[0], params_go_mv[1])
+aic_mv = go.calcular_aic_tiempo_hasta_la_falla(ttf_sin_cero, n_fallas, params_go_mv[0], params_go_mv[1])
 print(Fore.GREEN + ('AIC (Tiempo hasta la falla): ' + aic_mv.__str__()))
 
 plt.show()

@@ -13,7 +13,6 @@ go = EstimadorGoelOkumoto()
 
 aprox_inicial = (1, 0.5)
 params_go_mc = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
-
 params_go_mv_fallas_por_dia = go.\
     estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_go_mc,
                                                                metodo_resolucion='krylov')
