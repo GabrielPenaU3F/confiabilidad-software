@@ -26,11 +26,10 @@ class EstimadorLogistico(EstimadorModelo):
     def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
         suma_g = 0
         t = [0] + tiempos
-        for k in range(len(t)):
+        for k in range(1, len(t)):
             t_k = t[k]
             t_k_menos_1 = t[k - 1]
             suma_g += self.calcular_g(a, b, c, t_k, t_k_menos_1)
-
         return n_fallas - suma_g
 
     def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
@@ -43,13 +42,13 @@ class EstimadorLogistico(EstimadorModelo):
 
         suma_tk = np.sum(tiempos)
         suma_cuarto_termino = 0
-        for k in range(1, len(t)):
-            t_k = t[k]
+        for k in range(len(tiempos)):
+            t_k = tiempos[k]
             psi_tk = self.calcular_psi(b, c, t_k)
             mu_tk = self.calcular_media(t_k, a, b, c)
             suma_cuarto_termino += (psi_tk * mu_tk)
 
-        return n_fallas/b - suma_tk + n_fallas * c + (2/a) * suma_cuarto_termino - a * suma_h
+        return n_fallas/b - suma_tk + n_fallas * c + (2/a) * suma_cuarto_termino - (1/a) * suma_h
 
     def ecuacion_mv_3_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
         suma_j = 0
@@ -60,8 +59,8 @@ class EstimadorLogistico(EstimadorModelo):
             suma_j += self.calcular_j(a, b, c, t_k, t_k_menos_1)
 
         suma_segundo_termino = 0
-        for k in range(1, len(t)):
-            t_k = t[k]
+        for k in range(len(tiempos)):
+            t_k = tiempos[k]
             phi_tk = self.calcular_phi(b, c, t_k)
             mu_tk = self.calcular_media(t_k, a, b, c)
             suma_segundo_termino += (phi_tk * mu_tk)
@@ -108,8 +107,7 @@ class EstimadorLogistico(EstimadorModelo):
             phi_i = self.calcular_phi(b, c, t_i)
             primer_factor = (t_i - c)/(1 + phi_i)
             corchete = y_i + (a / (1 + phi_i))
-            suma += primer_factor * corchete
-
+            suma += (primer_factor * corchete)
         return suma
 
     def ecuacion_mv_3_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
@@ -121,8 +119,7 @@ class EstimadorLogistico(EstimadorModelo):
             phi_i = self.calcular_phi(b, c, t_i)
             primer_factor = b / (1 + phi_i)
             corchete = -y_i + (a / (1 + phi_i))
-            suma += primer_factor * corchete
-
+            suma += (primer_factor * corchete)
         return suma
 
     def calcular_phi(self, b, c, t):
