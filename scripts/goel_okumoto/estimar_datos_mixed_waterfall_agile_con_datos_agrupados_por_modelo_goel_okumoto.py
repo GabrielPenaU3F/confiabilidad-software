@@ -57,9 +57,12 @@ print(Fore.BLUE + ('a = ' + params_go_mv_fallas_por_dia[0].__str__() + ' (Máxim
 print(Fore.BLUE + ('b = ' + params_go_mv_fallas_por_dia[1].__str__() + ' (Máxima verosimilitud, fallas por día)'))
 
 prr_mc = go.calcular_prr(dias, fallas_acumuladas, params_go_mc[0], params_go_mc[1])
-prr_mv = go.calcular_prr(dias, fallas_acumuladas, params_go_mv_fallas_por_dia[0], params_go_mv_fallas_por_dia[1])
+prr_mv_facum = go.calcular_prr(dias, fallas_acumuladas, params_go_mv_fallas_acumuladas_al_dia[0],
+                               params_go_mv_fallas_acumuladas_al_dia[1])
+prr_mv_fpd = go.calcular_prr(dias, fallas_acumuladas, params_go_mv_fallas_por_dia[0], params_go_mv_fallas_por_dia[1])
 print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_mc.__str__()))
-print(Fore.GREEN + ('PRR - Máxima verosimilitud: ' + prr_mv.__str__()))
+print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas acumuladas): ' + prr_mv_facum.__str__()))
+print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas por día): ' + prr_mv_fpd.__str__()))
 
 aic_mv_facum = go.calcular_aic_fallas_acumuladas_al_dia(dias, fallas_acumuladas, params_go_mv_fallas_por_dia[0],
                                                         params_go_mv_fallas_por_dia[1])
