@@ -24,22 +24,10 @@ class EstimadorLogistico(EstimadorModelo):
                 self.ecuacion_mv_3_tiempo_hasta_la_falla(a, b, c, tiempos, n_fallas))
 
     def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
-        suma_g = 0
-        t = [0] + tiempos
-        for k in range(1, len(t)):
-            t_k = t[k]
-            t_k_menos_1 = t[k - 1]
-            suma_g += self.calcular_g(a, b, c, t_k, t_k_menos_1)
-        return n_fallas - suma_g
+        t_n = tiempos[-1]
+        return n_fallas - self.calcular_media(t_n, a, b, c)
 
     def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
-        suma_h = 0
-        t = [0] + tiempos
-        for k in range(1, len(t)):
-            t_k = t[k]
-            t_k_menos_1 = t[k - 1]
-            suma_h += self.calcular_h(a, b, c, t_k, t_k_menos_1)
-
         suma_tk = np.sum(tiempos)
         suma_cuarto_termino = 0
         for k in range(len(tiempos)):
@@ -48,24 +36,22 @@ class EstimadorLogistico(EstimadorModelo):
             mu_tk = self.calcular_media(t_k, a, b, c)
             suma_cuarto_termino += (psi_tk * mu_tk)
 
-        return n_fallas/b - suma_tk + n_fallas * c + (2/a) * suma_cuarto_termino - (1/a) * suma_h
+        t_n = tiempos[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        psi_tn = self.calcular_psi(b, c, t_n)
+        return n_fallas/b - suma_tk + n_fallas * c + (2/a) * suma_cuarto_termino - (1/a) * psi_tn * (mu_tn**2)
 
     def ecuacion_mv_3_tiempo_hasta_la_falla(self, a, b, c, tiempos, n_fallas):
-        suma_j = 0
-        t = [0] + tiempos
-        for k in range(1, len(t)):
-            t_k = t[k]
-            t_k_menos_1 = t[k - 1]
-            suma_j += self.calcular_j(a, b, c, t_k, t_k_menos_1)
-
-        suma_segundo_termino = 0
+        suma_mu_tk = 0
         for k in range(len(tiempos)):
             t_k = tiempos[k]
-            phi_tk = self.calcular_phi(b, c, t_k)
             mu_tk = self.calcular_media(t_k, a, b, c)
-            suma_segundo_termino += (phi_tk * mu_tk)
+            suma_mu_tk += mu_tk
 
-        return n_fallas - (2/a) * suma_segundo_termino - (1/a) * suma_j
+        t_n = tiempos[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        phi_tn = self.calcular_phi(b, c, t_n)
+        return n_fallas - (2/a) * suma_mu_tk - (1/a) * phi_tn * (mu_tn**2)
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b, c = vec
@@ -128,24 +114,6 @@ class EstimadorLogistico(EstimadorModelo):
     def calcular_psi(self, b, c, t):
         return (t - c) * self.calcular_phi(b, c, t)
 
-    def calcular_g(self, a, b, c, t_1, t_2):
-        mu_t1 = self.calcular_media(t_1, a, b, c)
-        mu_t2 = self.calcular_media(t_2, a, b, c)
-        return mu_t1 - mu_t2
-
-    def calcular_h(self, a, b, c, t_1, t_2):
-        psi_t1 = self.calcular_psi(b, c, t_1)
-        mu_t1 = self.calcular_media(t_1, a, b, c)
-        psi_t2 = self.calcular_psi(b, c, t_2)
-        mu_t2 = self.calcular_media(t_2, a, b, c)
-        return psi_t1 * (mu_t1**2) - psi_t2 * (mu_t2**2)
-
-    def calcular_j(self, a, b, c, t_1, t_2):
-        phi_t1 = self.calcular_phi(b, c, t_1)
-        mu_t1 = self.calcular_media(t_1, a, b, c)
-        phi_t2 = self.calcular_phi(b, c, t_2)
-        mu_t2 = self.calcular_media(t_2, a, b, c)
-        return -phi_t1 * (mu_t1**2) + phi_t2 * (mu_t2**2)
 
 
 
