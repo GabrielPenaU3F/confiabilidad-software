@@ -60,13 +60,34 @@ class EstimadorLogistico(EstimadorModelo):
                 self.ecuacion_mv_3_fallas_acumuladas_al_dia(a, b, c, dias, fallas_acumuladas_al_dia))
 
     def ecuacion_mv_1_fallas_acumuladas_al_dia(self, a, b, c, dias, fallas_acumuladas_al_dia):
-        pass
+        suma_yi = np.sum(fallas_acumuladas_al_dia)
+        suma_segundo_termino = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            phi_ti = self.calcular_phi(b, c, t_i)
+            suma_segundo_termino += (1 / phi_ti)
+        return (1/a) * suma_yi - suma_segundo_termino
 
     def ecuacion_mv_2_fallas_acumuladas_al_dia(self, a, b, c, dias, fallas_acumuladas_al_dia):
-        pass
+        sumatoria = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            y_i = fallas_acumuladas_al_dia[i]
+            primer_factor = t_i - c
+            mu_ti = self.calcular_media(t_i, a, b, c)
+            tercer_factor = y_i + mu_ti
+            sumatoria += primer_factor * mu_ti * tercer_factor
+        return sumatoria
 
     def ecuacion_mv_3_fallas_acumuladas_al_dia(self, a, b, c, dias, fallas_acumuladas_al_dia):
-        pass
+        sumatoria = 0
+        for i in range(len(dias)):
+            t_i = dias[i]
+            y_i = fallas_acumuladas_al_dia[i]
+            mu_ti = self.calcular_media(t_i, a, b, c)
+            segundo_factor = -y_i + mu_ti
+            sumatoria += mu_ti * segundo_factor
+        return sumatoria
 
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
         a, b, c = vec
@@ -75,38 +96,53 @@ class EstimadorLogistico(EstimadorModelo):
                 self.ecuacion_mv_3_fallas_por_dia(a, b, c, dias, fallas_por_dia))
 
     def ecuacion_mv_1_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma_yi = np.sum(fallas_acumuladas_al_dia)
-        suma_segundo_termino = 0
-        for i in range(len(dias)):
-            t_i = dias[i]
-            suma_segundo_termino += (1 / self.calcular_phi(b, c, t_i))
-
-        return suma_yi/a - suma_segundo_termino
+        deltas_yi = fallas_por_dia
+        suma_delta_yi = np.sum(deltas_yi)
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        return suma_delta_yi - mu_tn
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma = 0
+        deltas_yi = fallas_por_dia
+        sumatoria = 0
         for i in range(len(dias)):
             t_i = dias[i]
-            y_i = fallas_acumuladas_al_dia[i]
-            phi_i = self.calcular_phi(b, c, t_i)
-            primer_factor = (t_i - c)/(1 + phi_i)
-            corchete = y_i + (a / (1 + phi_i))
-            suma += (primer_factor * corchete)
-        return suma
+            if i == 0:
+                t_i_menos_1 = 0
+            else:
+                t_i_menos_1 = dias[i - 1]
+            mu_ti = self.calcular_media(t_i, a, b, c)
+            psi_ti = self.calcular_psi(b, c, t_i)
+            mu_ti_menos_1 = self.calcular_media(t_i_menos_1, a, b, c)
+            psi_ti_menos_1 = self.calcular_psi(b, c, t_i_menos_1)
+            numerador = (mu_ti**2) * psi_ti - (mu_ti_menos_1**2) * psi_ti_menos_1
+            denominador = mu_ti - mu_ti_menos_1
+            sumatoria += numerador/denominador
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        psi_tn = self.calcular_psi(b, c, t_n)
+        return sumatoria - (mu_tn**2) * psi_tn
 
     def ecuacion_mv_3_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
-        fallas_acumuladas_al_dia = self.calcular_fallas_acumuladas(fallas_por_dia)
-        suma = 0
+        deltas_yi = fallas_por_dia
+        sumatoria = 0
         for i in range(len(dias)):
             t_i = dias[i]
-            y_i = fallas_acumuladas_al_dia[i]
-            phi_i = self.calcular_phi(b, c, t_i)
-            primer_factor = b / (1 + phi_i)
-            corchete = -y_i + (a / (1 + phi_i))
-            suma += (primer_factor * corchete)
-        return suma
+            if i == 0:
+                t_i_menos_1 = 0
+            else:
+                t_i_menos_1 = dias[i - 1]
+            mu_ti = self.calcular_media(t_i, a, b, c)
+            phi_ti = self.calcular_phi(b, c, t_i)
+            mu_ti_menos_1 = self.calcular_media(t_i_menos_1, a, b, c)
+            phi_ti_menos_1 = self.calcular_phi(b, c, t_i_menos_1)
+            numerador = -(mu_ti**2) * phi_ti + (mu_ti_menos_1**2) * phi_ti_menos_1
+            denominador = mu_ti - mu_ti_menos_1
+            sumatoria += numerador/denominador
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        phi_tn = self.calcular_phi(b, c, t_n)
+        return sumatoria - (mu_tn**2) * phi_tn
 
     def calcular_phi(self, b, c, t):
         return np.exp(-b * (t - c))
