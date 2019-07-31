@@ -12,10 +12,13 @@ fallas_acumuladas = datos_fpd.get_fallas_acumuladas()
 log = EstimadorLogistico()
 
 aprox_inicial = (100, 1, 0)
-params_log_lsq = log.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
-
-params_log_mv = log.estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_log_lsq,
-                                                                               metodo_resolucion='krylov')
+params_log_mc = log.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
+params_log_mv_fallas_acumuladas_al_dia = log.\
+    estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(dias, fallas_acumuladas, params_log_mc,
+                                                                         metodo_resolucion='krylov')
+params_log_mv_fallas_por_dia = log.\
+    estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_log_mc,
+                                                               metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
 
@@ -31,23 +34,51 @@ ax.grid(color='black', linestyle='--', linewidth=0.5)
 
 ax.plot(dias, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--',
         label='Datos reales (Mixed Waterfall-Agile)')
-ax.plot(dias, log.calcular_numero_medio_de_fallas(dias, params_log_lsq[0], params_log_lsq[1], params_log_lsq[2]),
-        linewidth=1, color='#ca3e47', linestyle='-', label='LSQ: a=%.5f, b=%.5f, c=%.5f' % tuple(params_log_lsq))
-if params_log_mv is not None:
-    ax.plot(dias, log.calcular_numero_medio_de_fallas(dias, params_log_mv[0], params_log_mv[1], params_log_mv[2]),
-            linewidth=1, color='#58b368', linestyle='-', label='MV: a=%.5f, b=%.5f, c=%.5f' % tuple(params_log_mv))
+ax.plot(dias, log.calcular_numero_medio_de_fallas(dias, params_log_mc[0], params_log_mc[1], params_log_mc[2]),
+        linewidth=1, color='#ca3e47', linestyle='-', label='Mínimos cuadrados')
+ax.plot(dias, log.calcular_numero_medio_de_fallas(dias, params_log_mv_fallas_acumuladas_al_dia[0],
+                                                  params_log_mv_fallas_acumuladas_al_dia[1],
+                                                  params_log_mv_fallas_acumuladas_al_dia[2]),
+        linewidth=1, color='#1b7fbd', linestyle='-', label='Máxima verosimilitud (Acum)')
+ax.plot(dias, log.calcular_numero_medio_de_fallas(dias, params_log_mv_fallas_por_dia[0],
+                                                  params_log_mv_fallas_por_dia[1],
+                                                  params_log_mv_fallas_por_dia[2]),
+        linewidth=1, color='#58b368', linestyle='-', label='Máxima verosimilitud (FPD)')
 
 ax.legend()
 
 ax.plot()
 
-prr_lsq = log.calcular_prr(dias, fallas_acumuladas, params_log_lsq[0], params_log_lsq[1], params_log_lsq[2])
-prr_mv = log.calcular_prr(dias, fallas_acumuladas, params_log_mv[0], params_log_mv[1], params_log_mv[2])
-print(Fore.GREEN + ('PRR - LSQ: ' + prr_lsq.__str__()))
-print(Fore.GREEN + ('PRR - MV: ' + prr_mv.__str__()))
+print(Fore.BLUE + ('a = ' + params_log_mc[0].__str__() + ' (Mínimos cuadrados)'))
+print(Fore.BLUE + ('b = ' + params_log_mc[1].__str__() + ' (Mínimos cuadrados)'))
+print(Fore.BLUE + ('c = ' + params_log_mc[2].__str__() + ' (Mínimos cuadrados)'))
+print(Fore.BLUE + ('a = ' + params_log_mv_fallas_acumuladas_al_dia[0].__str__() +
+                   '(Máxima verosimilitud, fallas acumuladas)'))
+print(Fore.BLUE + ('b = ' + params_log_mv_fallas_acumuladas_al_dia[1].__str__() +
+                   '(Máxima verosimilitud, fallas acumuladas)'))
+print(Fore.BLUE + ('c = ' + params_log_mv_fallas_acumuladas_al_dia[2].__str__() +
+                   '(Máxima verosimilitud, fallas acumuladas)'))
+print(Fore.BLUE + ('a = ' + params_log_mv_fallas_por_dia[0].__str__() + ' (Máxima verosimilitud, fallas por día)'))
+print(Fore.BLUE + ('b = ' + params_log_mv_fallas_por_dia[1].__str__() + ' (Máxima verosimilitud, fallas por día)'))
+print(Fore.BLUE + ('c = ' + params_log_mv_fallas_por_dia[2].__str__() + ' (Máxima verosimilitud, fallas por día)'))
 
-# Como el ajuste anda mal, tampoco puede calcular el AIC
-# aic_mv = log.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_log_mv[0], params_log_mv[1], params_log_mv[2])
-# print(Fore.GREEN + ('AIC (FPD): ' + aic_mv.__str__()))
+prr_mc = log.calcular_prr(dias, fallas_acumuladas, params_log_mc[0], params_log_mc[1], params_log_mc[2])
+prr_mv_facum = log.calcular_prr(dias, fallas_acumuladas, params_log_mv_fallas_acumuladas_al_dia[0],
+                                params_log_mv_fallas_acumuladas_al_dia[1],
+                                params_log_mv_fallas_acumuladas_al_dia[2])
+prr_mv_fpd = log.calcular_prr(dias, fallas_acumuladas, params_log_mv_fallas_por_dia[0], params_log_mv_fallas_por_dia[1],
+                              params_log_mv_fallas_por_dia[2])
+print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_mc.__str__()))
+print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas acumuladas): ' + prr_mv_facum.__str__()))
+print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas por día): ' + prr_mv_fpd.__str__()))
+
+aic_mv_facum = log.calcular_aic_fallas_acumuladas_al_dia(dias, fallas_acumuladas,
+                                                         params_log_mv_fallas_acumuladas_al_dia[0],
+                                                         params_log_mv_fallas_acumuladas_al_dia[1],
+                                                         params_log_mv_fallas_acumuladas_al_dia[2])
+aic_mv_fpd = log.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_log_mv_fallas_por_dia[0],
+                                             params_log_mv_fallas_por_dia[1],  params_log_mv_fallas_por_dia[2])
+print(Fore.GREEN + ('AIC (Fallas acumuladas): ' + aic_mv_facum.__str__()))
+print(Fore.GREEN + ('AIC (Fallas por día): ' + aic_mv_fpd.__str__()))
 
 plt.show()

@@ -13,12 +13,12 @@ ds = EstimadorDelayedSShaped()
 
 aprox_inicial = (1, 0.5)
 params_ds_mc = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(dias, fallas_acumuladas, aprox_inicial)
-params_ds_mv_fallas_por_dia = ds.\
-    estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_ds_mc,
-                                                               metodo_resolucion='krylov')
 params_ds_mv_fallas_acumuladas_al_dia = ds.\
     estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(dias, fallas_acumuladas, params_ds_mc,
                                                                          metodo_resolucion='krylov')
+params_ds_mv_fallas_por_dia = ds.\
+    estimar_parametros_por_maxima_verosimilitud_fallas_por_dia(dias, fallas_por_dia, params_ds_mc,
+                                                               metodo_resolucion='krylov')
 
 fig, ax = plt.subplots()
 
@@ -63,8 +63,9 @@ print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_mc.__str__()))
 print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas acumuladas): ' + prr_mv_facum.__str__()))
 print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas por día): ' + prr_mv_fpd.__str__()))
 
-aic_mv_facum = ds.calcular_aic_fallas_acumuladas_al_dia(dias, fallas_acumuladas, params_ds_mv_fallas_por_dia[0],
-                                                        params_ds_mv_fallas_por_dia[1])
+aic_mv_facum = ds.calcular_aic_fallas_acumuladas_al_dia(dias, fallas_acumuladas,
+                                                        params_ds_mv_fallas_acumuladas_al_dia[0],
+                                                        params_ds_mv_fallas_acumuladas_al_dia[1])
 aic_mv_fpd = ds.calcular_aic_fallas_por_dia(dias, fallas_por_dia, params_ds_mv_fallas_por_dia[0],
                                             params_ds_mv_fallas_por_dia[1])
 print(Fore.GREEN + ('AIC (Fallas acumuladas): ' + aic_mv_facum.__str__()))
