@@ -81,13 +81,13 @@ class EstimadorLogistico(EstimadorModelo):
             mu_ti = self.calcular_media(t_i, a, b, c)
             sumatoria += (y_i - mu_ti)
 
-        n_fallas = fallas_acumuladas_al_dia[-1]
+        n = len(dias)
         t_0 = 0
         mu_t0 = self.calcular_media(t_0, a, b, c)
-        return sumatoria + n_fallas * mu_t0
+        return sumatoria + n * mu_t0
 
     def ecuacion_mv_2_fallas_acumuladas_al_dia(self, a, b, c, dias, fallas_acumuladas_al_dia):
-        n_fallas = fallas_acumuladas_al_dia[-1]
+        n = len(dias)
         sumatoria = 0
         t_0 = 0
         mu_t0 = self.calcular_media(t_0, a, b, c)
@@ -100,10 +100,10 @@ class EstimadorLogistico(EstimadorModelo):
             numerador_primer_termino = psi_ti * (mu_ti**2) - psi_t0 * (mu_t0**2)
             denominador_primer_termino = psi_ti - psi_t0
             sumatoria += (y_i * numerador_primer_termino/denominador_primer_termino - psi_ti * (mu_ti**2))
-        return sumatoria + n_fallas * psi_t0 * (mu_t0**2)
+        return sumatoria + n * psi_t0 * (mu_t0**2)
 
     def ecuacion_mv_3_fallas_acumuladas_al_dia(self, a, b, c, dias, fallas_acumuladas_al_dia):
-        n_fallas = fallas_acumuladas_al_dia[-1]
+        n = len(dias)
         sumatoria = 0
         t_0 = 0
         mu_t0 = self.calcular_media(t_0, a, b, c)
@@ -116,7 +116,7 @@ class EstimadorLogistico(EstimadorModelo):
             numerador_primer_termino = phi_ti * (mu_ti**2) - phi_t0 * (mu_t0**2)
             denominador_primer_termino = phi_ti - phi_t0
             sumatoria += (y_i * numerador_primer_termino/denominador_primer_termino - phi_ti * (mu_ti**2))
-        return sumatoria + n_fallas * phi_t0 * (mu_t0**2)
+        return sumatoria + n * phi_t0 * (mu_t0**2)
 
     def ecuaciones_mv_fallas_por_dia(self, dias, fallas_por_dia, vec):
         a, b, c = vec
