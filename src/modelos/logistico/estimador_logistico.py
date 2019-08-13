@@ -127,17 +127,25 @@ class EstimadorLogistico(EstimadorModelo):
     def ecuacion_mv_1_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
         deltas_yi = fallas_por_dia
         suma_delta_yi = np.sum(deltas_yi)
+        t_0 = 0
+        mu_t0 = self.calcular_media(t_0, a, b, c)
         t_n = dias[-1]
         mu_tn = self.calcular_media(t_n, a, b, c)
-        return suma_delta_yi - mu_tn
+        return suma_delta_yi - (mu_tn - mu_t0)
 
     def ecuacion_mv_2_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
         deltas_yi = fallas_por_dia
+        t_0 = 0
+        mu_t0 = self.calcular_media(t_0, a, b, c)
+        psi_t0 = self.calcular_psi(b, c, t_0)
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        psi_tn = self.calcular_psi(b, c, t_n)
         sumatoria = 0
         for i in range(len(dias)):
             t_i = dias[i]
             if i == 0:
-                t_i_menos_1 = 0
+                t_i_menos_1 = t_0
             else:
                 t_i_menos_1 = dias[i - 1]
             delta_yi = deltas_yi[i]
@@ -148,18 +156,21 @@ class EstimadorLogistico(EstimadorModelo):
             numerador = (mu_ti**2) * psi_ti - (mu_ti_menos_1**2) * psi_ti_menos_1
             denominador = mu_ti - mu_ti_menos_1
             sumatoria += delta_yi * numerador / denominador
-        t_n = dias[-1]
-        mu_tn = self.calcular_media(t_n, a, b, c)
-        psi_tn = self.calcular_psi(b, c, t_n)
-        return sumatoria - (mu_tn**2) * psi_tn
+        return sumatoria - ((mu_tn**2) * psi_tn - (mu_t0**2) * psi_t0)
 
     def ecuacion_mv_3_fallas_por_dia(self, a, b, c, dias, fallas_por_dia):
         deltas_yi = fallas_por_dia
+        t_0 = 0
+        mu_t0 = self.calcular_media(t_0, a, b, c)
+        phi_t0 = self.calcular_phi(b, c, t_0)
+        t_n = dias[-1]
+        mu_tn = self.calcular_media(t_n, a, b, c)
+        phi_tn = self.calcular_phi(b, c, t_n)
         sumatoria = 0
         for i in range(len(dias)):
             t_i = dias[i]
             if i == 0:
-                t_i_menos_1 = 0
+                t_i_menos_1 = t_0
             else:
                 t_i_menos_1 = dias[i - 1]
             delta_yi = deltas_yi[i]
@@ -170,10 +181,7 @@ class EstimadorLogistico(EstimadorModelo):
             numerador = -(mu_ti**2) * phi_ti + (mu_ti_menos_1**2) * phi_ti_menos_1
             denominador = mu_ti - mu_ti_menos_1
             sumatoria += delta_yi * numerador / denominador
-        t_n = dias[-1]
-        mu_tn = self.calcular_media(t_n, a, b, c)
-        phi_tn = self.calcular_phi(b, c, t_n)
-        return sumatoria + (mu_tn**2) * phi_tn
+        return sumatoria - ((mu_tn**2) * phi_tn - (mu_t0**2) * phi_t0)
 
     def calcular_phi(self, b, c, t):
         return np.exp(-b * (t - c))
