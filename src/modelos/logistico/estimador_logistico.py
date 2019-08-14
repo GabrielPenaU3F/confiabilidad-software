@@ -65,7 +65,7 @@ class EstimadorLogistico(EstimadorModelo):
         phi_tn = self.calcular_phi(b, c, t_n)
         quinto_termino = (mu_tn**2) * phi_tn - (mu_t0**2) * phi_t0
 
-        return n_fallas - (2/a) * suma_segundo_termino - (1/a) * quinto_termino
+        return n_fallas * a - 2 * suma_segundo_termino - quinto_termino
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b, c = vec
