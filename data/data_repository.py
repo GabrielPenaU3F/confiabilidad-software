@@ -1,9 +1,9 @@
-from datos.datos import AgileN1Data, NTDSData, MixedWaterfallAgileData
+from data.data import AgileN1Data, NTDSData, MixedWaterfallAgileData
 
 
 class DataRepository:
 
-    datos = {
+    data = {
       'ntds': NTDSData(),
       'agile-n1': AgileN1Data(),
       'mixed-waterfall-agile': MixedWaterfallAgileData()
@@ -11,4 +11,4 @@ class DataRepository:
 
     @classmethod
     def provide_observed_data_from_project(cls, project_name):
-        return cls.datos.get(project_name)
+        return cls.data.get(project_name)

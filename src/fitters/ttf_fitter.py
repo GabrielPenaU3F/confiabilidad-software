@@ -1,4 +1,4 @@
-from datos.repositorio_datos import DataRepository
+from data.data_repository import DataRepository
 from src.fitters.fitter import Fitter
 from src.plotter.plotter import Plotter
 

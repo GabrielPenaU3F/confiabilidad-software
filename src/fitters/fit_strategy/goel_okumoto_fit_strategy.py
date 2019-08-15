@@ -1,4 +1,4 @@
-from datos.repositorio_datos import DataRepository
+from data.data_repository import DataRepository
 from src.exceptions.exceptions import NotAdmittedFormatException
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
 from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator

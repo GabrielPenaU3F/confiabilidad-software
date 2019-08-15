@@ -1,4 +1,4 @@
-from datos.repositorio_datos import DataRepository
+from data.data_repository import DataRepository
 from src.exceptions.exceptions import NotAdmittedFormatException
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
 from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator

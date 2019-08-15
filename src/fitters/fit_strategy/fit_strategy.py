@@ -18,5 +18,5 @@ class FitStrategy(ABC):
         pass
 
     def validate_format(self, data):
-        if not data.get_formato() == 'ttf':
+        if not data.get_format() == 'ttf':
             raise NotAdmittedFormatException('The chosen project does not admit the specified format')

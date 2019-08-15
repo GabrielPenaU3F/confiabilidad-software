@@ -1,13 +1,13 @@
 from matplotlib import pyplot as plt
 
-from datos.repositorio_datos import DataRepository
+from data.data_repository import DataRepository
 from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 datos_fpd = DataRepository.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()
 fallas_por_dia = datos_fpd.get_fallas_por_dia()
-fallas_acumuladas = datos_fpd.calcular_fallas_acumuladas()
+fallas_acumuladas = datos_fpd.calculate_cumulative_failures()
 
 # Se estima con el modelo DS entre los días 1 y 100 y con Goel-Okumoto a partir del 101.
 
