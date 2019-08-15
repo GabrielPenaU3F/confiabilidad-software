@@ -1,33 +1,32 @@
-from datos.repositorio_datos import RepositorioDatos
+from datos.repositorio_datos import DataRepository
+from src.exceptions.exceptions import NotAdmittedFormatException
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
-from src.modelos.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
+from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 
 
 class DSFitStrategy(FitStrategy):
 
-    def fit_ttf(self, nombre_proyecto, datos):
-        datos = RepositorioDatos.proveer_datos_observados_proyecto(nombre_proyecto)
-        self.validar_formato(datos)
-        ttf = datos.get_datos()
-        fallas_acumuladas = datos.get_fallas_acumuladas()
-        ttf_sin_cero = ttf[1:]
+    def fit_ttf(self, project_name, data):
+        data = DataRepository.provide_observed_data_from_project(project_name)
+        self.validate_format(data)
+        ttf = data.get_data()
+        cumulative_failures = data.get_cumulative_failures()
+        ttf_without_zero = ttf[1:]
 
-        ds = EstimadorDelayedSShaped()
-        aprox_inicial = (1, 0.5)
-        params_ds_mc = ds.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
+        ds = DelayedSShapedEstimator()
+        initial_approx = (1, 0.5)
+        ds_lsq_params = ds.fit_mean_failure_number_by_least_squares(ttf, cumulative_failures, initial_approx)
 
-        params_ds_mv = ds.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf_sin_cero,
-                                                                                            params_ds_mc,
-                                                                                            metodo_resolucion='krylov')
+        ds_ml_params = ds.estimate_ttf_parameters_by_maximum_likelihood(ttf_without_zero,
+                                                                        ds_lsq_params,
+                                                                        solving_method='krylov')
 
-        return params_ds_mc, params_ds_mv
+        return ds_lsq_params, ds_ml_params
 
-    def fit_agrupados_acum(self, nombre_proyecto, datos):
+    def fit_grouped_cumulative(self, project_name, data):
         pass
 
-    def fit_agrupados_fpd(self, nombre_proyecto, datos):
+    def fit_grouped_fpd(self, project_name, data):
         pass
 
-    def validar_formato(self, datos):
-        pass
 

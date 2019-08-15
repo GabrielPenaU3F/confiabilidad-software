@@ -18,17 +18,17 @@ class Datos(ABC):
     def calcular_fallas_acumuladas(self, datos):
         pass
 
-    def get_fallas_acumuladas(self):
+    def get_cumulative_failures(self):
         return self.fallas_acumuladas
 
     def get_formato(self):
         return self.formato
 
-    def get_datos(self):
+    def get_data(self):
         return self.datos
 
 
-class DatosNTDS(Datos):
+class NTDSData(Datos):
 
     def __init__(self):
         formato = 'ttf'
@@ -40,7 +40,7 @@ class DatosNTDS(Datos):
         return np.arange(0, len(datos), 1)
 
 
-class DatosAgileN1(Datos):
+class AgileN1Data(Datos):
 
     def __init__(self):
         formato = 'ttf'
@@ -53,7 +53,7 @@ class DatosAgileN1(Datos):
         return np.arange(0, len(datos), 1)
 
 
-class DatosMixedWaterfallAgile(Datos):
+class MixedWaterfallAgileData(Datos):
 
     def __init__(self):
         formato = 'agrupados'

@@ -1,34 +1,31 @@
-from datos.repositorio_datos import RepositorioDatos
-from src.excepciones.excepciones import FormatoNoAdmitidoException
+from datos.repositorio_datos import DataRepository
+from src.exceptions.exceptions import NotAdmittedFormatException
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
-from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
+from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 
 class GoelOkumotoFitStrategy(FitStrategy):
 
-    def fit_ttf(self, nombre_proyecto, datos):
-        datos = RepositorioDatos.proveer_datos_observados_proyecto(nombre_proyecto)
-        self.validar_formato(datos)
-        ttf = datos.get_datos()
-        fallas_acumuladas = datos.get_fallas_acumuladas()
-        ttf_sin_cero = ttf[1:]
+    def fit_ttf(self, project_name, data):
+        data = DataRepository.provide_observed_data_from_project(project_name)
+        self.validate_format(data)
+        ttf = data.get_data()
+        cumulative_failures = data.get_cumulative_failures()
+        ttf_without_zero = ttf[1:]
 
-        go = EstimadorGoelOkumoto()
-        aprox_inicial = (1, 0.5)
-        params_go_mc = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
+        go = GoelOkumotoEstimator()
+        initial_approx = (1, 0.5)
+        go_lsq_params = go.fit_mean_failure_number_by_least_squares(ttf, cumulative_failures, initial_approx)
 
-        params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf_sin_cero,
-                                                                                            params_go_mc,
-                                                                                            metodo_resolucion='krylov')
+        go_ml_params = go.estimate_ttf_parameters_by_maximum_likelihood(ttf_without_zero,
+                                                                        go_lsq_params,
+                                                                        solving_method='krylov')
 
-        return params_go_mc, params_go_mv
+        return go_lsq_params, go_ml_params
 
-    def fit_agrupados_acum(self, nombre_proyecto, datos):
+    def fit_grouped_cumulative(self, project_name, data):
         pass
 
-    def fit_agrupados_fpd(self, nombre_proyecto, datos):
+    def fit_grouped_fpd(self, project_name, data):
         pass
 
-    def validar_formato(self, datos):
-        if not datos.get_formato() == 'ttf':
-            raise FormatoNoAdmitidoException('El proyecto seleccionado no admite el formato especificado')

@@ -1,14 +1,14 @@
-from datos.datos import DatosAgileN1, DatosNTDS, DatosMixedWaterfallAgile
+from datos.datos import AgileN1Data, NTDSData, MixedWaterfallAgileData
 
 
-class RepositorioDatos:
+class DataRepository:
 
     datos = {
-      'ntds': DatosNTDS(),
-      'agile-n1': DatosAgileN1(),
-      'mixed-waterfall-agile': DatosMixedWaterfallAgile()
+      'ntds': NTDSData(),
+      'agile-n1': AgileN1Data(),
+      'mixed-waterfall-agile': MixedWaterfallAgileData()
     }
 
     @classmethod
-    def proveer_datos_observados_proyecto(cls, nombre_proyecto):
-        return cls.datos.get(nombre_proyecto)
+    def provide_observed_data_from_project(cls, project_name):
+        return cls.datos.get(project_name)

@@ -1,21 +1,23 @@
-from datos.repositorio_datos import RepositorioDatos
+from datos.repositorio_datos import DataRepository
 from src.fitters.fitter import Fitter
-from src.graficador.graficador import Graficador
+from src.plotter.plotter import Plotter
 
 
 class TTFFitter(Fitter):
 
     """
-    Modelos aceptados
+    Accepted models
         Goel-Okumoto: 'goel-okumoto'
         Delayed S-Shaped: 'delayed-s-shaped'
-        Logístico: 'logistico'
+        Logistic: 'logistic'
     """
-    def fit(self, modelo, nombre_proyecto):
-        datos = RepositorioDatos.proveer_datos_observados_proyecto(nombre_proyecto)
-        fit_strategy = self.get_estrategia_modelo(modelo)
-        params_mc, params_mv = fit_strategy.fit_ttf(nombre_proyecto, datos)
+    def fit(self, model, project_name):
+        data = DataRepository.provide_observed_data_from_project(project_name)
+        fit_strategy = self.get_model_strategy(model)
+        lsq_params, ml_params = fit_strategy.fit_ttf(project_name, data)
 
-        plotter = Graficador()
-        plotter.graficar(nombre_proyecto, modelo, params_mc, params_mv, datos)
+        plotter = Plotter()
+        plotter.plot(project_name, model, lsq_params, ml_params, data)
+
+
 

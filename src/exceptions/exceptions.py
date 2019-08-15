@@ -1,4 +1,4 @@
-class FormatoNoAdmitidoException(Exception):
+class NotAdmittedFormatException(Exception):
 
     def __init__(self, arg):
         self.strerror = arg

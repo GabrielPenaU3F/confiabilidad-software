@@ -5,12 +5,12 @@ from matplotlib import pyplot as plt
 class PlotStrategy(ABC):
 
     @abstractmethod
-    def graficar(self, nombre_proyecto, params_mc, params_mv, datos):
+    def plot(self, project_name, lsq_params, ml_params, data):
         pass
 
-    def formatear_grafica(self, axes):
-        axes.set_xlabel('Tiempo (días)')
-        axes.set_ylabel('Número de fallas')
+    def do_plot_format(self, axes):
+        axes.set_xlabel('Time (days)')
+        axes.set_ylabel('Number of failures')
         axes.set_xlim(left=0, auto=True)
         axes.set_ylim(bottom=-2, top=2, auto=True)
         axes.patch.set_facecolor("#ffffff")
