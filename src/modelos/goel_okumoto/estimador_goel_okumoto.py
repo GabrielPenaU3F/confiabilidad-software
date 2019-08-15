@@ -13,7 +13,7 @@ class EstimadorGoelOkumoto(EstimadorModelo):
         a, b = parametros_modelo
         return a * b * self.calcular_exp_menos_bt(b, t)
 
-    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
         a, b = vec
         return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
                 self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))

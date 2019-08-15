@@ -18,7 +18,6 @@ class GoelOkumotoFitStrategy(FitStrategy):
         params_go_mc = go.ajustar_numero_medio_de_fallas_por_minimos_cuadrados(ttf, fallas_acumuladas, aprox_inicial)
 
         params_go_mv = go.estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(ttf_sin_cero,
-                                                                                            fallas_acumuladas,
                                                                                             params_go_mc,
                                                                                             metodo_resolucion='krylov')
 

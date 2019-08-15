@@ -13,19 +13,21 @@ class EstimadorDelayedSShaped(EstimadorModelo):
         a, b = parametros_modelo
         return a * (b**2) * t * self.calcular_exp_menos_bt(b, t)
 
-    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos, n_fallas),
-                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos, n_fallas))
+        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
+                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))
 
-    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
+    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n = len(tiempos)
         t_n = tiempos[-1]
-        return n_fallas/a + (1 + b * t_n) * self.calcular_exp_menos_bt(b, t_n) - 1
+        return n/a + (1 + b * t_n) * self.calcular_exp_menos_bt(b, t_n) - 1
 
-    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
+    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n = len(tiempos)
         suma_t_k = np.sum(tiempos)
         t_n = tiempos[-1]
-        return (2 * n_fallas / b) - suma_t_k - a * b * (t_n**2) * self.calcular_exp_menos_bt(b, t_n)
+        return (2 * n/b) - suma_t_k - a * b * (t_n**2) * self.calcular_exp_menos_bt(b, t_n)
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b = vec

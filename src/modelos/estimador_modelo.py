@@ -27,17 +27,17 @@ class EstimadorModelo(ABC):
     # Los métodos 'hybr', 'lm' y 'krylov' son los únicos tres que funcionan para éste problema.
     # Para más detalles, consultar la documentación:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, n_fallas, aprox_inicial,
+    def estimar_parametros_por_maxima_verosimilitud_tiempo_hasta_la_falla(self, tiempos, aprox_inicial,
                                                                           metodo_resolucion):
         try:
-            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos, n_fallas), aprox_inicial,
+            return opt.root(partial(self.ecuaciones_mv_tiempo_hasta_la_falla, tiempos), aprox_inicial,
                             method=metodo_resolucion).x
         except NoConvergence:
             print(Fore.RED + 'El sistema es incompatible')
             return None
 
     @abstractmethod
-    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
+    def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, vec):
         pass
 
     def estimar_parametros_por_maxima_verosimilitud_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia,
