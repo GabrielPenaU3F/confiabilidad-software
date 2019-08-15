@@ -5,8 +5,8 @@ class RepositorioDatos:
 
     datos = {
       'ntds': DatosNTDS(),
-      'agile_nro_1': DatosAgileN1(),
-      'mixed_waterfall_agile': DatosMixedWaterfallAgile()
+      'agile-n1': DatosAgileN1(),
+      'mixed-waterfall-agile': DatosMixedWaterfallAgile()
     }
 
     @classmethod
