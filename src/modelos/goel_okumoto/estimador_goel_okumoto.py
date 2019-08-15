@@ -15,17 +15,19 @@ class EstimadorGoelOkumoto(EstimadorModelo):
 
     def ecuaciones_mv_tiempo_hasta_la_falla(self, tiempos, n_fallas, vec):
         a, b = vec
-        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos, n_fallas),
-                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos, n_fallas))
+        return (self.ecuacion_mv_1_tiempo_hasta_la_falla(a, b, tiempos),
+                self.ecuacion_mv_2_tiempo_hasta_la_falla(a, b, tiempos))
 
-    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos, n_fallas):
+    def ecuacion_mv_1_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n = len(tiempos)
         t_n = tiempos[-1]
-        return self.calcular_media(t_n, a, b) - n_fallas
+        return self.calcular_media(t_n, a, b) - n
 
-    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos, n_datos):
+    def ecuacion_mv_2_tiempo_hasta_la_falla(self, a, b, tiempos):
+        n = len(tiempos)
         t_n = tiempos[-1]
         suma_tk = np.sum(tiempos)
-        return suma_tk + a * t_n * self.calcular_exp_menos_bt(b, t_n) - (n_datos / b)
+        return suma_tk + a * t_n * self.calcular_exp_menos_bt(b, t_n) - (n/b)
 
     def ecuaciones_mv_fallas_acumuladas_al_dia(self, dias, fallas_acumuladas_al_dia, vec):
         a, b = vec

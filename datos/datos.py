@@ -12,7 +12,7 @@ class Datos(ABC):
     def __init__(self, formato, datos):
         self.formato = formato
         self.datos = datos
-        self.calcular_fallas_acumuladas(datos)
+        self.fallas_acumuladas = self.calcular_fallas_acumuladas(datos)
 
     @abstractmethod
     def calcular_fallas_acumuladas(self, datos):
