@@ -1,9 +1,4 @@
-from colorama import Fore
-from matplotlib import pyplot as plt
-
-from datos.repositorio_datos import RepositorioDatos
 from src.fitters.ttf_fitter import TTFFitter
-from src.modelos.delayed_s_shaped.estimador_delayed_s_shaped import EstimadorDelayedSShaped
 
 ttf_fitter = TTFFitter()
 ttf_fitter.fit('delayed-s-shaped', 'ntds')
