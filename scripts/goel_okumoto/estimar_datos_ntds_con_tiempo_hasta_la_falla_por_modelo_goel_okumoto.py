@@ -6,7 +6,7 @@ from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 
 datos_ttf = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 ttf = datos_ttf.get_tiempos_de_falla()
-fallas_acumuladas = datos_ttf.get_fallas_acumuladas()
+fallas_acumuladas = datos_ttf.calcular_fallas_acumuladas()
 n_fallas = fallas_acumuladas[-1]
 ttf_sin_cero = ttf[1:]
 

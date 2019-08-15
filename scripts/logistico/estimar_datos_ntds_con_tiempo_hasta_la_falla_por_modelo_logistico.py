@@ -6,7 +6,7 @@ from src.modelos.logistico.estimador_logistico import EstimadorLogistico
 
 datos = RepositorioDatos.proveer_datos_observados_proyecto_NTDS('ttf')
 ttf = datos.get_tiempos_de_falla()
-fallas_acumuladas = datos.get_fallas_acumuladas()
+fallas_acumuladas = datos.calcular_fallas_acumuladas()
 n_fallas = fallas_acumuladas[-1]
 ttf_sin_cero = ttf[1:]
 

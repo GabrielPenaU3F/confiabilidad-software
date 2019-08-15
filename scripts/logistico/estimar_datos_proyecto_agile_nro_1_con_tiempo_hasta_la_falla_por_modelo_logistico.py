@@ -9,7 +9,7 @@ inicio = 0
 #fin = 6
 fin = datos.get_cantidad_datos()
 ttf = datos.get_tiempos_de_falla()[inicio:fin]
-fallas_acumuladas = datos.get_fallas_acumuladas()[inicio:fin]
+fallas_acumuladas = datos.calcular_fallas_acumuladas()[inicio:fin]
 n_fallas = fallas_acumuladas[-1]
 ttf_sin_cero = ttf[1:]
 

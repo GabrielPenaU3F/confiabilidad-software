@@ -7,7 +7,7 @@ from src.modelos.goel_okumoto.estimador_goel_okumoto import EstimadorGoelOkumoto
 datos_fpd = RepositorioDatos.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()
 fallas_por_dia = datos_fpd.get_fallas_por_dia()
-fallas_acumuladas = datos_fpd.get_fallas_acumuladas()
+fallas_acumuladas = datos_fpd.calcular_fallas_acumuladas()
 
 go = EstimadorGoelOkumoto()
 
