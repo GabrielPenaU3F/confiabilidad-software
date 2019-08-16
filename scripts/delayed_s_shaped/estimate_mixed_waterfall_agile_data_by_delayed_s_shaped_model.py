@@ -32,19 +32,15 @@ ax.patch.set_linewidth('1')
 ax.set_facecolor("#ffffff")
 ax.grid(color='black', linestyle='--', linewidth=0.5)
 
-ax.plot(dias, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--',
-        label='Datos reales (Mixed Waterfall-Agile)')
-ax.plot(dias, ds.calculate_mean_failure_numbers(dias, params_ds_mc[0], params_ds_mc[1]),
-        linewidth=1, color='#ca3e47', linestyle='-', label='Mínimos cuadrados')
+ax.plot(dias, fallas_acumuladas, )
+ax.plot(dias, ds.calculate_mean_failure_numbers(dias, params_ds_mc[0], params_ds_mc[1]), )
 ax.plot(dias, ds.calculate_mean_failure_numbers(dias, params_ds_mv_fallas_acumuladas_al_dia[0],
-                                                params_ds_mv_fallas_acumuladas_al_dia[1]),
-        linewidth=1, color='#1b7fbd', linestyle='-', label='Máxima verosimilitud (Acum)')
-ax.plot(dias, ds.calculate_mean_failure_numbers(dias, params_ds_mv_fallas_por_dia[0], params_ds_mv_fallas_por_dia[1]),
-        linewidth=1, color='#58b368', linestyle='-', label='Máxima verosimilitud (FPD)')
+                                                params_ds_mv_fallas_acumuladas_al_dia[1]), )
+ax.plot(dias, ds.calculate_mean_failure_numbers(dias, params_ds_mv_fallas_por_dia[0], params_ds_mv_fallas_por_dia[1]), )
 
 ax.legend()
 
-ax.plot()
+ax.plot(,
 
 print(Fore.BLUE + ('a = ' + params_ds_mc[0].__str__() + ' (Mínimos cuadrados)'))
 print(Fore.BLUE + ('b = ' + params_ds_mc[1].__str__() + ' (Mínimos cuadrados)'))

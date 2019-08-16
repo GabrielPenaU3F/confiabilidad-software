@@ -60,28 +60,23 @@ ax.grid(color='black', linestyle='--', linewidth=0.5)
 
 
 # Datos reales
-ax.plot(dias, fallas_acumuladas, linewidth=1, color='#263859', linestyle='--',
-        label='Datos reales (Mixed Waterfall-Agile)')
+ax.plot(dias, fallas_acumuladas, )
 
 # Plot Etapa 1
-ax.plot(dias_etapa1, ds.calculate_mean_failure_numbers(dias_etapa1, params_ds_lsq_etapa_1[0], params_ds_lsq_etapa_1[1]),
-        linewidth=1, color='#ca3e47', linestyle='-', label='LSQ - Etapa 1: a=%.5f, b=%.5f'
-                                                           % tuple(params_ds_lsq_etapa_1))
+ax.plot(dias_etapa1,
+        ds.calculate_mean_failure_numbers(dias_etapa1, params_ds_lsq_etapa_1[0], params_ds_lsq_etapa_1[1]), )
 if params_ds_mv_etapa_1 is not None:
-    ax.plot(dias_etapa1, ds.calculate_mean_failure_numbers(dias_etapa1, params_ds_mv_etapa_1[0], params_ds_mv_etapa_1[1]),
-            linewidth=1, color='#58b368', linestyle='-', label='MV - Etapa 1: a=%.5f, b=%.5f'
-                                                               % tuple(params_ds_mv_etapa_1))
+    ax.plot(dias_etapa1,
+            ds.calculate_mean_failure_numbers(dias_etapa1, params_ds_mv_etapa_1[0], params_ds_mv_etapa_1[1]), )
 
 # Plot Etapa 2
-ax.plot(dias_etapa2, go.calculate_mean_failure_numbers(dias_etapa2, params_go_lsq_etapa_2[0], params_go_lsq_etapa_2[1]),
-        linewidth=1, color='#ca3e47', linestyle='-', label='LSQ - Etapa 2: a=%.5f, b=%.5f'
-                                                           % tuple(params_go_lsq_etapa_2))
+ax.plot(dias_etapa2,
+        go.calculate_mean_failure_numbers(dias_etapa2, params_go_lsq_etapa_2[0], params_go_lsq_etapa_2[1]), )
 if params_go_mv_etapa_2 is not None:
-    ax.plot(dias_etapa2, go.calculate_mean_failure_numbers(dias_etapa2, params_go_mv_etapa_2[0], params_go_mv_etapa_2[1]),
-            linewidth=1, color='#58b368', linestyle='-', label='MV - Etapa 2: a=%.5f, b=%.5f'
-                                                               % tuple(params_go_mv_etapa_2))
+    ax.plot(dias_etapa2,
+            go.calculate_mean_failure_numbers(dias_etapa2, params_go_mv_etapa_2[0], params_go_mv_etapa_2[1]), )
 
 ax.legend()
 
-ax.plot()
+ax.plot(,
 plt.show()

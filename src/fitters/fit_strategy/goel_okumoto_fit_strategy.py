@@ -6,7 +6,7 @@ from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 class GoelOkumotoFitStrategy(FitStrategy):
 
-    def fit_ttf(self, project_name, data):
+    def fit_ttf(self, project_name):
         data = DataRepository.provide_observed_data_from_project(project_name)
         self.validate_format(data)
         ttf = data.get_data()
@@ -23,9 +23,15 @@ class GoelOkumotoFitStrategy(FitStrategy):
 
         return go_lsq_params, go_ml_params
 
-    def fit_grouped_cumulative(self, project_name, data):
+    def fit_grouped_cumulative(self, project_name):
         pass
 
-    def fit_grouped_fpd(self, project_name, data):
+    def fit_grouped_fpd(self, project_name):
+        pass
+
+    def calculate_prr(self, project_name):
+        pass
+
+    def calculate_aic(self, project_name):
         pass
 

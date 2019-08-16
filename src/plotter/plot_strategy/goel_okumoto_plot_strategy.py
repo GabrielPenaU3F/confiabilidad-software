@@ -1,3 +1,4 @@
+from data.data_repository import DataRepository
 from src.plotter.plot_strategy.plot_strategy import PlotStrategy
 from matplotlib import pyplot as plt
 
@@ -6,7 +7,8 @@ from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 class GoelOkumotoPlotStrategy(PlotStrategy):
 
-    def plot(self, project_name, lsq_params, ml_params, data):
+    def plot(self, project_name, lsq_params, ml_params):
+        data = DataRepository.provide_observed_data_from_project(project_name)
         x_axis_data = data.get_data()
         cumulative_failures = data.get_cumulative_failures()
         go = GoelOkumotoEstimator()

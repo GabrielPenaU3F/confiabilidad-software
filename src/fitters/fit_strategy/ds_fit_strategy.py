@@ -6,7 +6,7 @@ from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShape
 
 class DSFitStrategy(FitStrategy):
 
-    def fit_ttf(self, project_name, data):
+    def fit_ttf(self, project_name):
         data = DataRepository.provide_observed_data_from_project(project_name)
         self.validate_format(data)
         ttf = data.get_data()
@@ -23,10 +23,14 @@ class DSFitStrategy(FitStrategy):
 
         return ds_lsq_params, ds_ml_params
 
-    def fit_grouped_cumulative(self, project_name, data):
+    def fit_grouped_cumulative(self, project_name):
         pass
 
-    def fit_grouped_fpd(self, project_name, data):
+    def fit_grouped_fpd(self, project_name):
         pass
 
+    def calculate_prr(self, project_name):
+        pass
 
+    def calculate_aic(self, project_name):
+        pass

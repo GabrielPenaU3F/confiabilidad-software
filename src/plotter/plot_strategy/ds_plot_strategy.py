@@ -1,3 +1,4 @@
+from data.data_repository import DataRepository
 from src.plotter.plot_strategy.plot_strategy import PlotStrategy
 from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 from matplotlib import pyplot as plt
@@ -5,7 +6,8 @@ from matplotlib import pyplot as plt
 
 class DSPlotStrategy(PlotStrategy):
 
-    def plot(self, project_name, lsq_params, ml_params, data):
+    def plot(self, project_name, lsq_params, ml_params):
+        data = DataRepository.provide_observed_data_from_project(project_name)
         x_axis_data = data.get_data()
         cumulative_failures = data.get_cumulative_failures()
         ds = DelayedSShapedEstimator()

@@ -5,7 +5,7 @@ from src.models.logistic.logistic_estimator import LogisticEstimator
 
 class LogisticFitStrategy(FitStrategy):
 
-    def fit_ttf(self, project_name, data):
+    def fit_ttf(self, project_name):
         data = DataRepository.provide_observed_data_from_project(project_name)
         self.validate_format(data)
         ttf = data.get_data()
@@ -22,9 +22,14 @@ class LogisticFitStrategy(FitStrategy):
 
         return log_lsq_params, log_ml_params
 
-    def fit_grouped_cumulative(self, project_name, data):
+    def fit_grouped_cumulative(self, project_name):
         pass
 
-    def fit_grouped_fpd(self, project_name, data):
+    def fit_grouped_fpd(self, project_name):
         pass
 
+    def calculate_prr(self, project_name):
+        pass
+
+    def calculate_aic(self, project_name):
+        pass
