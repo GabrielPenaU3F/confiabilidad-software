@@ -8,9 +8,9 @@ from src.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
 class Fitter(ABC):
 
     fit_strategy = {
-        'goel-okumoto': GoelOkumotoFitStrategy(),
-        'delayed-s-shaped': DSFitStrategy(),
-        'logistic': LogisticFitStrategy()
+        'goel-okumoto': GoelOkumotoFitStrategy,
+        'delayed-s-shaped': DSFitStrategy,
+        'logistic': LogisticFitStrategy
     }
 
     def get_model_strategy(self, model):

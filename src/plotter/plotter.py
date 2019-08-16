@@ -7,13 +7,13 @@ from src.plotter.plot_strategy.logistic_plot_strategy import LogisticPlotStrateg
 class Plotter:
 
     plot_strategy = {
-        'goel-okumoto': GoelOkumotoPlotStrategy(),
-        'delayed-s-shaped': DSPlotStrategy(),
-        'logistic': LogisticPlotStrategy()
+        'goel-okumoto': GoelOkumotoPlotStrategy,
+        'delayed-s-shaped': DSPlotStrategy,
+        'logistic': LogisticPlotStrategy
     }
 
     def plot(self, project_name, model, lsq_params, ml_params):
-        plot_strategy = self.get_model_strategy(model)
+        plot_strategy = self.get_model_strategy(model)(project_name)
         plot_strategy.plot(project_name, lsq_params, ml_params)
 
     def get_model_strategy(self, model):

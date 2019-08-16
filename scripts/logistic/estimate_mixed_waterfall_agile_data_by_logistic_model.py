@@ -58,12 +58,9 @@ print(Fore.BLUE + ('a = ' + params_log_mv_fallas_por_dia[0].__str__() + ' (Máxi
 print(Fore.BLUE + ('b = ' + params_log_mv_fallas_por_dia[1].__str__() + ' (Máxima verosimilitud, fallas por día)'))
 print(Fore.BLUE + ('c = ' + params_log_mv_fallas_por_dia[2].__str__() + ' (Máxima verosimilitud, fallas por día)'))
 
-prr_mc = log.calculate_prr(dias, fallas_acumuladas, params_log_mc[0], params_log_mc[1], params_log_mc[2])
-prr_mv_facum = log.calculate_prr(dias, fallas_acumuladas, params_log_mv_fallas_acumuladas_al_dia[0],
-                                 params_log_mv_fallas_acumuladas_al_dia[1],
-                                 params_log_mv_fallas_acumuladas_al_dia[2])
-prr_mv_fpd = log.calculate_prr(dias, fallas_acumuladas, params_log_mv_fallas_por_dia[0], params_log_mv_fallas_por_dia[1],
-                               params_log_mv_fallas_por_dia[2])
+prr_mc = log.calculate_prr()
+prr_mv_facum = log.calculate_prr()
+prr_mv_fpd = log.calculate_prr()
 print(Fore.GREEN + ('PRR - Mínimos cuadrados: ' + prr_mc.__str__()))
 print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas acumuladas): ' + prr_mv_facum.__str__()))
 print(Fore.GREEN + ('PRR - Máxima verosimilitud (Fallas por día): ' + prr_mv_fpd.__str__()))
