@@ -1,5 +1,5 @@
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
-from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
+from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 
 class GoelOkumotoFitStrategy(FitStrategy):

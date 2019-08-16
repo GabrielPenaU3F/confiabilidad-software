@@ -2,7 +2,7 @@ from colorama import Fore
 from matplotlib import pyplot as plt
 
 from data.data_repository import DataRepository
-from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
+from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 
 datos_fpd = DataRepository.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()

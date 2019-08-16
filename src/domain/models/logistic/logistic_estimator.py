@@ -1,7 +1,7 @@
 import numpy as np
 
 
-from src.models.model_estimator import ModelEstimator
+from src.domain.models.model_estimator import ModelEstimator
 
 
 class LogisticEstimator(ModelEstimator):

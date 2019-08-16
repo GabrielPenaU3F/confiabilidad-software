@@ -2,7 +2,7 @@ from data.data_repository import DataRepository
 from src.plotter.plot_strategy.plot_strategy import PlotStrategy
 from matplotlib import pyplot as plt
 
-from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
+from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 
 class GoelOkumotoPlotStrategy(PlotStrategy):

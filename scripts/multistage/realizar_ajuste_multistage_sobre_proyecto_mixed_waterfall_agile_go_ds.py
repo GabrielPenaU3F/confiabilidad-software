@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 
 from data.data_repository import DataRepository
-from src.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
-from src.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
+from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
+from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 datos_fpd = DataRepository.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()

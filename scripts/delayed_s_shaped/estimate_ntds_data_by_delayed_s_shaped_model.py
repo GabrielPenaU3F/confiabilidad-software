@@ -1,6 +1,5 @@
-from src.fitters.ttf_fitter import TTFFitter
+from src.fitters.fitter import TTFFitter
 
 ttf_fitter = TTFFitter()
-ttf_fitter.fit('delayed-s-shaped', 'ntds')
-
-
+fit = ttf_fitter.fit('delayed-s-shaped', 'ntds')
+fit.show_results()

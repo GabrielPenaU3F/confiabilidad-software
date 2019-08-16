@@ -11,6 +11,12 @@ class FitStrategy(ABC):
         self.model = model
         self.data = DataRepository.provide_project_data(project_name)
 
+    def get_project_name(self):
+        return self.project_name
+
+    def get_model(self):
+        return self.model
+
     @abstractmethod
     def fit_ttf(self):
         pass

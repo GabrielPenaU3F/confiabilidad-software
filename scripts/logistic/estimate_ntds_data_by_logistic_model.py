@@ -1,4 +1,5 @@
-from src.fitters.ttf_fitter import TTFFitter
+from src.fitters.fitter import TTFFitter
 
 ttf_fitter = TTFFitter()
-ttf_fitter.fit('logistic', 'ntds')
+fit = ttf_fitter.fit('logistic', 'ntds')
+fit.show_results()

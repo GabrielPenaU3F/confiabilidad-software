@@ -1,4 +1,4 @@
-from data.data import AgileN1Data, NTDSData, MixedWaterfallAgileData
+from src.domain.data import AgileN1Data, NTDSData, MixedWaterfallAgileData
 
 
 class DataRepository:

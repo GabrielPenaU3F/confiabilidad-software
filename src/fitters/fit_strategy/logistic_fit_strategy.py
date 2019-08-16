@@ -1,5 +1,5 @@
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
-from src.models.logistic.logistic_estimator import LogisticEstimator
+from src.domain.models.logistic.logistic_estimator import LogisticEstimator
 
 
 class LogisticFitStrategy(FitStrategy):

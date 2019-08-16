@@ -1,5 +1,5 @@
-from colorama import Fore
-from src.fitters.ttf_fitter import TTFFitter
+from src.fitters.fitter import TTFFitter
 
 ttf_fitter = TTFFitter()
-ttf_fitter.fit('logistic', 'agile-n1')
+fit = ttf_fitter.fit('logistic', 'agile-n1')
+fit.show_results()

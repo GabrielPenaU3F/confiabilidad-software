@@ -2,7 +2,7 @@ from colorama import Fore
 from matplotlib import pyplot as plt
 
 from data.data_repository import DataRepository
-from src.models.logistic.logistic_estimator import LogisticEstimator
+from src.domain.models.logistic.logistic_estimator import LogisticEstimator
 
 datos_fpd = DataRepository.proveer_datos_observados_proyecto_mixed_waterfall_agile('fpd')
 dias = datos_fpd.get_dias()
