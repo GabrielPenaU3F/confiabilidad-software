@@ -28,9 +28,3 @@ class DSFitStrategy(FitStrategy):
 
     def fit_grouped_fpd(self):
         pass
-
-    def calculate_prr(self):
-        pass
-
-    def calculate_aic(self):
-        pass

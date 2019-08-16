@@ -10,5 +10,5 @@ class DataRepository:
     }
 
     @classmethod
-    def provide_observed_data_from_project(cls, project_name):
+    def provide_project_data(cls, project_name):
         return cls.data.get(project_name)

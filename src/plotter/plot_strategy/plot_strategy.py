@@ -8,7 +8,7 @@ class PlotStrategy(ABC):
 
     def __init__(self, project_name):
         self.project_name = project_name
-        self.data = DataRepository.provide_observed_data_from_project(project_name)
+        self.data = DataRepository.provide_project_data(project_name)
 
     @abstractmethod
     def plot(self, project_name, lsq_params, ml_params):
