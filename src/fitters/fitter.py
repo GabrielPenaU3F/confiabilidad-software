@@ -41,3 +41,9 @@ class TTFFitter(Fitter):
     def choose_fitter(self, fit_strategy):
         return fit_strategy.fit_ttf()
 
+
+class GroupedCumulativeFitter(Fitter):
+
+    def choose_fitter(self, fit_strategy):
+        return fit_strategy.fit_grouped_cumulative()
+

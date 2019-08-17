@@ -12,7 +12,7 @@ class GoelOkumotoPlotStrategy(PlotStrategy):
 
     def plot(self, project_name, lsq_params, ml_params):
         project_title = DataRepository.provide_project_data(project_name).get_project_title()
-        x_axis_data = self.data.get_data()
+        x_axis_data = self.data.get_times()
         cumulative_failures = self.data.get_cumulative_failures()
         go = GoelOkumotoEstimator()
 
@@ -22,5 +22,5 @@ class GoelOkumotoPlotStrategy(PlotStrategy):
         ax.plot(x_axis_data, go.calculate_mean_failure_numbers(x_axis_data, lsq_params[0], lsq_params[1]),
                 linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
         ax.plot(x_axis_data, go.calculate_mean_failure_numbers(x_axis_data, ml_params[0], ml_params[1]),
-                linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood (Time to failure)')
+                linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')
         self.do_plot_format(ax)

@@ -1,7 +1,6 @@
 from abc import abstractmethod, ABC
 
 from data.data_repository import DataRepository
-from src.exceptions.exceptions import NotAdmittedFormatException
 
 
 class FitStrategy(ABC):
@@ -43,7 +42,3 @@ class FitStrategy(ABC):
 
     def calculate_aic_grouped_fpd(self):
         pass
-
-    def validate_format(self, data):
-        if not data.get_format() == 'ttf':
-            raise NotAdmittedFormatException('The chosen project does not admit the specified format')

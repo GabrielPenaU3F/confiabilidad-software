@@ -8,20 +8,20 @@ class Data(ABC):
     title = None
     format = None
     data = None
-    cumulative_failure = None
+    cumulative_failures = None
 
     def __init__(self, title, format, data):
         self.title = title
         self.format = format
         self.data = data
-        self.cumulative_failure = self.calculate_cumulative_failures(data)
+        self.cumulative_failures = self.calculate_cumulative_failures(data)
 
     @abstractmethod
     def calculate_cumulative_failures(self, data):
         pass
 
     def get_cumulative_failures(self):
-        return self.cumulative_failure
+        return self.cumulative_failures
 
     def get_format(self):
         return self.format
@@ -36,7 +36,7 @@ class Data(ABC):
         if self.format == 'ttf':
             return self.data
         elif self.format == 'grouped':
-            return np.arange(1, len(self.data))
+            return np.arange(1, len(self.data) + 1)
 
 
 class NTDSData(Data):
