@@ -27,9 +27,11 @@ class Fitter(ABC):
     def fit(self, model, project_name):
 
         fit_strategy = self.get_model_strategy(model)(project_name)
-        lsq_params, ml_params = self.choose_fitter(fit_strategy)
-
-        return Fit(project_name, model, fit_strategy, lsq_params, ml_params)
+        try:
+            lsq_params, ml_params = self.choose_fitter(fit_strategy)
+            return Fit(project_name, model, fit_strategy, lsq_params, ml_params)
+        except TypeError:
+            return Fit(None, None, None, None, None)
 
     @abstractmethod
     def choose_fitter(self, fit_strategy):
@@ -47,3 +49,8 @@ class GroupedCumulativeFitter(Fitter):
     def choose_fitter(self, fit_strategy):
         return fit_strategy.fit_grouped_cumulative()
 
+
+class GroupedFailuresPerDayFitter(Fitter):
+
+    def choose_fitter(self, fit_strategy):
+        return fit_strategy.fit_grouped_fpd()

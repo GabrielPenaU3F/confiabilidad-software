@@ -1,4 +1,5 @@
 import numpy as np
+from colorama import Fore, Back
 
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
 from src.domain.models.logistic.logistic_estimator import LogisticEstimator
@@ -25,16 +26,32 @@ class LogisticFitStrategy(FitStrategy):
         return log_lsq_params, log_ml_params
 
     def fit_grouped_cumulative(self):
-        cumulative_failures = self.data.get_cumulative_failures()
-        times = np.arange(1, len(cumulative_failures) + 1)
+        try:
+            cumulative_failures = self.data.get_cumulative_failures()
+            times = np.arange(1, len(cumulative_failures) + 1)
 
-        initial_approx = (10, 0.05, 20)
-        log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
-        log_ml_params = self.model. \
-            estimate_grouped_cumulative_parameters_by_maximum_likelihood(times, cumulative_failures, log_lsq_params,
-                                                                         solving_method='krylov')
+            initial_approx = (10, 0.05, 20)
+            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
+            log_ml_params = self.model. \
+                estimate_grouped_cumulative_parameters_by_maximum_likelihood(times, cumulative_failures, log_lsq_params,
+                                                                             solving_method='krylov')
 
-        return log_lsq_params, log_ml_params
+            return log_lsq_params, log_ml_params
+        except ValueError as error:
+            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
 
     def fit_grouped_fpd(self):
-        pass
+        try:
+            fpd = self.data.get_data()
+            cumulative_failures = self.data.get_cumulative_failures()
+            times = np.arange(1, len(fpd) + 1)
+
+            initial_approx = (10, 0.05, 20)
+            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
+            log_ml_params = self.model. \
+                estimate_grouped_fpd_parameters_by_maximum_likelihood(times, fpd, log_lsq_params,
+                                                                      solving_method='krylov')
+
+            return log_lsq_params, log_ml_params
+        except ValueError as error:
+            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
