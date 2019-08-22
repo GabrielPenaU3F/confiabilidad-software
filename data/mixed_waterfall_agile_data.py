@@ -1,4 +1,4 @@
-from src.domain.data import Data
+from src.data.data import Data
 
 
 class MixedWaterfallAgileData(Data):

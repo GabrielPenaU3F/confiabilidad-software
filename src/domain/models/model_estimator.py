@@ -95,6 +95,8 @@ class ModelEstimator(ABC):
         for k in range(len(times)):
             t_k = times[k]
             lambda_tk = self.calculate_lambda(t_k, *model_parameters)
+            if lambda_tk == 0:
+                a=2
             sum += np.log(lambda_tk)
         return sum - (mu_tn - mu_t0)
 

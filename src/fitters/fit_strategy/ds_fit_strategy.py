@@ -11,14 +11,14 @@ class DSFitStrategy(FitStrategy):
         super().__init__(project_name, model)
 
     def fit_ttf(self):
-        ttf = self.data.get_data()
+        times_from_zero = self.data.get_times()
+        ttf_original_data = self.data.get_data()
         cumulative_failures = self.data.get_cumulative_failures()
-        ttf_without_zero = ttf[1:]
 
         initial_approx = (1, 0.5)
-        ds_lsq_params = self.model.fit_mean_failure_number_by_least_squares(ttf, cumulative_failures, initial_approx)
+        ds_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times_from_zero, cumulative_failures, initial_approx)
 
-        ds_ml_params = self.model.estimate_ttf_parameters_by_maximum_likelihood(ttf_without_zero,
+        ds_ml_params = self.model.estimate_ttf_parameters_by_maximum_likelihood(ttf_original_data,
                                                                                 ds_lsq_params,
                                                                                 solving_method='krylov')
 
