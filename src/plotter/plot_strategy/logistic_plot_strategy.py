@@ -1,4 +1,4 @@
-from data.data_repository import DataRepository
+from src.data.data_repository import DataRepository
 from src.plotter.plot_strategy.plot_strategy import PlotStrategy
 from src.domain.models.logistic.logistic_estimator import LogisticEstimator
 from matplotlib import pyplot as plt

@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from data.data_repository import DataRepository
+from src.data.data_repository import DataRepository
 
 
 class FitStrategy(ABC):

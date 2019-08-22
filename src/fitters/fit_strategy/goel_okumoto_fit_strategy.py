@@ -1,6 +1,5 @@
 import numpy as np
 
-from data.data_repository import DataRepository
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
 from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 

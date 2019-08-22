@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-from data.data_repository import DataRepository
+from src.data.data_repository import DataRepository
 from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 

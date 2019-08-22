@@ -1,6 +1,6 @@
 from colorama import Fore
 
-from data.data_repository import DataRepository
+from src.data.data_repository import DataRepository
 from src.result_presenter.result_displaying_strategy.result_displaying_strategy import ResultDisplayingStrategy
 
 

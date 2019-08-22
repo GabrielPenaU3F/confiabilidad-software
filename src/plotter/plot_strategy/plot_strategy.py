@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from matplotlib import pyplot as plt
 
-from data.data_repository import DataRepository
+from src.data.data_repository import DataRepository
 
 
 class PlotStrategy(ABC):
