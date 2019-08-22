@@ -34,8 +34,8 @@ class FitStrategy(ABC):
         return self.model.calculate_prr(times, cumulative_failures, *model_parameters)
 
     def calculate_aic_ttf(self, *model_parameters):
-        times = self.data.get_times()
-        return self.model.calculate_ttf_aic(times, *model_parameters)
+        original_times = self.data.get_data()
+        return self.model.calculate_ttf_aic(original_times, *model_parameters)
 
     def calculate_aic_grouped_cumulative(self):
         pass
