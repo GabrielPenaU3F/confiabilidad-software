@@ -25,3 +25,9 @@ class Fit:
 
             plotter = Plotter()
             plotter.plot(self.project_name, self.model, self.lsq_params, self.ml_params)
+
+    def get_lsq_parameters(self):
+        return self.lsq_params
+
+    def get_ml_parameters(self):
+        return self.ml_params
