@@ -29,12 +29,12 @@ class GoelOkumotoTestsWithNtdsData(unittest.TestCase):
 
     def test_ntds_goel_okumoto_least_squares_prr_is_1_comma_507181(self):
         prr = GoelOkumotoTestsWithNtdsData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 1.5071812, places=7)
+        self.assertAlmostEqual(prr, 1.507181, places=6)
 
-    def test_ntds_goel_okumoto_maximum_likelihood_prr_is_1_comma_405047(self):
+    def test_ntds_goel_okumoto_maximum_likelihood_prr_is_1_comma_405048(self):
         prr = GoelOkumotoTestsWithNtdsData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 1.4050476, places=7)
+        self.assertAlmostEqual(prr, 1.405048, places=6)
 
-    def test_ntds_goel_okumoto_aic_is_167_comma_380300(self):
+    def test_ntds_goel_okumoto_aic_is_167_comma_380301(self):
         aic = GoelOkumotoTestsWithNtdsData.fit.get_aic()
-        self.assertAlmostEqual(aic, 167.3803008, places=7)
+        self.assertAlmostEqual(aic, 167.380301, places=6)
