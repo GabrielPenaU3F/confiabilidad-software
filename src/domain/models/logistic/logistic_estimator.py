@@ -117,8 +117,8 @@ class LogisticEstimator(ModelEstimator):
             mu_ti = self.calculate_mean(t_i, a, b, c)
             phi_ti = self.calculate_phi(b, c, t_i)
             first_term_numerator = phi_ti * (mu_ti**2) - phi_t0 * (mu_t0**2)
-            second_term_numerator = phi_ti - phi_t0
-            sum += (y_i * first_term_numerator/second_term_numerator - phi_ti * (mu_ti**2))
+            first_term_denominator = phi_ti - phi_t0
+            sum += (y_i * first_term_numerator/first_term_denominator - phi_ti * (mu_ti**2))
         return sum + n * phi_t0 * (mu_t0**2)
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
