@@ -31,3 +31,12 @@ class Fit:
 
     def get_ml_parameters(self):
         return self.ml_params
+
+    def get_prr_lsq(self):
+        return self.prr_lsq
+
+    def get_prr_ml(self):
+        return self.prr_ml
+
+    def get_aic(self):
+        return self.aic
