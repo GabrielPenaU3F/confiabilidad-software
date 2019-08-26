@@ -3,7 +3,7 @@ import unittest
 from src.fitters.fitter import GroupedFailuresPerDayFitter
 
 
-class LogisticTestsWithGroupedFailuresPerDayFormatMixedWaterfallAgileData(unittest.TestCase):
+class LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
 
     fit = None
 

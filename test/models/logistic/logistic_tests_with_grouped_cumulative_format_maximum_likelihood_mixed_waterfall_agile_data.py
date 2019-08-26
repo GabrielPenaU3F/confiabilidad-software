@@ -3,7 +3,7 @@ import unittest
 from src.fitters.fitter import GroupedCumulativeFitter
 
 
-class LogisticTestsWithGroupedCumulativeFormatMixedWaterfallAgileData(unittest.TestCase):
+class LogisticTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
 
     fit = None
 
