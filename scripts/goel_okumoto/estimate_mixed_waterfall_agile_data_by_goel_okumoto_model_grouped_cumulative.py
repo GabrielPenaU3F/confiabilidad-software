@@ -1,5 +1,5 @@
-from src.fitters.fitter import GroupedCumulativeFitter, GroupedFailuresPerDayFitter
+from src.fitters.fitter import GroupedCumulativeFitter
 
 fitter = GroupedCumulativeFitter()
-fit = fitter.fit('goel-okumoto', 'mixed-waterfall-agile')
+fit = fitter.fit('goel-okumoto', 'mixed-waterfall-agile', cumulative=True)
 fit.show_results()

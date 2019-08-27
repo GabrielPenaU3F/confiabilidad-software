@@ -39,6 +39,6 @@ class FitStrategy(ABC):
         cumulative_failures = self.data.get_cumulative_failures()
         return self.model.calculate_prr(times, cumulative_failures, *model_parameters)
 
-    def calculate_aic(self, *model_parameters):
+    def calculate_aic(self, *model_parameters, **kwargs):
         strategy = self.format_strategies.get(self.data.get_format())(self.data, self.model)
-        return strategy.calculate_aic(*model_parameters)
+        return strategy.calculate_aic(*model_parameters, **kwargs)

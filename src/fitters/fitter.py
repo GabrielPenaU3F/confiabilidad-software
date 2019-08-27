@@ -24,12 +24,12 @@ class Fitter(ABC):
         Delayed S-Shaped: 'delayed-s-shaped'
         Logistic: 'logistic'
     """
-    def fit(self, model, project_name):
+    def fit(self, model, project_name, **kwargs):
 
         fit_strategy = self.get_model_strategy(model)(project_name)
         try:
             lsq_params, ml_params = self.choose_fitter(fit_strategy)
-            return Fit(project_name, model, fit_strategy, lsq_params, ml_params)
+            return Fit(project_name, model, fit_strategy, lsq_params, ml_params, **kwargs)
         except TypeError:
             return Fit(None, None, None, None, None)
 

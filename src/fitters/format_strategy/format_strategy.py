@@ -8,5 +8,5 @@ class FormatStrategy(ABC):
         self.model = model
 
     @abstractmethod
-    def calculate_aic(self, *model_parameters):
+    def calculate_aic(self, *model_parameters, **kwargs):
         pass

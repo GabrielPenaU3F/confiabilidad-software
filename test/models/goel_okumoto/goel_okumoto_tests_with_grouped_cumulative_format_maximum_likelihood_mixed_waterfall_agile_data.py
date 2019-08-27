@@ -23,9 +23,6 @@ class GoelOkumotoTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfall
         prr = GoelOkumotoTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 9.721876, places=6)
 
-    # Not used test
-    '''
-    def test_mixed_waterfall_agile_goel_okumoto_aic_is_minus_746_comma_010244(self):
+    def test_mixed_waterfall_agile_goel_okumoto_aic_is_1299_comma_136228(self):
         aic = GoelOkumotoTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()
-        self.assertAlmostEqual(aic, -746.010244, places=6)
-    '''
+        self.assertAlmostEqual(aic, 1299.136228, places=6)

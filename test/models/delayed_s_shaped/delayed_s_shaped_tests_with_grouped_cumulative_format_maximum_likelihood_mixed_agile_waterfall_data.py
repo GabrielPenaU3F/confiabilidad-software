@@ -23,8 +23,6 @@ class DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterf
         prr = DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 1926.376474, places=6)
 
-    ''' Not used test
-    def test_mixed_waterfall_agile_delayed_s_shaped_aic_is_minus_746_comma_010244(self):
-        aic = DelayedSShapedTestsWithGroupedCumulativeFormatMixedWaterfallAgileData.fit.get_aic()
-        self.assertAlmostEqual(aic, -746.010244, places=6)
-    '''
+    def test_mixed_waterfall_agile_delayed_s_shaped_aic_is_minus_1450_comma_967420(self):
+        aic = DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()
+        self.assertAlmostEqual(aic, 1450.967420, places=6)
