@@ -5,8 +5,6 @@ from src.fitters.format_strategy.format_strategy import FormatStrategy
 class FPDFormatStrategy(FormatStrategy):
 
     def calculate_aic(self, *model_parameters, **kwargs):
-        if len(kwargs) > 1:
-            raise InvalidArgumentException("The Grouped Data format does not allow more than 1 optional arguments")
         cumulative_flag = kwargs.get('cumulative')
         if cumulative_flag is True:
             return self.calculate_aic_grouped_cumulative(*model_parameters)
