@@ -23,9 +23,6 @@ class DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWa
         prr = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 3414.616205, places=6)
 
-    # Todo: corregir el bug con el lambda arrancando en cero
-    ''' Still INF 
-    def test_mixed_waterfall_agile_delayed_s_shaped_aic_is_minus_3414_comma_616205(self):
-        aic = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMixedWaterfallAgileData.fit.get_aic()
-        self.assertAlmostEqual(aic, 3414.616205, places=6)
-    '''
+    def test_mixed_waterfall_agile_delayed_s_shaped_aic_is_minus_1414_comma_986666(self):
+        aic = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()
+        self.assertAlmostEqual(aic, 1414.986666, places=6)

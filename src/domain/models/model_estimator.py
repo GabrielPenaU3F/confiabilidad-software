@@ -77,14 +77,14 @@ class ModelEstimator(ABC):
             prr += (1 - cumulative_failures[i] / estimated_failures[i]) ** 2
         return prr
 
-    def calculate_ttf_aic(self, times, n, *model_parameters):
-        return -2 * self.ttf_log_likelihood(times, n, *model_parameters) + (2 * len(model_parameters))
+    def calculate_ttf_aic(self, times, *model_parameters):
+        return -2 * self.ttf_log_likelihood(times, *model_parameters) + (2 * len(model_parameters))
 
-    def calculate_grouped_cumulative_aic(self, days, cumulative_failures, *model_parameters):
-        return -2 * self.grouped_cumulative_log_likelihood(days, cumulative_failures, *model_parameters) + (2 * len(model_parameters))
+    def calculate_aic_grouped_cumulative(self, cumulative_failures, *model_parameters):
+        return -2 * self.grouped_cumulative_log_likelihood(cumulative_failures, *model_parameters) + (2 * len(model_parameters))
 
-    def calculate_grouped_fpd_aic(self, days, failures_per_day, *model_parameters):
-        return -2 * self.grouped_fpd_log_likelihood(days, failures_per_day, *model_parameters) + (2 * len(model_parameters))
+    def calculate_aic_grouped_fpd(self, failures_per_day, *model_parameters):
+        return -2 * self.grouped_fpd_log_likelihood(failures_per_day, *model_parameters) + (2 * len(model_parameters))
 
     def ttf_log_likelihood(self, times, *model_parameters):
         t_0 = 0
@@ -95,39 +95,41 @@ class ModelEstimator(ABC):
         for k in range(len(times)):
             t_k = times[k]
             lambda_tk = self.calculate_lambda(t_k, *model_parameters)
-            if lambda_tk == 0:
-                a=2
             sum += np.log(lambda_tk)
         return sum - (mu_tn - mu_t0)
 
-    def grouped_cumulative_log_likelihood(self, days, cumulative_failures, *model_parameters):
+    # At this moment, this code is not being used
+    # The grouped cumulative data AIC is calculated using the FPD log likelihood (kinda hard-coded)
+    def grouped_cumulative_log_likelihood(self, cumulative_failures, *model_parameters):
+        times = np.arange(1, len(cumulative_failures) + 1)
         sum = 0
-        n = len(days)
+        n = len(times)
         t_0 = 0
         mu_t0 = self.calculate_mean(t_0, *model_parameters)
-        for i in range(len(days)):
-            t_i = days[i]
+        for i in range(len(times)):
+            t_i = times[i]
             y_i = cumulative_failures[i]
             mu_ti = self.calculate_mean(t_i, *model_parameters)
             y_i_factorial = np.math.factorial(y_i)
             sum += y_i * np.log(mu_ti - mu_t0) - np.math.log(y_i_factorial) - mu_ti
         return sum + n * mu_t0
 
-    def grouped_fpd_log_likelihood(self, days, failures_per_day, *model_parameters):
+    def grouped_fpd_log_likelihood(self, failures_per_day, *model_parameters):
+        times = np.arange(1, len(failures_per_day) + 1)
         sum = 0
         deltas_yi = failures_per_day
         t_0 = 0
         mu_t0 = self.calculate_mean(t_0, *model_parameters)
-        t_n = days[-1]
+        t_n = times[-1]
         mu_tn = self.calculate_mean(t_n, *model_parameters)
-        for i in range(len(days)):
-            t_i = days[i]
+        for i in range(len(times)):
+            t_i = times[i]
             delta_y_i = deltas_yi[i]
             mu_ti = self.calculate_mean(t_i, *model_parameters)
             if i == 0:
                 t_i_minus_1 = t_0
             else:
-                t_i_minus_1 = days[i - 1]
+                t_i_minus_1 = times[i - 1]
             mu_ti_minus_1 = self.calculate_mean(t_i_minus_1, *model_parameters)
             delta_y_i_factorial = np.math.factorial(delta_y_i)
             sum += (delta_y_i * np.log(mu_ti - mu_ti_minus_1)) - np.math.log(delta_y_i_factorial)

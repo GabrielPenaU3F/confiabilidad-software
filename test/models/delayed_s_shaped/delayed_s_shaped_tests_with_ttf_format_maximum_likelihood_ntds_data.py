@@ -23,6 +23,6 @@ class DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCas
         prr = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 3.990516, places=6)
 
-    def test_ntds_delayed_s_shaped_aic_is_163_comma_835957(self):
+    def test_ntds_delayed_s_shaped_aic_is_165_comma_835957(self):
         aic = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_aic()
-        self.assertAlmostEqual(aic, 163.835957, places=6)
+        self.assertAlmostEqual(aic, 165.835957, places=6)

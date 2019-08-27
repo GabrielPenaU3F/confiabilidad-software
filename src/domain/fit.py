@@ -15,7 +15,7 @@ class Fit:
             self.ml_params = ml_params
             self.prr_lsq = fit_strategy.calculate_prr(*lsq_params)
             self.prr_ml = fit_strategy.calculate_prr(*ml_params)
-            self.aic = fit_strategy.calculate_aic_ttf(*ml_params)
+            self.aic = fit_strategy.calculate_aic(*ml_params)
 
     def show_results(self):
         if self.project_name is not None:

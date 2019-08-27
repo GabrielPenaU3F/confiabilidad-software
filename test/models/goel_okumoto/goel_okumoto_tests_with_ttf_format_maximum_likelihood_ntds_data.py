@@ -23,6 +23,6 @@ class GoelOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
         prr = GoelOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 1.405048, places=6)
 
-    def test_ntds_goel_okumoto_aic_is_167_comma_380301(self):
+    def test_ntds_goel_okumoto_aic_is_169_comma_380301(self):
         aic = GoelOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_aic()
-        self.assertAlmostEqual(aic, 167.380301, places=6)
+        self.assertAlmostEqual(aic, 169.380301, places=6)
