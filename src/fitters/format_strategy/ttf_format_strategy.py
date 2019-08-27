@@ -1,4 +1,3 @@
-from src.exceptions.exceptions import InvalidArgumentException
 from src.fitters.format_strategy.format_strategy import FormatStrategy
 
 
