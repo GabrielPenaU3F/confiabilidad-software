@@ -30,8 +30,9 @@ class LogisticFitStrategy(FitStrategy):
             cumulative_failures = self.data.get_cumulative_failures()
             times = np.arange(1, len(cumulative_failures) + 1)
 
-            initial_approx = (10, 0.05, 20)
-            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
+            initial_approx = (0.01, 0.001, 0.00001)
+            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures,
+                                                                                 initial_approx)
             log_ml_params = self.model. \
                 estimate_grouped_cumulative_parameters_by_maximum_likelihood(times, cumulative_failures, log_lsq_params,
                                                                              solving_method='krylov')
@@ -46,8 +47,9 @@ class LogisticFitStrategy(FitStrategy):
             cumulative_failures = self.data.get_cumulative_failures()
             times = np.arange(1, len(fpd) + 1)
 
-            initial_approx = (10, 0.05, 20)
-            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
+            initial_approx = (0.01, 0.001, 0.00001)
+            log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures,
+                                                                                 initial_approx)
             log_ml_params = self.model. \
                 estimate_grouped_fpd_parameters_by_maximum_likelihood(times, fpd, log_lsq_params,
                                                                       solving_method='krylov')
