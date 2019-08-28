@@ -9,7 +9,7 @@ class LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = TTFFitter().fit('logistic', 'ntds')
+        cls.fit = TTFFitter().fit('logistic', 'ntds', initial_approx = (10, 0.05, 20))
 
     def test_ntds_logistic_maximum_likelihood_a_parameter_is_24_comma_611413(self):
         a = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]

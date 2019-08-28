@@ -9,7 +9,7 @@ class DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterf
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedCumulativeFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile')
+        cls.fit = GroupedCumulativeFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
 
     def test_mixed_waterfall_agile_delayed_s_shaped_maximum_likelihood_a_parameter_is_862_comma_961708(self):
         a = DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[0]

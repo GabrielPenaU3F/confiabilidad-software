@@ -9,7 +9,7 @@ class GoelOkumotoTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = TTFFitter().fit('goel-okumoto', 'ntds')
+        cls.fit = TTFFitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
 
     def test_ntds_goel_okumoto_least_squares_a_parameter_is_33_comma_599359(self):
         a = GoelOkumotoTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

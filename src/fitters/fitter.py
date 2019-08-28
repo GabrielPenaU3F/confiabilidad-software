@@ -28,29 +28,29 @@ class Fitter(ABC):
 
         fit_strategy = self.get_model_strategy(model)(project_name)
         try:
-            lsq_params, ml_params = self.choose_fitter(fit_strategy)
+            lsq_params, ml_params = self.choose_fitter(fit_strategy, **kwargs)
             return Fit(project_name, model, fit_strategy, lsq_params, ml_params, **kwargs)
         except TypeError:
             return Fit(None, None, None, None, None)
 
     @abstractmethod
-    def choose_fitter(self, fit_strategy):
+    def choose_fitter(self, fit_strategy, **kwargs):
         pass
 
 
 class TTFFitter(Fitter):
 
-    def choose_fitter(self, fit_strategy):
-        return fit_strategy.fit_ttf()
+    def choose_fitter(self, fit_strategy, **kwargs):
+        return fit_strategy.fit_ttf(**kwargs)
 
 
 class GroupedCumulativeFitter(Fitter):
 
-    def choose_fitter(self, fit_strategy):
-        return fit_strategy.fit_grouped_cumulative()
+    def choose_fitter(self, fit_strategy, **kwargs):
+        return fit_strategy.fit_grouped_cumulative(**kwargs)
 
 
 class GroupedFailuresPerDayFitter(Fitter):
 
-    def choose_fitter(self, fit_strategy):
-        return fit_strategy.fit_grouped_fpd()
+    def choose_fitter(self, fit_strategy, **kwargs):
+        return fit_strategy.fit_grouped_fpd(**kwargs)

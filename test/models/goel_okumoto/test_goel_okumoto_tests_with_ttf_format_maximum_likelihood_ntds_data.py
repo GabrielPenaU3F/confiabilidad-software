@@ -9,7 +9,7 @@ class GoelOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = TTFFitter().fit('goel-okumoto', 'ntds')
+        cls.fit = TTFFitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
 
     def test_ntds_goel_okumoto_maximum_likelihood_a_parameter_is_33_comma_993503(self):
         a = GoelOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]

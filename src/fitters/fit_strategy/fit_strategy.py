@@ -23,15 +23,15 @@ class FitStrategy(ABC):
         return self.model
 
     @abstractmethod
-    def fit_ttf(self):
+    def fit_ttf(self, **kwargs):
         pass
 
     @abstractmethod
-    def fit_grouped_cumulative(self):
+    def fit_grouped_cumulative(self, **kwargs):
         pass
 
     @abstractmethod
-    def fit_grouped_fpd(self):
+    def fit_grouped_fpd(self, **kwargs):
         pass
 
     def calculate_prr(self, *model_parameters):

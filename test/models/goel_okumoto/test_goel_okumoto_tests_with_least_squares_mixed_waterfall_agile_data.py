@@ -9,7 +9,7 @@ class GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase)
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile')
+        cls.fit = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
 
     def test_mixed_waterfall_agile_goel_okumoto_least_squares_a_parameter_is_1416_comma_913890(self):
         a = GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]
