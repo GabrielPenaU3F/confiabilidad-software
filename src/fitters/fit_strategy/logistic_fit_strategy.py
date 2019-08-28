@@ -30,7 +30,7 @@ class LogisticFitStrategy(FitStrategy):
             cumulative_failures = self.data.get_cumulative_failures()
             times = np.arange(1, len(cumulative_failures) + 1)
 
-            initial_approx = (0.01, 0.001, 0.00001)
+            initial_approx = (0.01, 0.001, 0.000001)
             log_lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures,
                                                                                  initial_approx)
             log_ml_params = self.model. \
