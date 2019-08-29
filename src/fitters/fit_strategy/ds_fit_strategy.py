@@ -11,9 +11,15 @@ class DSFitStrategy(FitStrategy):
         super().__init__(project_name, model)
 
     def fit_ttf(self, **kwargs):
-        times_from_zero = self.data.get_times()
-        ttf_original_data = self.data.get_data()
-        cumulative_failures = self.data.get_cumulative_failures()
+
+        if kwargs.keys().__contains__('end_sample'):
+            end = kwargs.get('end_sample')
+        else:
+            end = len(self.data.get_times())
+
+        times_from_zero = self.data.get_times()[0:end+1]
+        cumulative_failures = self.data.get_cumulative_failures()[0:end+1]
+        ttf_original_data = self.data.get_data()[0:end]
 
         if kwargs.keys().__contains__('initial_approx'):
             initial_approx = kwargs.get('initial_approx')
