@@ -8,5 +8,13 @@ class FormatStrategy(ABC):
         self.model = model
 
     @abstractmethod
+    def fit_model(self, **kwargs):
+        pass
+
+    @abstractmethod
+    def determine_initial_approx(self, initial_approx_arg):
+        pass
+
+    @abstractmethod
     def calculate_aic(self, *model_parameters, **kwargs):
         pass

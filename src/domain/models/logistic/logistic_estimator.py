@@ -6,6 +6,13 @@ from src.domain.models.model_estimator import ModelEstimator
 
 class LogisticEstimator(ModelEstimator):
 
+    def __init__(self):
+        self.default_initial_approximations = {
+            'ttf': (10, 0.05, 20),
+            'grouped-cumulative': (0.01, 0.001, 0.000001),
+            'grouped-fpd': (0.01, 0.001, 0.00001)
+        }
+
     def calculate_mean(self, t, *model_parameters):
         a, b, c = model_parameters
         return a / (1 + self.calculate_phi(b, c, t))

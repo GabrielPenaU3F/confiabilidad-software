@@ -5,6 +5,13 @@ from src.domain.models.model_estimator import ModelEstimator
 
 class GoelOkumotoEstimator(ModelEstimator):
 
+    def __init__(self):
+        self.default_initial_approximations = {
+            'ttf': (1, 0.5),
+            'grouped-cumulative': (1, 0.5),
+            'grouped-fpd': (1, 0.5)
+        }
+
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
         return a * (1 - self.calculate_exp_minus_bt(b, t))

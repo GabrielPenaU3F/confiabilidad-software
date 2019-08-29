@@ -3,11 +3,13 @@ from functools import partial
 
 import numpy as np
 import scipy.optimize as opt
-from colorama import Fore
+from colorama import Fore, Back
 from scipy.optimize.nonlin import NoConvergence
 
 
 class ModelEstimator(ABC):
+
+    default_initial_approximations = None
 
     @abstractmethod
     def calculate_mean(self, t, *model_parameters):
@@ -32,9 +34,8 @@ class ModelEstimator(ABC):
         try:
             return opt.root(partial(self.ttf_ml_equations, times), initial_approx,
                             method=solving_method).x
-        except NoConvergence:
-            print(Fore.RED + 'The equation system is inconsistent')
-            return None
+        except ValueError as error:
+            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
 
     @abstractmethod
     def ttf_ml_equations(self, times, vec):
@@ -45,9 +46,8 @@ class ModelEstimator(ABC):
         try:
             return opt.root(partial(self.grouped_cumulative_ml_equations, days, cumulative_failures),
                             initial_approx, method=solving_method).x
-        except NoConvergence:
-            print(Fore.RED + 'The equation system is inconsistent')
-            return None
+        except ValueError as error:
+            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
 
     @abstractmethod
     def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
@@ -58,9 +58,8 @@ class ModelEstimator(ABC):
         try:
             return opt.root(partial(self.grouped_fpd_ml_equations, times, failures_per_day), initial_approx,
                             method=solving_method).x
-        except NoConvergence:
-            print(Fore.RED + 'The equation system is inconsistent')
-            return None
+        except ValueError as error:
+            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
 
     @abstractmethod
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):
@@ -134,4 +133,7 @@ class ModelEstimator(ABC):
             delta_y_i_factorial = np.math.factorial(delta_y_i)
             sum += (delta_y_i * np.log(mu_ti - mu_ti_minus_1)) - np.math.log(delta_y_i_factorial)
         return sum - (mu_tn - mu_t0)
+
+    def get_default_initial_approx(self, format):
+        return self.default_initial_approximations.get(format)
 

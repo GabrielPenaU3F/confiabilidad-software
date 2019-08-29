@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 
 from src.data.data_repository import DataRepository
-from src.fitters.format_strategy.fpd_format_strategy import FPDFormatStrategy
+from src.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
 from src.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
 
 
@@ -13,26 +13,20 @@ class FitStrategy(ABC):
         self.data = DataRepository.provide_project_data(project_name)
         self.format_strategies = {
             'ttf': TTFFormatStrategy,
-            'grouped': FPDFormatStrategy
+            'grouped': GroupedFPDFormatStrategy
         }
 
     def get_project_name(self):
         return self.project_name
 
+    def get_data(self):
+        return self.data
+
     def get_model(self):
         return self.model
 
-    @abstractmethod
-    def fit_ttf(self, **kwargs):
-        pass
-
-    @abstractmethod
-    def fit_grouped_cumulative(self, **kwargs):
-        pass
-
-    @abstractmethod
-    def fit_grouped_fpd(self, **kwargs):
-        pass
+    def fit_model(self, format_strategy, **kwargs):
+        return format_strategy.fit_model(**kwargs)
 
     def calculate_prr(self, *model_parameters):
         times = self.data.get_times()
