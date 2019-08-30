@@ -6,9 +6,15 @@ from src.fitters.format_strategy.format_strategy import FormatStrategy
 class GroupedCumulativeFormatStrategy(FormatStrategy):
 
     def fit_model(self, **kwargs):
+
+        if kwargs.keys().__contains__('end_sample'):
+            end = kwargs.get('end_sample')
+        else:
+            end = len(self.data.get_times())
+
         initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
 
-        cumulative_failures = self.data.get_cumulative_failures()
+        cumulative_failures = self.data.get_cumulative_failures()[0:end]
         times = np.arange(1, len(cumulative_failures) + 1)
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
         ml_params = self.model. \

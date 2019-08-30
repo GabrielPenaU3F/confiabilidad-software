@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import GroupedFailuresPerDayFitter
+from src.fitters.fitter import GroupedFPDFitter
 
 
 class GoelOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
@@ -9,7 +9,7 @@ class GoelOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWater
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedFailuresPerDayFitter().fit('goel-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit = GroupedFPDFitter().fit('goel-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
 
     def test_mixed_waterfall_agile_goel_okumoto_maximum_likelihood_a_parameter_is_1373_comma_290255(self):
         a = GoelOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[0]

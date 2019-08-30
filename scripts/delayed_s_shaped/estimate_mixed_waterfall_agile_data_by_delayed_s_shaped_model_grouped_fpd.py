@@ -1,5 +1,5 @@
-from src.fitters.fitter import GroupedFailuresPerDayFitter
+from src.fitters.fitter import GroupedFPDFitter
 
-fitter = GroupedFailuresPerDayFitter()
+fitter = GroupedFPDFitter()
 fit = fitter.fit('delayed-s-shaped', 'mixed-waterfall-agile')
 fit.show_results()

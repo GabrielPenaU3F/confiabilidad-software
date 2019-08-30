@@ -4,6 +4,7 @@ from src.fitters.format_strategy.format_strategy import FormatStrategy
 class TTFFormatStrategy(FormatStrategy):
 
     def fit_model(self, **kwargs):
+
         if kwargs.keys().__contains__('end_sample'):
             end = kwargs.get('end_sample')
         else:

@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import GroupedFailuresPerDayFitter
+from src.fitters.fitter import GroupedFPDFitter
 
 
 class LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
@@ -9,8 +9,8 @@ class LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfal
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedFailuresPerDayFitter().fit('logistic', 'mixed-waterfall-agile',
-                                                    initial_approx=(0.01, 0.001, 0.00001))
+        cls.fit = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile',
+                                         initial_approx=(0.01, 0.001, 0.00001))
 
     def test_mixed_waterfall_agile_logistic_maximum_likelihood_a_parameter_is_835_comma_522623(self):
         a = LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[0]

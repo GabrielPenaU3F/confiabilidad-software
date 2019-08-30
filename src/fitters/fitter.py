@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from colorama import Back, Fore
 
 from src.domain.fit import Fit
+from src.exceptions.exceptions import InvalidArgumentException
 from src.fitters.fit_strategy.ds_fit_strategy import DSFitStrategy
 from src.fitters.fit_strategy.goel_okumoto_fit_strategy import GoelOkumotoFitStrategy
 from src.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
@@ -20,7 +21,10 @@ class Fitter(ABC):
     }
 
     def get_model_strategy(self, model):
-        return self.fit_strategy.get(model)
+        if self.fit_strategy.keys().__contains__(model):
+            return self.fit_strategy.get(model)
+        else:
+            raise InvalidArgumentException('The requested model does not exist')
 
 
     """
@@ -48,16 +52,25 @@ class Fitter(ABC):
 class TTFFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        return TTFFormatStrategy(data, model)
+        if data.get_format() is 'ttf':
+            return TTFFormatStrategy(data, model)
+        else:
+            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
 
 
 class GroupedCumulativeFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        return GroupedCumulativeFormatStrategy(data, model)
+        if data.get_format() is 'grouped':
+            return GroupedCumulativeFormatStrategy(data, model)
+        else:
+            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
 
 
-class GroupedFailuresPerDayFitter(Fitter):
+class GroupedFPDFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        return GroupedFPDFormatStrategy(data, model)
+        if data.get_format() is 'grouped':
+            return GroupedFPDFormatStrategy(data, model)
+        else:
+            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')

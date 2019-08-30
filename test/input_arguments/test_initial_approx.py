@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import TTFFitter, GroupedCumulativeFitter, GroupedFailuresPerDayFitter
+from src.fitters.fitter import TTFFitter, GroupedCumulativeFitter, GroupedFPDFitter
 
 
 class TestInitialApprox(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestInitialApprox(unittest.TestCase):
         self.assertAlmostEqual(b, 0.004807, places=6)
 
     def test_goel_okumoto_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = GroupedFailuresPerDayFitter().fit('goel-okumoto', 'mixed-waterfall-agile')
+        fit = GroupedFPDFitter().fit('goel-okumoto', 'mixed-waterfall-agile')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 1416.913890, places=6)
         self.assertAlmostEqual(b, 0.004807, places=6)
@@ -40,7 +40,7 @@ class TestInitialApprox(unittest.TestCase):
         self.assertAlmostEqual(b, 0.021788, places=6)
 
     def test_delayed_s_shaped_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = GroupedFailuresPerDayFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile')
+        fit = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 893.638883, places=6)
         self.assertAlmostEqual(b, 0.021788, places=6)
@@ -60,7 +60,7 @@ class TestInitialApprox(unittest.TestCase):
         self.assertAlmostEqual(c, 75.801129, places=6)
 
     def test_logistic_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = GroupedFailuresPerDayFitter().fit('logistic', 'mixed-waterfall-agile')
+        fit = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile')
         a, b, c = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 835.410586, places=6)
         self.assertAlmostEqual(b, 0.030741, places=6)
