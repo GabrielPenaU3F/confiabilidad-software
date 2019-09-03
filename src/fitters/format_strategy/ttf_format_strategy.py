@@ -18,10 +18,13 @@ class TTFFormatStrategy(FormatStrategy):
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times_from_zero, cumulative_failures,
                                                                          initial_approx)
-
-        ml_params = self.model.estimate_ttf_parameters_by_maximum_likelihood(ttf_original_data,
-                                                                             lsq_params,
-                                                                             solving_method='krylov')
+        # TODO: Fix this. Write a good design
+        if kwargs.get('lsq_only') is True:
+            ml_params = lsq_params
+        else:
+            ml_params = self.model.estimate_ttf_parameters_by_maximum_likelihood(ttf_original_data,
+                                                                                 lsq_params,
+                                                                                 solving_method='krylov')
 
         return lsq_params, ml_params
 
