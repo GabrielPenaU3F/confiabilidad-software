@@ -16,7 +16,7 @@ class GroupedFPDFormatStrategy(FormatStrategy):
 
         fpd = self.data.get_data()[0:end]
         cumulative_failures = self.data.get_cumulative_failures()[0:end]
-        times = np.arange(1, len(fpd) + 1)
+        times = self.data.get_times()[0:end]
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
 

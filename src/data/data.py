@@ -9,11 +9,13 @@ class Data(ABC):
     format = None
     data = None
     cumulative_failures = None
+    times = None
 
-    def __init__(self, title, format, data):
+    def __init__(self, title, format, data, **kwargs):
         self.title = title
         self.format = format
         self.data = data
+        self.times = kwargs.get('times')
         self.cumulative_failures = self.calculate_cumulative_failures(data)
 
     def calculate_cumulative_failures(self, data):
@@ -39,4 +41,6 @@ class Data(ABC):
         if self.format == 'ttf':
             return [0] + self.data
         elif self.format == 'grouped':
-            return np.arange(1, len(self.data) + 1)
+            if self.times is None:
+                return np.arange(1, len(self.data) + 1)
+            return self.times

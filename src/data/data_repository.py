@@ -1,4 +1,5 @@
 from data.agile1_data import AgileN1Data
+from data.agile2_data import AgileN2Data
 from data.mixed_waterfall_agile_data import MixedWaterfallAgileData
 from data.ntds_data import NTDSData
 from src.exceptions.exceptions import InvalidArgumentException
@@ -9,7 +10,8 @@ class DataRepository:
     data = {
       'ntds': NTDSData(),
       'agile-n1': AgileN1Data(),
-      'mixed-waterfall-agile': MixedWaterfallAgileData()
+      'mixed-waterfall-agile': MixedWaterfallAgileData(),
+      'agile-n2': AgileN2Data()
     }
 
     @classmethod
