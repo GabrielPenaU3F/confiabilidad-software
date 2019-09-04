@@ -13,7 +13,9 @@ cumulative_failures = data.get_cumulative_failures()
 ds = DelayedSShapedEstimator()
 log = LogisticEstimator()
 
-ds_fit = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', initial_approx=(10, 0.02))
+'''
+
+ds_fit = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', initial_approx=(100, 0.001))
 log_fit = fpd_fitter.fit('logistic', 'agile-n2', initial_approx=(8000, 0.003, 1))
 
 ds_lsq_a = ds_fit.get_lsq_parameters()[0]
@@ -73,18 +75,16 @@ plt.show()
 
 '''
 
-#ds_fit_50 = fpd_fitter.fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=50, initial_approx=(20, 0.002))
-#log_fit_50 = fpd_fitter.fit('logistic', 'mixed-waterfall-agile', end_sample=50, initial_approx=(1000, 0.00001, 10))
+#ds_fit_151 = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', end_sample=4, initial_approx=(100, 0.001))
+#log_fit_151 = fpd_fitter.fit('logistic', 'agile-n2', end_sample=4, initial_approx=(8000, 0.003, 1))
 
-#ds_fit_60 = fpd_fitter.fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=60, initial_approx=(20, 0.002))
-#log_fit_60 = fpd_fitter.fit('logistic', 'mixed-waterfall-agile', end_sample=60, initial_approx=(1000, 0.00001, 100))
+ds_fit_248 = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', end_sample=5, initial_approx=(500, 0.002))
+#log_fit_248 = fpd_fitter.fit('logistic', 'agile-n2', end_sample=5, initial_approx=(8000, 0.003, 1))
 
-#ds_fit_70 = fpd_fitter.fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=70, initial_approx=(10, 0.01))
-#log_fit_70 = fpd_fitter.fit('logistic', 'mixed-waterfall-agile', end_sample=70, initial_approx=(1000, 0.00001, 100))
+#ds_fit_480 = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', end_sample=6, initial_approx=(100, 0.001))
+#log_fit_480 = fpd_fitter.fit('logistic', 'agile-n2', end_sample=6, initial_approx=(8000, 0.003, 1))
 
-ds_fit_90 = fpd_fitter.fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=90, initial_approx=(10, 0.01))
-log_fit_70 = fpd_fitter.fit('logistic', 'mixed-waterfall-agile', end_sample=90, initial_approx=(1000, 0.00001, 100))
-
-'''
+#ds_fit_690 = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', end_sample=10, initial_approx=(500, 0.002))
+#log_fit_690 = fpd_fitter.fit('logistic', 'agile-n2', end_sample=10, initial_approx=(8000, 0.003, 0.001))
 
 a=2

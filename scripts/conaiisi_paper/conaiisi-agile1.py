@@ -13,7 +13,6 @@ cumulative_failures = data.get_cumulative_failures()
 ds = DelayedSShapedEstimator()
 log = LogisticEstimator()
 
-'''
 
 ds_fit = ttf_fitter.fit('delayed-s-shaped', 'agile-n1')
 log_fit = ttf_fitter.fit('logistic', 'agile-n1')
@@ -73,7 +72,6 @@ axes.legend()
 
 plt.show()
 
-'''
 
 ds_fit_217 = ttf_fitter.fit('delayed-s-shaped', 'agile-n1', end_sample=9, initial_approx=(20, 0.002))
 log_fit_217 = ttf_fitter.fit('logistic', 'agile-n1', end_sample=9)
