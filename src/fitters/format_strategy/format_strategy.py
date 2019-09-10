@@ -5,6 +5,8 @@ from src.exceptions.exceptions import InvalidArgumentException
 
 class FormatStrategy(ABC):
 
+    execute_ml_function = None
+
     def __init__(self, data, model):
         self.data = data
         self.model = model

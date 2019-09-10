@@ -3,6 +3,10 @@ from src.fitters.format_strategy.format_strategy import FormatStrategy
 
 class TTFFormatStrategy(FormatStrategy):
 
+    def __init__(self, data, model):
+        super().__init__(data, model)
+        self.execute_ml_function = self.model.estimate_ttf_parameters_by_maximum_likelihood
+
     def fit_model(self, **kwargs):
 
         end = self.determine_end_sample(kwargs.get('end_sample'))
@@ -15,13 +19,10 @@ class TTFFormatStrategy(FormatStrategy):
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times_from_zero, cumulative_failures,
                                                                          initial_approx)
-        # TODO: Fix this. Write a good design
         if kwargs.get('lsq_only') is True:
             ml_params = lsq_params
         else:
-            ml_params = self.model.estimate_ttf_parameters_by_maximum_likelihood(ttf_original_data,
-                                                                                 lsq_params,
-                                                                                 solving_method='krylov')
+            ml_params = self.execute_ml_function(ttf_original_data, lsq_params, solving_method='krylov')
 
         return lsq_params, ml_params
 
