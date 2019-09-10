@@ -19,11 +19,8 @@ class TTFFormatStrategy(FormatStrategy):
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times_from_zero, cumulative_failures,
                                                                          initial_approx)
-        if kwargs.get('lsq_only') is True:
-            ml_params = lsq_params
-        else:
-            ml_params = self.execute_ml_function(ttf_original_data, lsq_params, solving_method='krylov')
-
+        ml_function_parameters = ttf_original_data, lsq_params
+        ml_params = self.determine_ml_parameters(kwargs.get('lsq_only'), *ml_function_parameters)
         return lsq_params, ml_params
 
     def determine_initial_approx(self, initial_approx_arg):

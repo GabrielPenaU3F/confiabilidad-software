@@ -16,8 +16,8 @@ class GroupedCumulativeFormatStrategy(FormatStrategy):
         cumulative_failures = self.data.get_cumulative_failures()[0:end]
         times = self.data.get_times()[0:end]
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
-        ml_params = self.execute_ml_function(times, cumulative_failures, lsq_params, solving_method='krylov')
-
+        ml_function_parameters = times, cumulative_failures, lsq_params
+        ml_params = self.determine_ml_parameters(kwargs.get('lsq_only'), *ml_function_parameters)
         return lsq_params, ml_params
 
     def determine_initial_approx(self, initial_approx_arg):

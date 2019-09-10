@@ -26,6 +26,13 @@ class FormatStrategy(ABC):
     def fit_model(self, **kwargs):
         pass
 
+    def determine_ml_parameters(self, lsq_only_arg, *ml_function_parameters):
+        if lsq_only_arg is True:
+            ml_params = ml_function_parameters[1]
+        else:
+            ml_params = self.execute_ml_function(*ml_function_parameters, solving_method='krylov')
+        return ml_params
+
     @abstractmethod
     def determine_initial_approx(self, initial_approx_arg):
         pass
