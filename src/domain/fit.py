@@ -6,7 +6,7 @@ class Fit:
 
     project_name = None
 
-    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params, **kwargs):
+    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params):
         if project_name is not None:
             self.project_name = project_name
             self.model = model_name
@@ -14,8 +14,12 @@ class Fit:
             self.lsq_params = lsq_params
             self.ml_params = ml_params
             self.prr_lsq = fit_strategy.calculate_prr(*lsq_params)
-            self.prr_ml = fit_strategy.calculate_prr(*ml_params)
-            self.aic = fit_strategy.calculate_aic(*ml_params)
+            if ml_params is not None:
+                self.prr_ml = fit_strategy.calculate_prr(*ml_params)
+                self.aic = fit_strategy.calculate_aic(*ml_params)
+            else:
+                self.prr_ml = None
+                self.aic = None
 
     def show_results(self):
         if self.project_name is not None:
