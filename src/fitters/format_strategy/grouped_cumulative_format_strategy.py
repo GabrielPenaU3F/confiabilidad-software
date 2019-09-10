@@ -7,10 +7,7 @@ class GroupedCumulativeFormatStrategy(FormatStrategy):
 
     def fit_model(self, **kwargs):
 
-        if kwargs.keys().__contains__('end_sample'):
-            end = kwargs.get('end_sample')
-        else:
-            end = len(self.data.get_times())
+        end = self.determine_end_sample(kwargs.get('end_sample'))
 
         initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
 
