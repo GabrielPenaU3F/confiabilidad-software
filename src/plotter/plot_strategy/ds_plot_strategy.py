@@ -16,10 +16,17 @@ class DSPlotStrategy(PlotStrategy):
         ds = DelayedSShapedEstimator()
 
         fig, ax = plt.subplots()
-        ax.plot(x_axis_data, cumulative_failures, linewidth=1, color='#263859', linestyle='--',
-                label='Real data (' + project_title + ')')
-        ax.plot(x_axis_data, ds.calculate_mean_failure_numbers(x_axis_data, lsq_params[0], lsq_params[1]),
-                linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
+        self.plot_real_data(ax, x_axis_data, cumulative_failures, project_title)
+        self.plot_least_squares(ax, ds, x_axis_data, lsq_params)
         ax.plot(x_axis_data, ds.calculate_mean_failure_numbers(x_axis_data, ml_params[0], ml_params[1]),
                 linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')
         self.do_plot_format(ax)
+
+    def plot_least_squares(self, axes, ds, x_data, lsq_params):
+        axes.plot(x_data, ds.calculate_mean_failure_numbers(x_data, lsq_params[0], lsq_params[1]),
+                  linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
+
+    def plot_maximum_likelihood(self, axes, ds, x_data, ml_params):
+        if ml_params is not None:
+            axes.plot(x_data, ds.calculate_mean_failure_numbers(x_data, ml_params[0], ml_params[1]),
+                      linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')

@@ -28,7 +28,7 @@ class FormatStrategy(ABC):
 
     def determine_ml_parameters(self, lsq_only_arg, *ml_function_parameters):
         if lsq_only_arg is True:
-            ml_params = ml_function_parameters[1]
+            ml_params = None
         else:
             ml_params = self.execute_ml_function(*ml_function_parameters, solving_method='krylov')
         return ml_params

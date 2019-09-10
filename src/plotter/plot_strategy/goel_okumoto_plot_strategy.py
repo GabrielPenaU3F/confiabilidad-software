@@ -17,10 +17,16 @@ class GoelOkumotoPlotStrategy(PlotStrategy):
         go = GoelOkumotoEstimator()
 
         fig, ax = plt.subplots()
-        ax.plot(x_axis_data, cumulative_failures, linewidth=1, color='#263859', linestyle='--',
-                label='Real data (' + project_title + ')')
-        ax.plot(x_axis_data, go.calculate_mean_failure_numbers(x_axis_data, lsq_params[0], lsq_params[1]),
-                linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
-        ax.plot(x_axis_data, go.calculate_mean_failure_numbers(x_axis_data, ml_params[0], ml_params[1]),
-                linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')
+        self.plot_real_data(ax, x_axis_data, cumulative_failures, project_title)
+        self.plot_least_squares(ax, go, x_axis_data, lsq_params)
+        self.plot_maximum_likelihood(ax, go, x_axis_data, ml_params)
         self.do_plot_format(ax)
+
+    def plot_maximum_likelihood(self, axes, go, x_data, ml_params):
+        if ml_params is not None:
+            axes.plot(x_data, go.calculate_mean_failure_numbers(x_data, ml_params[0], ml_params[1]),
+                      linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')
+
+    def plot_least_squares(self, axes, go, x_data, lsq_params):
+        axes.plot(x_data, go.calculate_mean_failure_numbers(x_data, lsq_params[0], lsq_params[1]),
+                  linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
