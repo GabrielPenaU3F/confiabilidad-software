@@ -4,7 +4,8 @@ from functools import partial
 import numpy as np
 import scipy.optimize as opt
 from colorama import Fore, Back
-from scipy.optimize.nonlin import NoConvergence
+
+from src.exceptions.exceptions import InvalidFitException
 
 
 class ModelEstimator(ABC):
@@ -36,6 +37,8 @@ class ModelEstimator(ABC):
                             method=solving_method).x
         except ValueError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
+            #TODO: Hallar forma de capturar esta excepcion
+            # raise InvalidFitException(str(error))
 
     @abstractmethod
     def ttf_ml_equations(self, times, vec):

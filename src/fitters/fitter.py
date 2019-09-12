@@ -4,6 +4,7 @@ from colorama import Back, Fore
 
 from src.domain.fit import Fit
 from src.exceptions.exceptions import InvalidArgumentException
+from src.fitters.fit_strategy.barraza_contagion_fit_strategy import BarrazaContagionFitStrategy
 from src.fitters.fit_strategy.ds_fit_strategy import DSFitStrategy
 from src.fitters.fit_strategy.goel_okumoto_fit_strategy import GoelOkumotoFitStrategy
 from src.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
@@ -17,7 +18,8 @@ class Fitter(ABC):
     fit_strategy = {
         'goel-okumoto': GoelOkumotoFitStrategy,
         'delayed-s-shaped': DSFitStrategy,
-        'logistic': LogisticFitStrategy
+        'logistic': LogisticFitStrategy,
+        'barraza-contagion': BarrazaContagionFitStrategy
     }
 
     def get_model_strategy(self, model):
@@ -32,6 +34,7 @@ class Fitter(ABC):
         Goel-Okumoto: 'goel-okumoto'
         Delayed S-Shaped: 'delayed-s-shaped'
         Logistic: 'logistic'
+        Barraza Contagion: 'barraza-contagion'
     """
     def fit(self, model, project_name, **kwargs):
 

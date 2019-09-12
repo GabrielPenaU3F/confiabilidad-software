@@ -13,3 +13,9 @@ class NotAdmittedFormatException(ExceptionWithMessage):
 class InvalidArgumentException(ExceptionWithMessage):
 
     pass
+
+
+class InvalidFitException(ExceptionWithMessage):
+
+    pass
+
