@@ -37,7 +37,7 @@ class ModelEstimator(ABC):
                             method=solving_method).x
         except ValueError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-            #TODO: Hallar forma de capturar esta excepcion
+            # TODO: Find a way to handle this exception
             # raise InvalidFitException(str(error))
 
     @abstractmethod

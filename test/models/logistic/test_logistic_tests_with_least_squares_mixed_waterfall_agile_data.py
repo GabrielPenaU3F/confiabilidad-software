@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import GroupedCumulativeFitter
+from src.fitters.fitter import GroupedFPDFitter
 
 
 class LogisticTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
@@ -9,8 +9,8 @@ class LogisticTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedCumulativeFitter().fit('logistic', 'mixed-waterfall-agile',
-                                                initial_approx=(0.01, 0.001, 0.000001))
+        cls.fit = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile',
+                                         initial_approx=(0.01, 0.001, 0.000001))
 
     def test_mixed_waterfall_agile_logistic_least_squares_a_parameter_is_835_comma_410609(self):
         a = LogisticTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]
