@@ -17,6 +17,8 @@ class LogisticPlotStrategy(PlotStrategy):
 
         fig, ax = plt.subplots()
         self.plot_real_data(ax, x_axis_data, cumulative_failures, project_title)
+        self.plot_least_squares(ax, log, x_axis_data, lsq_params)
+        self.plot_maximum_likelihood(ax, log, x_axis_data, ml_params)
         self.do_plot_format(ax)
 
     def plot_least_squares(self, axes, log, x_data, lsq_params):

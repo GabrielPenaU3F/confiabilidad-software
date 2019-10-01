@@ -4,6 +4,9 @@ from src.result_presenter.result_displaying_strategy.result_displaying_strategy 
 
 class LogisticResultDisplayingStrategy(ResultDisplayingStrategy):
 
+    def __init__(self, project_name):
+        super().__init__(project_name, 'Logistic')
+
     def print_least_squares_parameters(self, a_lsq, b_lsq, c_lsq):
         print(Fore.YELLOW + 'Least squares estimates:')
         print(Fore.LIGHTRED_EX + ('a = ' + a_lsq.__str__()))
