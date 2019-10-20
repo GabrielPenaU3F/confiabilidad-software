@@ -39,3 +39,6 @@ class FitStrategy(ABC):
 
     def calculate_mttf(self, *model_parameters):
         return self.model.calculate_mttf(self.data.get_cumulative_failures()[-1], *model_parameters)
+
+    def calculate_mtbf(self, mttf):
+        return self.model.calculate_mtbf(mttf)

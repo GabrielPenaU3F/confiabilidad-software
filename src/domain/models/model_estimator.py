@@ -144,8 +144,7 @@ class ModelEstimator(ABC):
         return sum - (mu_tn - mu_t0)
 
     def calculate_mttf(self, n_fallas, *model_parameters):
-        mtbf = []
-        mtbf.append(0)
+        mttf = [0]
         for k in range(1, n_fallas):
             limsup = self.calculate_limit_for_mu(*model_parameters)
             denominator = gamma.lower_incomplete_gamma(limsup, k)
@@ -154,7 +153,13 @@ class ModelEstimator(ABC):
                                         (self.calculate_mean(u, *model_parameters)**(k-1)) *
                                         np.exp(- self.calculate_mean(u, *model_parameters))),
                                        0, +np.inf)[0]
-            mtbf.append(numerator/denominator)
+            mttf.append(numerator/denominator)
+        return mttf
+
+    def calculate_mtbf(self, mttf):
+        mtbf = [0]
+        for k in range(1, len(mttf)):
+            mtbf.append(mttf[k] - mttf[k-1])
         return mtbf
 
     def get_default_initial_approx(self, format):

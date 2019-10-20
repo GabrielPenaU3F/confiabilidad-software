@@ -22,6 +22,7 @@ class Fit:
                 self.prr_ml = None
                 self.aic = None
                 self.mttf = fit_strategy.calculate_mttf(*lsq_params)
+            self.mtbf = fit_strategy.calculate_mtbf(self.mttf)
 
     def show_results(self):
         if self.project_name is not None:
@@ -50,5 +51,11 @@ class Fit:
     def get_all_mttf(self):
         return self.mttf
 
+    def get_all_mtbf(self):
+        return self.mtbf
+
     def get_mttf(self, k):
         return self.mttf[k]
+
+    def get_mtbf(self, k):
+        return self.mtbf[k]

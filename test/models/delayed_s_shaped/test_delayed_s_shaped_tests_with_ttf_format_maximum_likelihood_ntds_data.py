@@ -39,8 +39,16 @@ class DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCas
         mttf = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mttf(3)
         self.assertAlmostEqual(mttf, 29.3, places=1)
 
-    def test_mttf_for_k_equal_4_is_35_comma_5(self):
-        mttf = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mttf(4)
-        self.assertAlmostEqual(mttf, 35.5, places=1)
+    def test_mtbf_for_k_equal_1_is_14_comma_4(self):
+        mtbf = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(1)
+        self.assertAlmostEqual(mtbf, 14.4, places=1)
+
+    def test_mtbf_for_k_equal_5_is_5_comma_8(self):
+        mtbf = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(5)
+        self.assertAlmostEqual(mtbf, 5.8, places=1)
+
+    def test_mtbf_for_k_equal_20_is_9_comma_0(self):
+        mtbf = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(20)
+        self.assertAlmostEqual(mtbf, 9.0, places=1)
 
 
