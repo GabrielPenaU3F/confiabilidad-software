@@ -28,7 +28,7 @@ class BarrazaContagionEstimator(ModelEstimator):
     def calculate_limit_for_mu(self, *model_parameters):
         a, b = model_parameters
         if b > 0:
-            return np.inf
+            return +np.inf
         elif b < 0:
             return -1/b
 
@@ -39,4 +39,10 @@ class BarrazaContagionEstimator(ModelEstimator):
         return None
 
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):
+        return None
+
+    def calculate_mttf(self, n_fallas, *model_parameters):
+        return None
+
+    def calculate_mtbf(self, mttf):
         return None
