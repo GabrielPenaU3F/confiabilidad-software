@@ -25,6 +25,13 @@ class BarrazaContagionEstimator(ModelEstimator):
         denominator = 1 + a * t
         return a * numerator / denominator
 
+    def calculate_limit_for_mu(self, *model_parameters):
+        a, b = model_parameters
+        if b > 0:
+            return np.inf
+        elif b < 0:
+            return -1/b
+
     def ttf_ml_equations(self, times, vec):
         return None
 

@@ -4,7 +4,9 @@ from functools import partial
 import numpy as np
 import scipy.optimize as opt
 from colorama import Fore, Back
+from scipy import integrate
 
+from src.auxiliar_math import gamma
 from src.exceptions.exceptions import InvalidFitException
 
 
@@ -18,6 +20,10 @@ class ModelEstimator(ABC):
 
     @abstractmethod
     def calculate_lambda(self, t, *model_parameters):
+        pass
+
+    @abstractmethod
+    def calculate_limit_for_mu(self, *model_parameters):
         pass
 
     def calculate_mean_failure_numbers(self, times, *model_parameters):
@@ -136,6 +142,20 @@ class ModelEstimator(ABC):
             delta_y_i_factorial = np.math.factorial(delta_y_i)
             sum += (delta_y_i * np.log(mu_ti - mu_ti_minus_1)) - np.math.log(delta_y_i_factorial)
         return sum - (mu_tn - mu_t0)
+
+    def calculate_mttf(self, n_fallas, *model_parameters):
+        mtbf = []
+        mtbf.append(0)
+        for k in range(1, n_fallas):
+            limsup = self.calculate_limit_for_mu(*model_parameters)
+            denominator = gamma.lower_incomplete_gamma(limsup, k)
+            numerator = integrate.quad(lambda u:
+                                       (u * self.calculate_lambda(u, *model_parameters) *
+                                        (self.calculate_mean(u, *model_parameters)**(k-1)) *
+                                        np.exp(- self.calculate_mean(u, *model_parameters))),
+                                       0, +np.inf)[0]
+            mtbf.append(numerator/denominator)
+        return mtbf
 
     def get_default_initial_approx(self, format):
         return self.default_initial_approximations.get(format)

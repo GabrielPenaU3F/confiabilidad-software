@@ -20,6 +20,10 @@ class GoelOkumotoEstimator(ModelEstimator):
         a, b = model_parameters
         return a * b * self.calculate_exp_minus_bt(b, t)
 
+    def calculate_limit_for_mu(self, *model_parameters):
+        a, b = model_parameters
+        return a
+
     def ttf_ml_equations(self, times, vec):
         a, b = vec
         return (self.ttf_ml_equation_1(a, b, times),

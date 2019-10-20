@@ -17,9 +17,11 @@ class Fit:
             if ml_params is not None:
                 self.prr_ml = fit_strategy.calculate_prr(*ml_params)
                 self.aic = fit_strategy.calculate_aic(*ml_params)
+                self.mttf = fit_strategy.calculate_mttf(*ml_params)
             else:
                 self.prr_ml = None
                 self.aic = None
+                self.mttf = fit_strategy.calculate_mttf(*lsq_params)
 
     def show_results(self):
         if self.project_name is not None:
@@ -44,3 +46,9 @@ class Fit:
 
     def get_aic(self):
         return self.aic
+
+    def get_all_mttf(self):
+        return self.mttf
+
+    def get_mttf(self, k):
+        return self.mttf[k]

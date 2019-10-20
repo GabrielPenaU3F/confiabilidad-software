@@ -24,6 +24,10 @@ class LogisticEstimator(ModelEstimator):
         denominator = (1 + phi)**2
         return numerator/denominator
 
+    def calculate_limit_for_mu(self, *model_parameters):
+        a, b, c = model_parameters
+        return a
+
     def ttf_ml_equations(self, times, vec):
         a, b, c = vec
         return (self.ttf_ml_equation_1(a, b, c, times),

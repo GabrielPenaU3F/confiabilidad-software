@@ -1,7 +1,6 @@
 from abc import ABC
 
 from src.data.data_repository import DataRepository
-from src.exceptions.exceptions import InvalidFitException
 from src.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
 from src.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
 
@@ -37,3 +36,6 @@ class FitStrategy(ABC):
     def calculate_aic(self, *model_parameters):
         strategy = self.format_strategies.get(self.data.get_format())(self.data, self.model)
         return strategy.calculate_aic(*model_parameters)
+
+    def calculate_mttf(self, *model_parameters):
+        return self.model.calculate_mttf(self.data.get_cumulative_failures()[-1], *model_parameters)
