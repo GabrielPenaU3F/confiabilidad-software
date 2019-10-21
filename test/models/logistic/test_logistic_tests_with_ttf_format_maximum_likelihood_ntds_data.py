@@ -30,3 +30,27 @@ class LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
     def test_ntds_logistic_aic_is_180_comma_515936(self):
         aic = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_aic()
         self.assertAlmostEqual(aic, 180.515936, places=6)
+        
+    def test_ntds_logistic_mttf_for_k_equal_1_is_5_comma_6(self):
+        mttf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mttf(1)
+        self.assertAlmostEqual(mttf, 5.6, delta=0.1)
+
+    def test_ntds_logistic_mttf_for_k_equal_2_is_15_comma_4(self):
+        mttf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mttf(2)
+        self.assertAlmostEqual(mttf, 15.4, delta=0.1)
+
+    def test_ntds_logistic_mttf_for_k_equal_3_is_25_comma_3(self):
+        mttf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mttf(3)
+        self.assertAlmostEqual(mttf, 25.3, delta=0.1)
+
+    def test_ntds_logistic_mtbf_for_k_equal_1_is_5_comma_6(self):
+        mtbf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(1)
+        self.assertAlmostEqual(mtbf, 5.6, delta=0.1)
+
+    def test_ntds_logistic_mtbf_for_k_equal_5_is_7_comma_1(self):
+        mtbf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(5)
+        self.assertAlmostEqual(mtbf, 7.1, delta=0.1)
+
+    def test_ntds_logistic_mtbf_for_k_equal_20_is_4_comma_1(self):
+        mtbf = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_mtbf(20)
+        self.assertAlmostEqual(mtbf, 4.1, delta=0.1)
