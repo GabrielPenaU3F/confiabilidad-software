@@ -1,4 +1,4 @@
-from src.domain.models.gompertz.gompertz import GompertzEstimator
+from src.domain.models.gompertz.gompertz_estimator import GompertzEstimator
 from src.fitters.fit_strategy.fit_strategy import FitStrategy
 
 

@@ -18,7 +18,7 @@ class GompertzEstimator(ModelEstimator):
 
     def calculate_lambda(self, t, *model_parameters):
         a, b, c = model_parameters
-        return a * t * (b ** (c ** t)) * (c ** (2*t - 1))
+        return a * (c ** t) * (b ** (c ** t)) * np.log(b) * np.log(c)
 
     def calculate_limit_for_mu(self, *model_parameters):
         a, b, c = model_parameters

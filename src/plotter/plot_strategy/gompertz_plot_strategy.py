@@ -1,5 +1,5 @@
 from src.data.data_repository import DataRepository
-from src.domain.models.gompertz.gompertz import GompertzEstimator
+from src.domain.models.gompertz.gompertz_estimator import GompertzEstimator
 from src.plotter.plot_strategy.plot_strategy import PlotStrategy
 from matplotlib import pyplot as plt
 
