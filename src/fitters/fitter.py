@@ -7,6 +7,7 @@ from src.exceptions.exceptions import InvalidArgumentException
 from src.fitters.fit_strategy.barraza_contagion_fit_strategy import BarrazaContagionFitStrategy
 from src.fitters.fit_strategy.ds_fit_strategy import DSFitStrategy
 from src.fitters.fit_strategy.goel_okumoto_fit_strategy import GoelOkumotoFitStrategy
+from src.fitters.fit_strategy.gompertz_fit_strategy import GompertzFitStrategy
 from src.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
 from src.fitters.format_strategy.grouped_cumulative_format_strategy import GroupedCumulativeFormatStrategy
 from src.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
@@ -19,7 +20,8 @@ class Fitter(ABC):
         'goel-okumoto': GoelOkumotoFitStrategy,
         'delayed-s-shaped': DSFitStrategy,
         'logistic': LogisticFitStrategy,
-        'barraza-contagion': BarrazaContagionFitStrategy
+        'barraza-contagion': BarrazaContagionFitStrategy,
+        'gompertz': GompertzFitStrategy
     }
 
     def get_model_strategy(self, model):
@@ -35,6 +37,7 @@ class Fitter(ABC):
         Delayed S-Shaped: 'delayed-s-shaped'
         Logistic: 'logistic'
         Barraza Contagion: 'barraza-contagion'
+        Gompertz: 'gompertz'
     """
     def fit(self, model, project_name, **kwargs):
 
