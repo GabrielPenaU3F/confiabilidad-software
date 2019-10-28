@@ -46,7 +46,7 @@ class LogisticEstimator(ModelEstimator):
         n = len(times)
         sum_tk = np.sum(times)
         fourth_term_sum = 0
-        for k in range(len(times)):
+        for k in range(n):
             t_k = times[k]
             psi_tk = self.calculate_psi(b, c, t_k)
             mu_tk = self.calculate_mean(t_k, a, b, c)
@@ -65,7 +65,7 @@ class LogisticEstimator(ModelEstimator):
     def ttf_ml_equation_3(self, a, b, c, times):
         n = len(times)
         second_term_sum = 0
-        for k in range(len(times)):
+        for k in range(n):
             t_k = times[k]
             mu_tk = self.calculate_mean(t_k, a, b, c)
             phi_tk = self.calculate_phi(t_k, b, c)
