@@ -24,14 +24,18 @@ class Fit:
                 self.mttf = fit_strategy.calculate_mttf(*lsq_params)
             self.mtbf = fit_strategy.calculate_mtbf(self.mttf)
 
-    def show_results(self):
+    def show_results(self, **kwargs):
         if self.project_name is not None:
             presenter = ResultPresenter()
             presenter.display_data(self.project_name, self.model,
                                    self.lsq_params, self.ml_params, self.prr_lsq, self.prr_ml, self.aic)
 
             plotter = Plotter()
-            plotter.plot(self.project_name, self.model, self.lsq_params, self.ml_params)
+            plotter.plot_results(self.project_name, self.model, self.lsq_params, self.ml_params)
+            if kwargs.get("plot_mttf") is True:
+                plotter.plot_mttf(self.mttf)
+            if kwargs.get("plot_mtbf") is True:
+                plotter.plot_mtbf(self.mtbf)
 
     def get_lsq_parameters(self):
         return self.lsq_params
