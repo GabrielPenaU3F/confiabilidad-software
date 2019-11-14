@@ -1,9 +1,9 @@
 import numpy as np
 
-from src.domain.models.model_estimator import ModelEstimator
+from src.domain.models.nhpp_estimator import NHPPEstimator
 
 
-class GompertzEstimator(ModelEstimator):
+class GompertzEstimator(NHPPEstimator):
 
     def __init__(self):
         self.default_initial_approximations = {
