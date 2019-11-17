@@ -37,8 +37,8 @@ class BarrazaContagionEstimator(NHPPEstimator):
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):
         return None
 
-    def calculate_mttf(self, n_fallas, *model_parameters):
+    def calculate_mttfs(self, n_failures, *model_parameters):
         return None
 
-    def calculate_mtbf(self, mttf):
+    def calculate_mtbfs(self, mttfs):
         return None

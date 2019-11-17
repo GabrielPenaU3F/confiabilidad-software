@@ -37,8 +37,8 @@ class FitStrategy(ABC):
         strategy = self.format_strategies.get(self.data.get_format())(self.data, self.model)
         return strategy.calculate_aic(*model_parameters)
 
-    def calculate_mttf(self, *model_parameters):
-        return self.model.calculate_mttf(self.data.get_cumulative_failures()[-1], *model_parameters)
+    def calculate_mttfs(self, *model_parameters):
+        return self.model.calculate_mttfs(self.data.get_cumulative_failures()[-1], *model_parameters)
 
-    def calculate_mtbf(self, mttf):
-        return self.model.calculate_mtbf(mttf)
+    def calculate_mtbfs(self, mttfs):
+        return self.model.calculate_mtbfs(mttfs)

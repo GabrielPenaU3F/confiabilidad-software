@@ -20,9 +20,9 @@ class ModelEstimator(ABC):
         pass
 
     @abstractmethod
-    def calculate_mttf(self, n_fallas, *model_parameters):
+    def calculate_mttfs(self, n_fallas, *model_parameters):
         pass
 
     @abstractmethod
-    def calculate_mtbf(self, mttf):
+    def calculate_mtbfs(self, mttf):
         pass
