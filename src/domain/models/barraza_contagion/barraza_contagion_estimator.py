@@ -1,9 +1,10 @@
 import numpy as np
+import scipy.optimize as opt
 
-from src.domain.models.nhpp_estimator import NHPPEstimator
+from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 
-class BarrazaContagionEstimator(NHPPEstimator):
+class BarrazaContagionEstimator(PureBirthsEstimator):
 
     def __init__(self):
         self.default_initial_approximations = {
@@ -28,13 +29,20 @@ class BarrazaContagionEstimator(NHPPEstimator):
     def calculate_limit_for_mu(self, *model_parameters):
         return +np.inf
 
-    def ttf_ml_equations(self, times, vec):
+    def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
+        parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
+        return parameters
+
+    def estimate_ttf_parameters_by_maximum_likelihood(self, *parameters, **kwargs):
+        pass
+
+    def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, *parameters, **kwargs):
+        pass
+
+    def ttf_ml_equations(self):
         return None
 
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        return None
-
-    def grouped_fpd_ml_equations(self, times, failures_per_day, vec):
+    def grouped_fpd_ml_equations(self):
         return None
 
     def calculate_mttfs(self, n_failures, *model_parameters):
@@ -42,3 +50,14 @@ class BarrazaContagionEstimator(NHPPEstimator):
 
     def calculate_mtbfs(self, mttfs):
         return None
+
+    def calculate_prr(self, times, cumulative_failures, *model_parameters):
+        # The first value is always zero. It has to be eliminated in order to allow the division
+        times = times[1:]
+        cumulative_failures = cumulative_failures[1:]
+
+        estimated_failures = [self.calculate_mean(times[i], *model_parameters) for i in range(len(times))]
+        prr = 0
+        for i in range(len(times)):
+            prr += (1 - cumulative_failures[i] / estimated_failures[i]) ** 2
+        return prr

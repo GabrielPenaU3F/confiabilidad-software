@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from functools import partial
 
 import numpy as np
@@ -7,10 +7,10 @@ from colorama import Fore, Back
 from scipy import integrate
 
 from src.auxiliar_math import gamma
-from src.domain.models.model_estimator import ModelEstimator
+from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 
-class NHPPEstimator(ModelEstimator):
+class NHPPEstimator(PureBirthsEstimator):
 
     default_initial_approximations = None
 
