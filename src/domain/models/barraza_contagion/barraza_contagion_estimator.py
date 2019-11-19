@@ -29,6 +29,9 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
     def calculate_limit_for_mu(self, *model_parameters):
         return +np.inf
 
+    def calculate_mean_failure_numbers(self, times, *model_parameters):
+        return self.calculate_mean(np.array(times), *model_parameters)
+
     def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
         parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
         return parameters
@@ -50,6 +53,11 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
 
     def calculate_mtbfs(self, mttfs):
         return None
+
+    def calculate_mtbf(self, n_failure_time, *model_parameters):
+        a, b = model_parameters
+        parenthesis = 1 + a * n_failure_time
+        return parenthesis / (a * (parenthesis**b - 1))
 
     def calculate_prr(self, times, cumulative_failures, *model_parameters):
         # The first value is always zero. It has to be eliminated in order to allow the division

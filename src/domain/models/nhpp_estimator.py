@@ -12,8 +12,6 @@ from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 class NHPPEstimator(PureBirthsEstimator):
 
-    default_initial_approximations = None
-
     @abstractmethod
     def calculate_mean(self, t, *model_parameters):
         pass
@@ -168,7 +166,3 @@ class NHPPEstimator(PureBirthsEstimator):
         for k in range(1, len(mttfs)):
             mtbfs.append(mttfs[k] - mttfs[k - 1])
         return mtbfs
-
-    def get_default_initial_approx(self, format):
-        return self.default_initial_approximations.get(format)
-

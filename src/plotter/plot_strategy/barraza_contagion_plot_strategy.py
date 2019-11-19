@@ -24,6 +24,6 @@ class BarrazaContagionPlotStrategy(PlotStrategy):
     def plot_maximum_likelihood(self, axes, go, x_data, ml_params):
         pass
 
-    def plot_least_squares(self, axes, go, x_data, lsq_params):
-        axes.plot(x_data, go.calculate_mean_failure_numbers(x_data, lsq_params[0], lsq_params[1]),
+    def plot_least_squares(self, axes, bc, x_data, lsq_params):
+        axes.plot(x_data, bc.calculate_mean_failure_numbers(x_data, lsq_params[0], lsq_params[1]),
                   linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
