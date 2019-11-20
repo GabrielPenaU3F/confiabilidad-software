@@ -39,9 +39,11 @@ class PureBirthsEstimator(ABC):
     def calculate_mttfs(self, *parameters):
         pass
 
-    @abstractmethod
-    def calculate_mtbfs(self, *parameters):
-        pass
+    def calculate_mtbfs(self, mttfs):
+        mtbfs = [mttfs[0]]
+        for k in range(1, len(mttfs)):
+            mtbfs.append(mttfs[k] - mttfs[k - 1])
+        return mtbfs
 
     @abstractmethod
     def calculate_prr(self, *parameters):

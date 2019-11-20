@@ -48,11 +48,12 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
     def grouped_fpd_ml_equations(self):
         return None
 
-    def calculate_mttfs(self, n_failures, *model_parameters):
-        return None
-
-    def calculate_mtbfs(self, mttfs):
-        return None
+    def calculate_mttfs(self, failure_times, *model_parameters):
+        mttfs = []
+        mttfs.append(self.calculate_mtbf(failure_times[0], *model_parameters))
+        for k in range(1, len(failure_times)):
+            mttfs.append(mttfs[k-1] + self.calculate_mtbf(failure_times[k], *model_parameters))
+        return mttfs
 
     def calculate_mtbf(self, n_failure_time, *model_parameters):
         a, b = model_parameters

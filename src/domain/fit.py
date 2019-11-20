@@ -22,7 +22,8 @@ class Fit:
                 self.prr_ml = None
                 self.aic = None
                 self.mttf = fit_strategy.calculate_mttfs(*lsq_params)
-            self.mtbf = fit_strategy.calculate_mtbfs(self.mttf)
+            if self.mttf is not None:
+                self.mtbf = fit_strategy.calculate_mtbfs(self.mttf)
 
     def show_results(self, **kwargs):
         if self.project_name is not None:
@@ -33,8 +34,10 @@ class Fit:
             plotter = Plotter()
             plotter.plot_results(self.project_name, self.model, self.lsq_params, self.ml_params)
             if kwargs.get("plot_mttf") is True:
+                plotter.show_mt_warning(self.model, self.project_name)
                 plotter.plot_mttf(self.mttf)
             if kwargs.get("plot_mtbf") is True:
+                plotter.show_mt_warning(self.model, self.project_name)
                 plotter.plot_mtbf(self.mtbf)
 
     def get_lsq_parameters(self):

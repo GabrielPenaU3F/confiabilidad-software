@@ -61,3 +61,7 @@ class Plotter:
 
     def get_model_strategy(self, model):
         return self.plot_strategy.get(model)
+
+    def show_mt_warning(self, model, project_name):
+        strategy = self.get_model_strategy(model)(project_name)
+        strategy.show_mt_warning()

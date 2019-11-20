@@ -37,3 +37,6 @@ class PlotStrategy(ABC):
         axes.set_facecolor("#ffffff")
         axes.grid(color='black', linestyle='--', linewidth=0.5)
         axes.legend()
+
+    def show_mt_warning(self):
+        pass

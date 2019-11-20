@@ -145,8 +145,6 @@ class NHPPEstimator(PureBirthsEstimator):
         upper_limit = self.calculate_limit_for_mu(*model_parameters)
         mttfs = [0]
         for k in range(1, n_failures):
-            if k==104:
-                a=2
             mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
             mttfs.append(mttf)
         return mttfs
@@ -160,9 +158,3 @@ class NHPPEstimator(PureBirthsEstimator):
                                    0, +np.inf, limit=2000)[0]
         mttf = numerator / denominator
         return mttf
-
-    def calculate_mtbfs(self, mttfs):
-        mtbfs = [0]
-        for k in range(1, len(mttfs)):
-            mtbfs.append(mttfs[k] - mttfs[k - 1])
-        return mtbfs
