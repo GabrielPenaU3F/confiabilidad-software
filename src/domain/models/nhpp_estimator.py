@@ -6,7 +6,7 @@ import scipy.optimize as opt
 from colorama import Fore, Back
 from scipy import integrate
 
-from src.auxiliar_math import gamma
+from src.auxiliar_math import gamma, maximum
 from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 
@@ -150,11 +150,28 @@ class NHPPEstimator(PureBirthsEstimator):
         return mttfs
 
     def calculate_mttf(self, k, upper_limit, *model_parameters):
+        if k <= 100:
+            mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
+        else:
+            #mttf = self.calculate_approximate_mttf_integral(k, *model_parameters)
+            mttf = np.nan
+        return mttf
+
+    def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
         denominator = gamma.lower_incomplete_gamma(upper_limit, k)
         numerator = integrate.quad(lambda u:
                                    (u * self.calculate_lambda(u, *model_parameters) *
                                     (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
                                     np.exp(- self.calculate_mean(u, *model_parameters))),
                                    0, +np.inf, limit=2000)[0]
-        mttf = numerator / denominator
-        return mttf
+        return numerator / denominator
+
+    def calculate_approximate_mttf_integral(self, k, *model_parameters):
+        t_max = maximum.find_maximum(self.approximate_mttf_integrand, 90, k, *model_parameters)
+        if k == 500:
+            lowlim, uplim = 2, 2
+
+    def approximate_mttf_integrand(self, u, k, *model_parameters):
+        mu = self.calculate_mean(u, *model_parameters)
+        lambda_u = self.calculate_lambda(u, *model_parameters)
+        return (u * lambda_u * (mu ** (k - 1)) * np.exp(-mu)) / (np.math.factorial(k))
