@@ -44,3 +44,10 @@ class Data(ABC):
             if self.times is None:
                 return np.arange(1, len(self.data) + 1)
             return self.times
+
+    def get_time_between_failures(self):
+        tbfs = [self.data[0]]
+        if self.format == 'ttf':
+            for i in range(1, len(self.data)):
+                tbfs.append(self.data[i] - self.data[i-1])
+        return tbfs

@@ -16,6 +16,7 @@ ntds = DataRepository.provide_project_data('ntds')
 ntds_data = ntds.get_data()
 ntds_cumfailures = ntds.get_cumulative_failures()
 n = ntds_cumfailures[-1]
+tbf = ntds.get_time_between_failures()
 
 a_go = 33.5994
 b_go = 0.0063
@@ -46,12 +47,15 @@ ig, axes = plt.subplots()
 axes.set_xlabel('Failure number')
 axes.set_ylabel('Mean time between failures')
 axes.set_xlim(left=0, auto=True)
-axes.set_ylim(auto=True)
+axes.set_ylim(bottom=0, top=20)
 axes.patch.set_facecolor("#ffffff")
 axes.patch.set_edgecolor('black')
 axes.patch.set_linewidth('1')
 axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
+axes.set_ylim(bottom=0, top=20)
+axes.plot(failures, tbf, linewidth=1, color='black', linestyle='--',
+          label='Real data (' + 'NTDS' + ')')
 axes.plot(failures, mtbf_go,
           linewidth=1, color='#949494', linestyle='-', label='Goel-Okumoto')
 axes.plot(failures, mtbf_ds,

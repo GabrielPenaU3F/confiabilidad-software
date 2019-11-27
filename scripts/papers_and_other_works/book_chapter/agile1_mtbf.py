@@ -14,6 +14,8 @@ agile1 = DataRepository.provide_project_data('agile-n1')
 agile1_data = agile1.get_data()
 agile1_cumfailures = agile1.get_cumulative_failures()
 n = agile1_cumfailures[-1]
+tbf = agile1.get_time_between_failures()
+
 
 a_ds = 72.4203
 b_ds = 0.0031
@@ -39,12 +41,14 @@ ig, axes = plt.subplots()
 axes.set_xlabel('Failure number')
 axes.set_ylabel('Mean time between failures')
 axes.set_xlim(left=0, auto=True)
-axes.set_ylim(auto=True)
+axes.set_ylim(bottom=0, top=50)
 axes.patch.set_facecolor("#ffffff")
 axes.patch.set_edgecolor('black')
 axes.patch.set_linewidth('1')
 axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
+axes.plot(failures, tbf, linewidth=1, color='black', linestyle='--',
+          label='Real data (' + 'Agile #1' + ')')
 axes.plot(failures, mtbf_ds,
           linewidth=1, color='#696969', linestyle='-', label='Delayed S-Shaped')
 axes.plot(failures, mtbf_log,
