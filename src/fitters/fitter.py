@@ -58,7 +58,7 @@ class Fitter(ABC):
 class TTFFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        if data.get_format() is 'ttf':
+        if data.get_format() == 'ttf':
             return TTFFormatStrategy(data, model)
         else:
             raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
@@ -67,7 +67,7 @@ class TTFFitter(Fitter):
 class GroupedCumulativeFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        if data.get_format() is 'grouped':
+        if data.get_format() == 'grouped':
             return GroupedCumulativeFormatStrategy(data, model)
         else:
             raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
@@ -76,7 +76,7 @@ class GroupedCumulativeFitter(Fitter):
 class GroupedFPDFitter(Fitter):
 
     def choose_format_strategy(self, data, model):
-        if data.get_format() is 'grouped':
+        if data.get_format() == 'grouped':
             return GroupedFPDFormatStrategy(data, model)
         else:
             raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
