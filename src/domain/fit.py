@@ -62,7 +62,7 @@ class Fit:
         return self.mtbf
 
     def get_mttf(self, k):
-        return self.mttf[k]
+        return self.mttf[k-1]
 
     def get_mtbf(self, k):
-        return self.mtbf[k]
+        return self.mtbf[k-1]
