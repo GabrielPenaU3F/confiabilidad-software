@@ -9,6 +9,7 @@ from src.fitters.fit_strategy.ds_fit_strategy import DSFitStrategy
 from src.fitters.fit_strategy.goel_okumoto_fit_strategy import GoelOkumotoFitStrategy
 from src.fitters.fit_strategy.gompertz_fit_strategy import GompertzFitStrategy
 from src.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
+from src.fitters.fit_strategy.musa_okumoto_fit_strategy import MusaOkumotoFitStrategy
 from src.fitters.format_strategy.grouped_cumulative_format_strategy import GroupedCumulativeFormatStrategy
 from src.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
 from src.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
@@ -17,6 +18,7 @@ from src.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
 class Fitter(ABC):
 
     fit_strategy = {
+        'musa-okumoto': MusaOkumotoFitStrategy,
         'goel-okumoto': GoelOkumotoFitStrategy,
         'delayed-s-shaped': DSFitStrategy,
         'logistic': LogisticFitStrategy,
@@ -33,6 +35,7 @@ class Fitter(ABC):
 
     """
     Accepted models
+        Musa-Okumoto: 'musa-okumoto'
         Goel-Okumoto: 'goel-okumoto'
         Delayed S-Shaped: 'delayed-s-shaped'
         Logistic: 'logistic'

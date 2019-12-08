@@ -1,5 +1,5 @@
 from src.fitters.fitter import GroupedFPDFitter
 
-fpd_fitter = GroupedFPDFitter()
-fit = fpd_fitter.fit('goel-okumoto', 'agile-n2')
+fitter = GroupedFPDFitter()
+fit = fitter.fit('musa-okumoto', 'mixed-waterfall-agile')
 fit.show_results(plot_mttf=True, plot_mtbf=True)

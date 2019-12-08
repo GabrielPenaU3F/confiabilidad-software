@@ -10,11 +10,14 @@ from src.result_presenter.result_displaying_strategy.gompertz_result_displaying_
     GompertzResultDisplayingStrategy
 from src.result_presenter.result_displaying_strategy.logistic_result_displaying_strategy import \
     LogisticResultDisplayingStrategy
+from src.result_presenter.result_displaying_strategy.musa_okumoto_result_displaying_strategy import \
+    MusaOkumotoResultDisplayingStrategy
 
 
 class ResultPresenter:
 
     result_displaying_strategy = {
+        'musa-okumoto': MusaOkumotoResultDisplayingStrategy,
         'goel-okumoto': GoelOkumotoResultDisplayingStrategy,
         'delayed-s-shaped': DelayedSShapedResultDisplayingStrategy,
         'logistic': LogisticResultDisplayingStrategy,

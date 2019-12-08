@@ -3,7 +3,7 @@ import numpy as np
 from src.domain.models.nhpp_estimator import NHPPEstimator
 
 
-class GoelOkumotoEstimator(NHPPEstimator):
+class MusaOkumotoEstimator(NHPPEstimator):
 
     def __init__(self):
         self.default_initial_approximations = {
@@ -14,15 +14,14 @@ class GoelOkumotoEstimator(NHPPEstimator):
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
-        return a * (1 - self.calculate_exp_minus_bt(b, t))
+        return a * (np.log(1 + b*t))
 
     def calculate_lambda(self, t, *model_parameters):
         a, b = model_parameters
-        return a * b * self.calculate_exp_minus_bt(b, t)
+        return a * b / (1 + b*t)
 
     def calculate_limit_for_mu(self, *model_parameters):
-        a, b = model_parameters
-        return a
+        return np.infty
 
     def ttf_ml_equations(self, times, vec):
         a, b = vec
@@ -31,14 +30,22 @@ class GoelOkumotoEstimator(NHPPEstimator):
 
     def ttf_ml_equation_1(self, a, b, times):
         n = len(times)
+        t_0 = 0
         t_n = times[-1]
-        return self.calculate_mean(t_n, a, b) - n
+        return n - (self.calculate_mean(t_n, a, b) - self.calculate_mean(t_0, a, b))
 
     def ttf_ml_equation_2(self, a, b, times):
         n = len(times)
         t_n = times[-1]
-        sum_tk = np.sum(times)
-        return sum_tk + a * t_n * self.calculate_exp_minus_bt(b, t_n) - (n / b)
+        t_0 = 0
+        lambda_tn = self.calculate_lambda(t_n, a, b)
+        lambda_t0 = self.calculate_lambda(t_0, a, b)
+        sum = 0
+        for k in range(n):
+            t_k = times[k]
+            lambda_tk = self.calculate_lambda(t_k, a, b)
+            sum += t_k * lambda_tk
+        return n - (t_n * lambda_tn - t_0 * lambda_t0) - sum/a
 
     def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
         a, b = vec
@@ -46,22 +53,10 @@ class GoelOkumotoEstimator(NHPPEstimator):
                 self.grouped_cumulative_ml_equation_2(a, b, days, cumulative_failures))
 
     def grouped_cumulative_ml_equation_1(self, a, b, days, cumulative_failures):
-        n = len(days)
-        sum_yi = np.sum(cumulative_failures)
-        sum_exp = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            sum_exp += self.calculate_exp_minus_bt(b, t_i)
-        return (sum_yi/a) - n + sum_exp
+        pass
 
     def grouped_cumulative_ml_equation_2(self, a, b, days, cumulative_failures):
-        sum = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            exp_b_ti = self.calculate_exp_minus_bt(b, t_i)
-            parentheses_factor = (cumulative_failures[i] / (1 - exp_b_ti)) - a
-            sum += t_i * exp_b_ti * parentheses_factor
-        return sum
+        pass
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
@@ -71,11 +66,17 @@ class GoelOkumotoEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
+        t_0 = 0
         t_n = days[-1]
-        return sum_delta_yi - self.calculate_mean(t_n, a, b)
+        mu_t0 = self.calculate_mean(t_0, a, b)
+        mu_tn = self.calculate_mean(t_n, a, b)
+        return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, days, failures_per_day):
+        t_0 = 0
         t_n = days[-1]
+        lambda_t0 = self.calculate_lambda(t_0, a, b)
+        lambda_tn = self.calculate_lambda(t_n, a, b)
         deltas_yi = failures_per_day
         sum_delta_x_phi = 0
         for i in range(len(days)):
@@ -84,20 +85,10 @@ class GoelOkumotoEstimator(NHPPEstimator):
                 t_i_minus_1 = 0
             else:
                 t_i_minus_1 = days[i - 1]
-            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(b, t_i, t_i_minus_1))
-        return sum_delta_x_phi + a * t_n * self.calculate_exp_minus_bt(b, t_n)
+            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(a, b, t_i, t_i_minus_1))
+        return sum_delta_x_phi - (t_n * lambda_tn - t_0 * lambda_t0)
 
-    def calculate_phi(self, b, t_i, t_i_minus_1):
-        num = t_i_minus_1 * self.calculate_exp_minus_bt(b, t_i_minus_1) - t_i * self.calculate_exp_minus_bt(b, t_i)
-        den = self.calculate_exp_minus_bt(b, t_i_minus_1) - self.calculate_exp_minus_bt(b, t_i)
+    def calculate_phi(self, a, b, t_i, t_i_minus_1):
+        num = t_i * self.calculate_lambda(t_i, a, b) - t_i_minus_1 * self.calculate_lambda(t_i_minus_1, a, b)
+        den = self.calculate_mean(t_i, a, b) - self.calculate_mean(t_i_minus_1, a, b)
         return num/den
-
-    def calculate_exp_minus_bt(self, b, t):
-        return np.exp(-b * t)
-
-
-
-
-
-
-

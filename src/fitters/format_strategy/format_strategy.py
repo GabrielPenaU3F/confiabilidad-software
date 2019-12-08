@@ -12,6 +12,7 @@ class FormatStrategy(ABC):
         self.model = model
 
     def determine_end_sample(self, end_sample_arg):
+        end = None
         if end_sample_arg is None:
             end = len(self.data.get_times())
         else:
