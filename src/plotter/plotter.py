@@ -28,9 +28,6 @@ class Plotter:
     def plot_mttf(self, mttf):
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mttf), len(mttf))
-        if len(failures) >= 100:
-            failures = failures[0:100]
-            mttf = mttf[0:100]
         axes.set_ylabel('MTTF')
         markerline, stemlines, baseline = axes.stem(
             failures, mttf, basefmt='black', linefmt='#ca3e47', label='MTTF', use_line_collection=True)
@@ -39,9 +36,6 @@ class Plotter:
     def plot_mtbf(self, mtbf):
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mtbf), len(mtbf))
-        if len(failures) >= 100:
-            failures = failures[0:100]
-            mtbf = mtbf[0:100]
         axes.set_ylabel('MTBF')
         markerline, stemlines, baseline = axes.stem(
             failures, mtbf, basefmt='black', linefmt='#ca3e47', label='MTBF', use_line_collection=True)

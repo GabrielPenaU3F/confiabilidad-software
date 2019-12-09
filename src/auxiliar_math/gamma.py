@@ -14,7 +14,7 @@ def lower_incomplete_gamma(a, z, **kwargs):
     if z < 50:
         gamma_z = sp.gamma(z)
         return gamma_z * normalized_lower_incomplete_gamma
-    else:
+    else:  # For large z, we take the factorial approximation
         gamma_z = np.math.factorial(np.math.floor(z-1))
         normalized_lower_incomplete_gamma_augmented = normalized_lower_incomplete_gamma * augmenting_factor
         return gamma_z * int(np.floor_divide(normalized_lower_incomplete_gamma_augmented, augmenting_factor))
