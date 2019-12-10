@@ -14,13 +14,14 @@ class Fit:
             self.lsq_params = lsq_params
             self.ml_params = ml_params
             self.prr_lsq = fit_strategy.calculate_prr(*lsq_params)
-            self.mttf = fit_strategy.calculate_mttfs(*lsq_params)
             if ml_params is not None:
                 self.prr_ml = fit_strategy.calculate_prr(*ml_params)
                 self.aic = fit_strategy.calculate_aic(*ml_params)
+                self.mttf = fit_strategy.calculate_mttfs(*ml_params)
             else:
                 self.prr_ml = None
                 self.aic = None
+                self.mttf = fit_strategy.calculate_mttfs(*lsq_params)
             if self.mttf is not None:
                 self.mtbf = fit_strategy.calculate_mtbfs(self.mttf)
 

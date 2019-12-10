@@ -29,21 +29,17 @@ class Plotter:
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mttf), len(mttf))
         axes.set_ylabel('MTTF')
-        markerline, stemlines, baseline = axes.stem(
-            failures, mttf, basefmt='black', linefmt='#ca3e47', label='MTTF', use_line_collection=True)
-        self.do_format_mt_plot(axes, markerline)
+        axes.plot(failures, mttf, label='MTTF')
+        self.do_format_mt_plot(axes)
 
     def plot_mtbf(self, mtbf):
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mtbf), len(mtbf))
         axes.set_ylabel('MTBF')
-        markerline, stemlines, baseline = axes.stem(
-            failures, mtbf, basefmt='black', linefmt='#ca3e47', label='MTBF', use_line_collection=True)
-        self.do_format_mt_plot(axes, markerline)
+        axes.plot(failures, mtbf, label='MTBF')
+        self.do_format_mt_plot(axes)
 
-    def do_format_mt_plot(self, axes, markerline):
-        markerline.set_markerfacecolor('#ca3e47')
-        markerline.set_markeredgecolor('#ca3e47')
+    def do_format_mt_plot(self, axes):
         axes.set_xlabel('Failure')
         axes.set_xlim(left=0, auto=True)
         axes.set_ylim(auto=True)

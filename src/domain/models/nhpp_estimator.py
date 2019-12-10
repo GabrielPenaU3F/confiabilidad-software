@@ -153,6 +153,8 @@ class NHPPEstimator(PureBirthsEstimator):
                 mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
                 if np.isnan(mttf):
                     wasnan = True
+                    mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
+                        k, upper_limit, *model_parameters)
             else:
                 mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
                     k, upper_limit, *model_parameters)
