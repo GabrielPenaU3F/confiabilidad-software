@@ -149,10 +149,8 @@ class NHPPEstimator(PureBirthsEstimator):
         mttfs = []
         wasnan = False
         for k in range(1, n_failures + 1):
-            if k==99:
-                a=2
             if not wasnan:
-                mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
+                mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
                 if np.isnan(mttf):
                     wasnan = True
                     mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
@@ -162,10 +160,6 @@ class NHPPEstimator(PureBirthsEstimator):
                     k, upper_limit, *model_parameters)
             mttfs.append(mttf)
         return mttfs
-
-    def calculate_mttf(self, k, upper_limit, *model_parameters):
-        mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
-        return mttf
 
     def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
         denominator = gamma.lower_incomplete_gamma(upper_limit, k)
