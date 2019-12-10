@@ -149,6 +149,8 @@ class NHPPEstimator(PureBirthsEstimator):
         mttfs = []
         wasnan = False
         for k in range(1, n_failures + 1):
+            if k==99:
+                a=2
             if not wasnan:
                 mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
                 if np.isnan(mttf):
@@ -174,7 +176,3 @@ class NHPPEstimator(PureBirthsEstimator):
                                    0, +np.inf, limit=2000)[0]
         return numerator / denominator
 
-    def approximate_mttf_integrand(self, u, k, *model_parameters):
-        mu = self.calculate_mean(u, *model_parameters)
-        lambda_u = self.calculate_lambda(u, *model_parameters)
-        return (u * lambda_u * (mu ** (k - 1)) * np.exp(-mu)) / (np.math.factorial(k))
