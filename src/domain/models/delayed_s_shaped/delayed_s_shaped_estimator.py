@@ -13,8 +13,7 @@ class DelayedSShapedEstimator(NHPPEstimator):
             'grouped-cumulative': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
-        saddlepoint_calculator = DelayedSShapedSaddlepointCalculator(self.calculate_lambda,
-                                                                     self.calculate_mean)
+        saddlepoint_calculator = DelayedSShapedSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 
     def calculate_mean(self, t, *model_parameters):

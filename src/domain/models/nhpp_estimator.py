@@ -6,7 +6,7 @@ import scipy.optimize as opt
 from colorama import Fore, Back
 from scipy import integrate
 
-from src.auxiliar_math import gamma, maximum
+from src.auxiliar_math import gamma
 from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 
