@@ -1,6 +1,6 @@
 import numpy as np
-import scipy.optimize
+import scipy.optimize as opt
 
 
-def find_maximum(function, initial_approx, *args):
-    return scipy.optimize.minimize_scalar(lambda x: -function(x, *args), bounds=((1, 1000),))
+def find_maximum(function, initial_guess, *args):
+    return opt.minimize(lambda x: -function(x, *args), x0=initial_guess, bounds=((0, 10000),)).x[0]

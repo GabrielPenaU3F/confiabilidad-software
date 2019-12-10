@@ -1,6 +1,8 @@
 import numpy as np
 
 from src.domain.models.nhpp_estimator import NHPPEstimator
+from src.domain.saddlepoint_calculators.delayed_s_shaped_saddlepoint_calculator import \
+    DelayedSShapedSaddlepointCalculator
 
 
 class DelayedSShapedEstimator(NHPPEstimator):
@@ -11,6 +13,9 @@ class DelayedSShapedEstimator(NHPPEstimator):
             'grouped-cumulative': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
+        saddlepoint_calculator = DelayedSShapedSaddlepointCalculator(self.calculate_lambda,
+                                                                     self.calculate_mean)
+        super().__init__(saddlepoint_calculator)
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters

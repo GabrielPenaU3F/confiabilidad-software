@@ -12,6 +12,9 @@ from src.domain.models.pure_births_estimator import PureBirthsEstimator
 
 class NHPPEstimator(PureBirthsEstimator):
 
+    def __init__(self, saddlepoint_calculator):
+        self.saddlepoint_calculator = saddlepoint_calculator
+
     @abstractmethod
     def calculate_mean(self, t, *model_parameters):
         pass
@@ -144,17 +147,20 @@ class NHPPEstimator(PureBirthsEstimator):
     def calculate_mttfs(self, n_failures, *model_parameters):
         upper_limit = self.calculate_limit_for_mu(*model_parameters)
         mttfs = []
+        wasnan = False
         for k in range(1, n_failures + 1):
-            mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
+            if not wasnan:
+                mttf = self.calculate_mttf(k, upper_limit, *model_parameters)
+                if np.isnan(mttf):
+                    wasnan = True
+            else:
+                mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
+                    k, upper_limit, *model_parameters)
             mttfs.append(mttf)
         return mttfs
 
     def calculate_mttf(self, k, upper_limit, *model_parameters):
-        if k <= 100:
-            mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
-        else:
-            #mttf = self.calculate_approximate_mttf_integral(k, *model_parameters)
-            mttf = np.nan
+        mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
         return mttf
 
     def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
@@ -165,11 +171,6 @@ class NHPPEstimator(PureBirthsEstimator):
                                     np.exp(- self.calculate_mean(u, *model_parameters))),
                                    0, +np.inf, limit=2000)[0]
         return numerator / denominator
-
-    def calculate_approximate_mttf_integral(self, k, *model_parameters):
-        t_max = maximum.find_maximum(self.approximate_mttf_integrand, 90, k, *model_parameters)
-        if k == 500:
-            lowlim, uplim = 2, 2
 
     def approximate_mttf_integrand(self, u, k, *model_parameters):
         mu = self.calculate_mean(u, *model_parameters)
