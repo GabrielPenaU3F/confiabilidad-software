@@ -23,3 +23,10 @@ class DSSaddlepointCalculatorTest(unittest.TestCase):
         calculator = DelayedSShapedSaddlepointCalculator(ds.calculate_mean, ds.calculate_lambda)
         saddlepoint_approx = calculator.calculate_saddlepoint_mttf_approximation(k, self.a, self.a, self.b)
         self.assertAlmostEqual(105, saddlepoint_approx, delta=1)
+
+    def test_ds_mttf_saddlepoint_approx_for_k_900_mixed_dataset(self):
+        k = 900
+        ds = DelayedSShapedEstimator()
+        calculator = DelayedSShapedSaddlepointCalculator(ds.calculate_mean, ds.calculate_lambda)
+        saddlepoint_approx = calculator.calculate_saddlepoint_mttf_approximation(k, self.a, self.a, self.b)
+        self.assertAlmostEqual(243, saddlepoint_approx, delta=1)
