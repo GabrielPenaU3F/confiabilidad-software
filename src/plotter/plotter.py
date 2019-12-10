@@ -29,14 +29,14 @@ class Plotter:
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mttf), len(mttf))
         axes.set_ylabel('MTTF')
-        axes.plot(failures, mttf, label='MTTF')
+        axes.scatter(failures, mttf, s=4.0, color='#ca3e47', label='MTTF')
         self.do_format_mt_plot(axes)
 
     def plot_mtbf(self, mtbf):
         fig, axes = plt.subplots()
         failures = np.linspace(1, len(mtbf), len(mtbf))
         axes.set_ylabel('MTBF')
-        axes.plot(failures, mtbf, label='MTBF')
+        axes.scatter(failures, mtbf, s=4.0, color='#ca3e47', label='MTBF')
         self.do_format_mt_plot(axes)
 
     def do_format_mt_plot(self, axes):
