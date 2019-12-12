@@ -2,7 +2,6 @@ import unittest
 
 from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 from src.domain.saddlepoint_calculators.goel_okumoto_saddlepoint_calculator import GoelOkumotoSaddlepointCalculator
-from src.fitters.fitter import GroupedFPDFitter
 
 
 class GOSaddlepointCalculatorTest(unittest.TestCase):

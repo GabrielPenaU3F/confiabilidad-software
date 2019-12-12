@@ -10,9 +10,9 @@ class NHPPSaddlepointCalculator:
 
     model_parameters = None
 
-    def __init__(self, mu_ds_function, lambda_ds_function):
-        self.lambda_ds_function = lambda_ds_function
-        self.mu_ds_function = mu_ds_function
+    def __init__(self, mu_function, lambda_function):
+        self.lambda_function = lambda_function
+        self.mu_function = mu_function
 
     def calculate_saddlepoint_mttf_approximation(self, k, upper_limit, *model_parameters):
         self.model_parameters = model_parameters
@@ -27,10 +27,10 @@ class NHPPSaddlepointCalculator:
         return 1
 
     def g_x(self, x, k, upper_limit):
-        lambda_ds = self.lambda_ds_function(x, *self.model_parameters)
-        mu_ds = self.mu_ds_function(x, *self.model_parameters)
+        lambda_ = self.lambda_function(x, *self.model_parameters)
+        mu = self.mu_function(x, *self.model_parameters)
         gammainc = lower_incomplete_gamma(upper_limit, k, min_decimals=12)
-        return np.log(x) + np.log(lambda_ds) + (k - 1) * np.log(mu_ds) - mu_ds - np.math.log(gammainc)
+        return np.log(x) + np.log(lambda_) + (k - 1) * np.log(mu) - mu - np.math.log(gammainc)
 
     # Second derivative of g(x)
     @abstractmethod

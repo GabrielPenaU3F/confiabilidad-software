@@ -1,6 +1,7 @@
 import numpy as np
 
 from src.domain.models.nhpp_estimator import NHPPEstimator
+from src.domain.saddlepoint_calculators.musa_okumoto_saddlepoint_calculator import MusaOkumotoSaddlepointCalculator
 
 
 class MusaOkumotoEstimator(NHPPEstimator):
@@ -11,6 +12,8 @@ class MusaOkumotoEstimator(NHPPEstimator):
             'grouped-cumulative': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
+        saddlepoint_calculator = MusaOkumotoSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
+        super().__init__(saddlepoint_calculator)
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
