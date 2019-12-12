@@ -18,14 +18,14 @@ class MOSaddlepointCalculatorTest(unittest.TestCase):
         saddlepoint_approx = calculator.calculate_saddlepoint_mttf_approximation(k, np.inf, self.a, self.b)
         self.assertAlmostEqual(15, saddlepoint_approx, delta=1)
 
-    def test_mo_mttf_saddlepoint_approx_for_k_600_mixed_dataset_is_114(self):
+    def test_mo_mttf_saddlepoint_approx_for_k_600_mixed_dataset_is_120(self):
         k = 600
         mo = MusaOkumotoEstimator()
         calculator = MusaOkumotoSaddlepointCalculator(mo.calculate_mean, mo.calculate_lambda)
         saddlepoint_approx = calculator.calculate_saddlepoint_mttf_approximation(k, np.inf, self.a, self.b)
         self.assertAlmostEqual(120, saddlepoint_approx, delta=1)
 
-    def test_mo_mttf_saddlepoint_approx_for_k_900_mixed_dataset_is_212(self):
+    def test_mo_mttf_saddlepoint_approx_for_k_900_mixed_dataset_is_215(self):
         k = 900
         mo = MusaOkumotoEstimator()
         calculator = MusaOkumotoSaddlepointCalculator(mo.calculate_mean, mo.calculate_lambda)

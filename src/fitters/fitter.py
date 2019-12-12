@@ -48,10 +48,11 @@ class Fitter(ABC):
         try:
             format_strategy = self.choose_format_strategy(fit_strategy.get_data(), fit_strategy.get_model())
             lsq_params, ml_params = fit_strategy.fit_model(format_strategy, **kwargs)
-            return Fit(project_name, model, fit_strategy, lsq_params, ml_params)
+            mts_flag = kwargs.get('mts')
+            return Fit(project_name, model, fit_strategy, lsq_params, ml_params, mts_flag)
         except TypeError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-            return Fit(None, None, None, None, None)
+            return Fit(None, None, None, None, None, None)
 
     @abstractmethod
     def choose_format_strategy(self, data, model):

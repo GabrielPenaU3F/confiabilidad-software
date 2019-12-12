@@ -2,6 +2,7 @@ import numpy as np
 
 
 from src.domain.models.nhpp_estimator import NHPPEstimator
+from src.domain.saddlepoint_calculators.logistic_saddlepoint_calculator import LogisticSaddlepointCalculator
 
 
 class LogisticEstimator(NHPPEstimator):
@@ -12,6 +13,8 @@ class LogisticEstimator(NHPPEstimator):
             'grouped-cumulative': (0.01, 0.001, 0.000001),
             'grouped-fpd': (0.01, 0.001, 0.00001)
         }
+        saddlepoint_calculator = LogisticSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
+        super().__init__(saddlepoint_calculator)
 
     def calculate_mean(self, t, *model_parameters):
         a, b, c = model_parameters

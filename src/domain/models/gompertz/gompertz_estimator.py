@@ -1,6 +1,7 @@
 import numpy as np
 
 from src.domain.models.nhpp_estimator import NHPPEstimator
+from src.domain.saddlepoint_calculators.gompertz_saddlepoint_calculator import GompertzSaddlepointCalculator
 
 
 class GompertzEstimator(NHPPEstimator):
@@ -11,6 +12,8 @@ class GompertzEstimator(NHPPEstimator):
             'grouped-cumulative': (25, 0.5, 0.5),
             'grouped-fpd': (250, 0.5, 0.5)
         }
+        saddlepoint_calculator = GompertzSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
+        super().__init__(saddlepoint_calculator)
 
     def calculate_mean(self, t, *model_parameters):
         a, b, c = model_parameters

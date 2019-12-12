@@ -7,20 +7,20 @@ class TestEndSample(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ds_agile1_25samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25)
-        cls.fit_ds_agile1_15samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15)
-        cls.fit_log_agile1_25samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=25)
-        cls.fit_log_agile1_20samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=20)
+        cls.fit_ds_agile1_25samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_ds_agile1_15samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15, mts=False)
+        cls.fit_log_agile1_25samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_log_agile1_20samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=20, mts=False)
 
-        cls.fit_ds_mixed_35samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35)
-        cls.fit_ds_mixed_15samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15)
-        cls.fit_log_mixed_25samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=25)
-        cls.fit_log_mixed_35samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=35)
+        cls.fit_ds_mixed_35samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35, mts=False)
+        cls.fit_ds_mixed_15samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15, mts=False)
+        cls.fit_log_mixed_25samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=25, mts=False)
+        cls.fit_log_mixed_35samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=35, mts=False)
 
         cls.fit_go_mixed_35samples = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile',
-                                                                   end_sample=35)
+                                                                   end_sample=35, mts=False)
         cls.fit_go_mixed_15samples = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile',
-                                                                   end_sample=15)
+                                                                   end_sample=15, mts=False)
 
     def test_agile_n1_delayed_s_shaped_with_a_partial_dataset_of_25_samples(self):
         a = TestEndSample.fit_ds_agile1_25samples.get_ml_parameters()[0]

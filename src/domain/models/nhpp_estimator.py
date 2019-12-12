@@ -168,5 +168,9 @@ class NHPPEstimator(PureBirthsEstimator):
                                     (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
                                     np.exp(- self.calculate_mean(u, *model_parameters))),
                                    0, +np.inf, limit=2000)[0]
-        return numerator / denominator
+        try:
+            mttf = numerator / denominator
+        except OverflowError:
+            mttf = np.nan
+        return mttf
 

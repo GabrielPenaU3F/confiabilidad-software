@@ -5,8 +5,9 @@ from src.result_presenter.result_presenter import ResultPresenter
 class Fit:
 
     project_name = None
+    mttf = None
 
-    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params):
+    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params, mts_flag):
         if project_name is not None:
             self.project_name = project_name
             self.model = model_name
@@ -17,11 +18,13 @@ class Fit:
             if ml_params is not None:
                 self.prr_ml = fit_strategy.calculate_prr(*ml_params)
                 self.aic = fit_strategy.calculate_aic(*ml_params)
-                self.mttf = fit_strategy.calculate_mttfs(*ml_params)
+                if mts_flag is not False:
+                    self.mttf = fit_strategy.calculate_mttfs(*ml_params)
             else:
                 self.prr_ml = None
                 self.aic = None
-                self.mttf = fit_strategy.calculate_mttfs(*lsq_params)
+                if mts_flag is not False:
+                    self.mttf = fit_strategy.calculate_mttfs(*lsq_params)
             if self.mttf is not None:
                 self.mtbf = fit_strategy.calculate_mtbfs(self.mttf)
 
