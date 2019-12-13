@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 import numpy as np
 
-from src.auxiliar_math.gamma import lower_incomplete_gamma
+from src.auxiliar_math.gamma.gamma import lower_incomplete_gamma
 from src.auxiliar_math.maximum import find_maximum
 
 

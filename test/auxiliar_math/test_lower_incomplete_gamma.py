@@ -1,6 +1,6 @@
 import unittest
 
-from src.auxiliar_math import gamma
+from src.auxiliar_math.gamma import gamma
 
 
 class TestLowerIncompleteGamma(unittest.TestCase):
