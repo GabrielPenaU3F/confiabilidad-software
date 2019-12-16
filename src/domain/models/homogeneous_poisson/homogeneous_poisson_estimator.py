@@ -40,11 +40,11 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
                                                               solving_method):
         t_0 = 0
-        n = len(times)
+        n = len(times) - 1
+        t_n = times[n]
         deltas_yi = failures_per_day
         sum_deltas_yi = np.sum(deltas_yi)
-        sum_ti = np.sum(times)
-        return [sum_deltas_yi / (sum_ti - n * t_0)]
+        return [sum_deltas_yi / (t_n - t_0)]
 
     def ttf_ml_equations(self, times, vec):
         pass
@@ -67,3 +67,11 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
         for i in range(len(times)):
             prr += (1 - cumulative_failures[i] / estimated_failures[i]) ** 2
         return prr
+
+    def calculate_mttfs(self, n_failures, *model_parameters):
+        lambda_ = model_parameters[0]
+        mttfs = []
+        for k in range(1, n_failures + 1):
+            mttf = k / lambda_
+            mttfs.append(mttf)
+        return mttfs

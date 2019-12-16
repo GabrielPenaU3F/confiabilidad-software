@@ -44,7 +44,7 @@ class Plotter:
     def do_format_mt_plot(self, axes):
         axes.set_xlabel('Failure')
         axes.set_xlim(left=0, auto=True)
-        axes.set_ylim(auto=True)
+        axes.set_ylim(bottom=0, auto=True)
         axes.patch.set_facecolor("#ffffff")
         axes.patch.set_edgecolor('black')
         axes.patch.set_linewidth('1')
