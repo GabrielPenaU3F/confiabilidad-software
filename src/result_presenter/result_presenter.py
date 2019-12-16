@@ -8,6 +8,8 @@ from src.result_presenter.result_displaying_strategy.goel_okumoto_result_display
     GoelOkumotoResultDisplayingStrategy
 from src.result_presenter.result_displaying_strategy.gompertz_result_displaying_strategy import \
     GompertzResultDisplayingStrategy
+from src.result_presenter.result_displaying_strategy.homogeneous_poisson_displaying_strategy import \
+    HomogeneousPoissonResultDisplayingStrategy
 from src.result_presenter.result_displaying_strategy.logistic_result_displaying_strategy import \
     LogisticResultDisplayingStrategy
 from src.result_presenter.result_displaying_strategy.musa_okumoto_result_displaying_strategy import \
@@ -17,6 +19,7 @@ from src.result_presenter.result_displaying_strategy.musa_okumoto_result_display
 class ResultPresenter:
 
     result_displaying_strategy = {
+        'poisson': HomogeneousPoissonResultDisplayingStrategy,
         'musa-okumoto': MusaOkumotoResultDisplayingStrategy,
         'goel-okumoto': GoelOkumotoResultDisplayingStrategy,
         'delayed-s-shaped': DelayedSShapedResultDisplayingStrategy,

@@ -2,6 +2,7 @@ import numpy as np
 
 from src.plotter.plot_strategy.barraza_contagion_plot_strategy import BarrazaContagionPlotStrategy
 from src.plotter.plot_strategy.ds_plot_strategy import DSPlotStrategy
+from src.plotter.plot_strategy.homogeneous_poisson_plot_strategy import HomogeneousPoissonPlotStrategy
 from src.plotter.plot_strategy.musa_okumoto_plot_strategy import MusaOkumotoPlotStrategy
 from src.plotter.plot_strategy.goel_okumoto_plot_strategy import GoelOkumotoPlotStrategy
 from src.plotter.plot_strategy.gompertz_plot_strategy import GompertzPlotStrategy
@@ -12,6 +13,7 @@ from matplotlib import pyplot as plt
 class Plotter:
 
     plot_strategy = {
+        'poisson': HomogeneousPoissonPlotStrategy,
         'musa-okumoto': MusaOkumotoPlotStrategy,
         'goel-okumoto': GoelOkumotoPlotStrategy,
         'delayed-s-shaped': DSPlotStrategy,
