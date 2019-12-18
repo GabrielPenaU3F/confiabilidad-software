@@ -19,3 +19,8 @@ class InvalidFitException(ExceptionWithMessage):
 
     pass
 
+
+class InvalidInitialConditionException(ExceptionWithMessage):
+
+    pass
+

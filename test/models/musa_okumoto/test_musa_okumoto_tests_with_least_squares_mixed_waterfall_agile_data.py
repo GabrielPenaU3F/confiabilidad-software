@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import GroupedFPDFitter
 
 
 class MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):

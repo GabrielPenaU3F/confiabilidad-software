@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import GroupedCumulativeFitter
+from src.domain.fitters.fitter import GroupedCumulativeFitter
 
 
 class DelayedSShapedTestsWithGroupedCumulativeFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):

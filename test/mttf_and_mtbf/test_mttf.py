@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.fitters.fitter import TTFFitter, GroupedFPDFitter
+from src.domain.fitters.fitter import TTFFitter, GroupedFPDFitter
 
 
 class MTTFTest(unittest.TestCase):

@@ -1,4 +1,4 @@
-from src.fitters.fitter import GroupedCumulativeFitter
+from src.domain.fitters.fitter import GroupedCumulativeFitter
 
 fitter = GroupedCumulativeFitter()
 fit = fitter.fit('logistic', 'mixed-waterfall-agile', cumulative=True)

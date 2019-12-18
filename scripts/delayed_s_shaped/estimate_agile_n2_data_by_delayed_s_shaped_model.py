@@ -1,4 +1,4 @@
-from src.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import GroupedFPDFitter
 
 fpd_fitter = GroupedFPDFitter()
 fit = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', initial_approx=(10, 0.01))

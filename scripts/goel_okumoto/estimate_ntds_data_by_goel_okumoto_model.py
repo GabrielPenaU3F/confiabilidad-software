@@ -1,4 +1,4 @@
-from src.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import TTFFitter
 
 ttf_fitter = TTFFitter()
 fit = ttf_fitter.fit('goel-okumoto', 'ntds')

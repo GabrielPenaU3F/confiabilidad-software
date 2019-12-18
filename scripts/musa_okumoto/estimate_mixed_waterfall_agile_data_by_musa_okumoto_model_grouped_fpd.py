@@ -1,4 +1,4 @@
-from src.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import GroupedFPDFitter
 
 fitter = GroupedFPDFitter()
 fit = fitter.fit('musa-okumoto', 'mixed-waterfall-agile')

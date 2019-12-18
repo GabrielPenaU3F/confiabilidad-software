@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import TTFFitter, GroupedFPDFitter, GroupedCumulativeFitter
+from src.domain.fitters.fitter import TTFFitter, GroupedFPDFitter, GroupedCumulativeFitter
 
 
 class TestEndSample(unittest.TestCase):

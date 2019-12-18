@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import TTFFitter
 
 
 class GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):

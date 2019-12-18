@@ -1,7 +1,7 @@
 import unittest
 
 from src.exceptions.exceptions import InvalidArgumentException
-from src.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import TTFFitter
 
 
 class TestWrongParameters(unittest.TestCase):

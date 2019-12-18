@@ -1,6 +1,6 @@
 import unittest
 
-from src.fitters.fitter import TTFFitter, GroupedCumulativeFitter, GroupedFPDFitter
+from src.domain.fitters.fitter import TTFFitter, GroupedCumulativeFitter, GroupedFPDFitter
 
 
 class TestInitialApprox(unittest.TestCase):
