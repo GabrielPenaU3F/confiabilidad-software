@@ -1,5 +1,5 @@
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 
-ttf_fitter = TTFFitter()
+ttf_fitter = Fitter()
 fit = ttf_fitter.fit('gompertz', 'ntds')
 fit.show_results()

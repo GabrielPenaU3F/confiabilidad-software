@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
@@ -9,7 +9,7 @@ class GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfal
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedFPDFitter().fit('gompertz', 'mixed-waterfall-agile', initial_approx=(25, 0.5, 0.5))
+        cls.fit = Fitter().fit('gompertz', 'mixed-waterfall-agile', initial_approx=(25, 0.5, 0.5))
 
     def test_mixed_waterfall_agile_gompertz_maximum_likelihood_a_parameter_is_1093_comma_671400(self):
         a = GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[0]

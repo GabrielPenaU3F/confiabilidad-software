@@ -1,6 +1,6 @@
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 
-ttf_fitter = TTFFitter()
+ttf_fitter = Fitter()
 
 #fit_go_10 = ttf_fitter.fit('goel-okumoto', 'ntds', end_sample=9, lsq_only=True)
 #fit_ds_10 = ttf_fitter.fit('delayed-s-shaped', 'ntds', end_sample=9, lsq_only=True)

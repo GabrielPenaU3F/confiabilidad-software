@@ -1,10 +1,10 @@
 from src.data.data_repository import DataRepository
 from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 from src.domain.models.logistic.logistic_estimator import LogisticEstimator
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 from matplotlib import pyplot as plt
 
-ttf_fitter = TTFFitter()
+ttf_fitter = Fitter()
 
 data = DataRepository.provide_project_data('agile-n1')
 x_axis_data = data.get_times()

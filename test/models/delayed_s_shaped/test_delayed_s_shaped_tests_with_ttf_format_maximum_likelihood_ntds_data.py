@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCas
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = TTFFitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
 
     def test_ntds_delayed_s_shaped_maximum_likelihood_a_parameter_is_27_comma_491544(self):
         a = DelayedSShapedTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]

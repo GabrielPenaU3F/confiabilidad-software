@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class GompertzTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
@@ -9,7 +9,7 @@ class GompertzTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedFPDFitter().fit('gompertz', 'mixed-waterfall-agile', initial_approx=(25, 0.5, 0.5))
+        cls.fit = Fitter().fit('gompertz', 'mixed-waterfall-agile', initial_approx=(25, 0.5, 0.5))
 
     def test_mixed_waterfall_agile_gompertz_least_squares_a_parameter_is_885_comma_879217(self):
         a = GompertzTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]

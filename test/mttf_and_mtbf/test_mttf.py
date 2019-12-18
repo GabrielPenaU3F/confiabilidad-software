@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.domain.fitters.fitter import TTFFitter, GroupedFPDFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class MTTFTest(unittest.TestCase):
@@ -15,11 +15,11 @@ class MTTFTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ntds_go = TTFFitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_mixed_ds = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
-        cls.fit_agile1_log = TTFFitter().fit('logistic', 'agile-n1')
-        cls.fit_ntds_ds = TTFFitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_ntds_log = TTFFitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20))
+        cls.fit_ntds_go = Fitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_mixed_ds = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit_agile1_log = Fitter().fit('logistic', 'agile-n1')
+        cls.fit_ntds_ds = Fitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_ntds_log = Fitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20))
 
 
 

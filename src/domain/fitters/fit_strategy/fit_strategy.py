@@ -3,6 +3,7 @@ from abc import ABC
 from src.data.data_repository import DataRepository
 from src.domain.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
 from src.domain.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
+from src.exceptions.exceptions import InvalidArgumentException
 
 
 class FitStrategy(ABC):
@@ -11,6 +12,7 @@ class FitStrategy(ABC):
         self.project_name = project_name
         self.model = model
         self.data = DataRepository.provide_project_data(project_name)
+        self.format_strategy = self.choose_format_strategy(self.data.get_format())
         self.format_strategies = {
             'ttf': TTFFormatStrategy,
             'grouped': GroupedFPDFormatStrategy
@@ -25,8 +27,11 @@ class FitStrategy(ABC):
     def get_model(self):
         return self.model
 
-    def fit_model(self, format_strategy, **kwargs):
-        return format_strategy.fit_model(**kwargs)
+    def get_format_strategy(self):
+        return self.format_strategy
+
+    def fit_model(self, **kwargs):
+        return self.format_strategy.fit_model(**kwargs)
 
     def calculate_prr(self, *model_parameters):
         times = self.data.get_times()
@@ -42,3 +47,11 @@ class FitStrategy(ABC):
 
     def calculate_mtbfs(self, mttfs):
         return self.model.calculate_mtbfs(mttfs)
+
+    def choose_format_strategy(self, format):
+        if format == 'ttf':
+            return TTFFormatStrategy(self.data, self.model)
+        elif format == 'grouped':
+            return GroupedFPDFormatStrategy(self.data, self.model)
+        else:
+            raise InvalidArgumentException('The data format is invalid')

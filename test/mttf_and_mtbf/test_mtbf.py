@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class MTBFTest(unittest.TestCase):
@@ -11,9 +11,9 @@ class MTBFTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ntds_go = TTFFitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_ntds_ds = TTFFitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_ntds_log = TTFFitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20))
+        cls.fit_ntds_go = Fitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_ntds_ds = Fitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_ntds_log = Fitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20))
 
     def test_ntds_goel_okumoto_mtbf_for_k_equal_1_is_5_comma_2(self):
         mtbf = MTBFTest.fit_ntds_go.get_mtbf(1)

@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import TTFFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class MusaOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class MusaOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = TTFFitter().fit('musa-okumoto', 'ntds', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('musa-okumoto', 'ntds', initial_approx=(1, 0.5))
 
     def test_ntds_musa_okumoto_maximum_likelihood_a_parameter_is_23_comma_397375(self):
         a = MusaOkumotoTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]

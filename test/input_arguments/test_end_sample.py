@@ -1,26 +1,21 @@
 import unittest
 
-from src.domain.fitters.fitter import TTFFitter, GroupedFPDFitter, GroupedCumulativeFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class TestEndSample(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ds_agile1_25samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25, mts=False)
-        cls.fit_ds_agile1_15samples = TTFFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15, mts=False)
-        cls.fit_log_agile1_25samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=25, mts=False)
-        cls.fit_log_agile1_20samples = TTFFitter().fit('logistic', 'agile-n1', end_sample=20, mts=False)
+        cls.fit_ds_agile1_25samples = Fitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_ds_agile1_15samples = Fitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15, mts=False)
+        cls.fit_log_agile1_25samples = Fitter().fit('logistic', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_log_agile1_20samples = Fitter().fit('logistic', 'agile-n1', end_sample=20, mts=False)
 
-        cls.fit_ds_mixed_35samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35, mts=False)
-        cls.fit_ds_mixed_15samples = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15, mts=False)
-        cls.fit_log_mixed_25samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=25, mts=False)
-        cls.fit_log_mixed_35samples = GroupedFPDFitter().fit('logistic', 'mixed-waterfall-agile', end_sample=35, mts=False)
-
-        cls.fit_go_mixed_35samples = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile',
-                                                                   end_sample=35, mts=False)
-        cls.fit_go_mixed_15samples = GroupedCumulativeFitter().fit('goel-okumoto', 'mixed-waterfall-agile',
-                                                                   end_sample=15, mts=False)
+        cls.fit_ds_mixed_35samples = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35, mts=False)
+        cls.fit_ds_mixed_15samples = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15, mts=False)
+        cls.fit_log_mixed_25samples = Fitter().fit('logistic', 'mixed-waterfall-agile', end_sample=25, mts=False)
+        cls.fit_log_mixed_35samples = Fitter().fit('logistic', 'mixed-waterfall-agile', end_sample=35, mts=False)
 
     def test_agile_n1_delayed_s_shaped_with_a_partial_dataset_of_25_samples(self):
         a = TestEndSample.fit_ds_agile1_25samples.get_ml_parameters()[0]
@@ -97,18 +92,6 @@ class TestEndSample(unittest.TestCase):
         prr_25samples = TestEndSample.fit_log_mixed_25samples.get_prr_ml()
         prr_35samples = TestEndSample.fit_log_mixed_35samples.get_prr_ml()
         self.assertTrue(prr_25samples > prr_35samples)
-
-    def test_mixed_goel_okumoto_with_a_partial_dataset_of_35_samples(self):
-        a = TestEndSample.fit_go_mixed_35samples.get_ml_parameters()[0]
-        b = TestEndSample.fit_go_mixed_35samples.get_ml_parameters()[1]
-        self.assertAlmostEqual(a, 50.376732, places=6)
-        self.assertAlmostEqual(b, 0.454540, places=6)
-
-    def test_mixed_goel_okumoto_with_a_partial_dataset_of_15_samples(self):
-        a = TestEndSample.fit_go_mixed_15samples.get_ml_parameters()[0]
-        b = TestEndSample.fit_go_mixed_15samples.get_ml_parameters()[1]
-        self.assertAlmostEqual(a, 55.988653, places=6)
-        self.assertAlmostEqual(b, 0.332405, places=6)
 
     # Surprisingly, this test fails. Maybe it's an exception to the general rule?
     '''

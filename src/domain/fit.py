@@ -12,9 +12,11 @@ class Fit:
     def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params, **kwargs):
         optional_arguments = self.decode_kwargs(**kwargs)
         if project_name is not None:
+            data_object = fit_strategy.get_data()
+            format_strategy = fit_strategy.get_format_strategy()
             self.project_name = project_name
-            self.times = self.determine_times(project_name, optional_arguments)
-            self.data = DataRepository.provide_project_data(project_name).get_data()
+            self.times = self.determine_times(data_object, optional_arguments, format_strategy)
+            self.data = self.determine_data(project_name, optional_arguments, format_strategy)
             self.model = model_name
             self.fit_strategy = fit_strategy
             self.lsq_params = lsq_params
@@ -86,8 +88,10 @@ class Fit:
         mts_flag = kwargs.get('mts')
         return OptionalArguments(x0, mts_flag=mts_flag)
 
-    def determine_times(self, project_name, optional_arguments):
-        data = DataRepository.provide_project_data(project_name)
+    def determine_times(self, data, optional_arguments, format_strategy):
         times = data.get_times()
         times[0] = optional_arguments.get_x0()
         return times
+
+    def determine_data(self, project_name, optional_arguments, format_strategy):
+        pass

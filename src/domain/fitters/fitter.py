@@ -1,7 +1,4 @@
-from abc import ABC, abstractmethod
-
 from colorama import Back, Fore
-
 from src.domain.fit import Fit
 from src.exceptions.exceptions import InvalidArgumentException
 from src.domain.fitters.fit_strategy.barraza_contagion_fit_strategy import BarrazaContagionFitStrategy
@@ -11,14 +8,11 @@ from src.domain.fitters.fit_strategy.gompertz_fit_strategy import GompertzFitStr
 from src.domain.fitters.fit_strategy.homogeneous_poisson_fit_strategy import HomogeneousPoissonFitStrategy
 from src.domain.fitters.fit_strategy.logistic_fit_strategy import LogisticFitStrategy
 from src.domain.fitters.fit_strategy.musa_okumoto_fit_strategy import MusaOkumotoFitStrategy
-from src.domain.fitters.format_strategy.grouped_cumulative_format_strategy import GroupedCumulativeFormatStrategy
-from src.domain.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
-from src.domain.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
 
 
-class Fitter(ABC):
+class Fitter:
 
-    fit_strategy = {
+    fit_strategies = {
         'poisson': HomogeneousPoissonFitStrategy,
         'musa-okumoto': MusaOkumotoFitStrategy,
         'goel-okumoto': GoelOkumotoFitStrategy,
@@ -29,8 +23,8 @@ class Fitter(ABC):
     }
 
     def get_model_strategy(self, model):
-        if self.fit_strategy.keys().__contains__(model):
-            return self.fit_strategy.get(model)
+        if self.fit_strategies.keys().__contains__(model):
+            return self.fit_strategies.get(model)
         else:
             raise InvalidArgumentException('The requested model does not exist')
 
@@ -46,42 +40,10 @@ class Fitter(ABC):
     """
     def fit(self, model, project_name, **kwargs):
 
-        fit_strategy = self.get_model_strategy(model)(project_name)
         try:
-            format_strategy = self.choose_format_strategy(fit_strategy.get_data(), fit_strategy.get_model())
-            lsq_params, ml_params = fit_strategy.fit_model(format_strategy, **kwargs)
+            fit_strategy = self.get_model_strategy(model)(project_name)
+            lsq_params, ml_params = fit_strategy.fit_model(**kwargs)
             return Fit(project_name, model, fit_strategy, lsq_params, ml_params, **kwargs)
         except TypeError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
             return Fit(None, None, None, None, None)
-
-    @abstractmethod
-    def choose_format_strategy(self, data, model):
-        pass
-
-
-class TTFFitter(Fitter):
-
-    def choose_format_strategy(self, data, model):
-        if data.get_format() == 'ttf':
-            return TTFFormatStrategy(data, model)
-        else:
-            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
-
-
-class GroupedCumulativeFitter(Fitter):
-
-    def choose_format_strategy(self, data, model):
-        if data.get_format() == 'grouped':
-            return GroupedCumulativeFormatStrategy(data, model)
-        else:
-            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')
-
-
-class GroupedFPDFitter(Fitter):
-
-    def choose_format_strategy(self, data, model):
-        if data.get_format() == 'grouped':
-            return GroupedFPDFormatStrategy(data, model)
-        else:
-            raise InvalidArgumentException('The fitter does not match the requested project\'s data format')

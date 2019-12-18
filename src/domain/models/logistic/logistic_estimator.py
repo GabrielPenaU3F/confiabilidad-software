@@ -84,57 +84,6 @@ class LogisticEstimator(NHPPEstimator):
 
         return n * a - 2 * second_term_sum - fifth_term
 
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        a, b, c = vec
-        return (self.grouped_cumulative_ml_equation_1(a, b, c, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_2(a, b, c, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_3(a, b, c, days, cumulative_failures))
-
-    def grouped_cumulative_ml_equation_1(self, a, b, c, days, cumulative_failures):
-        sum = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            y_i = cumulative_failures[i]
-            mu_ti = self.calculate_mean(t_i, a, b, c)
-            sum += (y_i - mu_ti)
-
-        n = len(days)
-        t_0 = 0
-        mu_t0 = self.calculate_mean(t_0, a, b, c)
-        return sum + n * mu_t0
-
-    def grouped_cumulative_ml_equation_2(self, a, b, c, days, cumulative_failures):
-        n = len(days)
-        sum = 0
-        t_0 = 0
-        mu_t0 = self.calculate_mean(t_0, a, b, c)
-        psi_t0 = self.calculate_psi(b, c, t_0)
-        for i in range(len(days)):
-            y_i = cumulative_failures[i]
-            t_i = days[i]
-            mu_ti = self.calculate_mean(t_i, a, b, c)
-            psi_ti = self.calculate_psi(b, c, t_i)
-            first_term_numerator = psi_ti * (mu_ti**2) - psi_t0 * (mu_t0**2)
-            first_term_denominator = psi_ti - psi_t0
-            sum += (y_i * first_term_numerator/first_term_denominator - psi_ti * (mu_ti**2))
-        return sum + n * psi_t0 * (mu_t0**2)
-
-    def grouped_cumulative_ml_equation_3(self, a, b, c, days, cumulative_failures):
-        n = len(days)
-        sum = 0
-        t_0 = 0
-        mu_t0 = self.calculate_mean(t_0, a, b, c)
-        phi_t0 = self.calculate_phi(b, c, t_0)
-        for i in range(len(days)):
-            y_i = cumulative_failures[i]
-            t_i = days[i]
-            mu_ti = self.calculate_mean(t_i, a, b, c)
-            phi_ti = self.calculate_phi(b, c, t_i)
-            first_term_numerator = phi_ti * (mu_ti**2) - phi_t0 * (mu_t0**2)
-            first_term_denominator = phi_ti - phi_t0
-            sum += (y_i * first_term_numerator/first_term_denominator - phi_ti * (mu_ti**2))
-        return sum + n * phi_t0 * (mu_t0**2)
-
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b, c = vec
         return (self.grouped_fpd_ml_equation_1(a, b, c, days, failures_per_day),

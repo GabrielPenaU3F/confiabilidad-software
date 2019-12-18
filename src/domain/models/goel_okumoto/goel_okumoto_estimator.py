@@ -43,29 +43,6 @@ class GoelOkumotoEstimator(NHPPEstimator):
         sum_tk = np.sum(times)
         return sum_tk + a * t_n * self.calculate_exp_minus_bt(b, t_n) - (n / b)
 
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        a, b = vec
-        return (self.grouped_cumulative_ml_equation_1(a, b, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_2(a, b, days, cumulative_failures))
-
-    def grouped_cumulative_ml_equation_1(self, a, b, days, cumulative_failures):
-        n = len(days)
-        sum_yi = np.sum(cumulative_failures)
-        sum_exp = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            sum_exp += self.calculate_exp_minus_bt(b, t_i)
-        return (sum_yi/a) - n + sum_exp
-
-    def grouped_cumulative_ml_equation_2(self, a, b, days, cumulative_failures):
-        sum = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            exp_b_ti = self.calculate_exp_minus_bt(b, t_i)
-            parentheses_factor = (cumulative_failures[i] / (1 - exp_b_ti)) - a
-            sum += t_i * exp_b_ti * parentheses_factor
-        return sum
-
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
         return (self.grouped_fpd_ml_equation_1(a, b, days, failures_per_day),

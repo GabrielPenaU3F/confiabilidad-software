@@ -51,18 +51,6 @@ class NHPPEstimator(PureBirthsEstimator):
     def ttf_ml_equations(self, times, vec):
         pass
 
-    def estimate_grouped_cumulative_parameters_by_maximum_likelihood(self, days, cumulative_failures,
-                                                                     initial_approx, solving_method):
-        try:
-            return opt.root(partial(self.grouped_cumulative_ml_equations, days, cumulative_failures),
-                            initial_approx, method=solving_method).x
-        except ValueError as error:
-            print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-
-    @abstractmethod
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        pass
-
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
                                                               solving_method):
         try:
@@ -70,6 +58,8 @@ class NHPPEstimator(PureBirthsEstimator):
                             method=solving_method).x
         except ValueError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
+            # TODO: Find a way to handle this exception
+            # raise InvalidFitException(str(error))
 
     @abstractmethod
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):
@@ -89,9 +79,6 @@ class NHPPEstimator(PureBirthsEstimator):
     def calculate_ttf_aic(self, times, *model_parameters):
         return -2 * self.ttf_log_likelihood(times, *model_parameters) + (2 * len(model_parameters))
 
-    def calculate_aic_grouped_cumulative(self, cumulative_failures, *model_parameters):
-        return -2 * self.grouped_cumulative_log_likelihood(cumulative_failures, *model_parameters) + (2 * len(model_parameters))
-
     def calculate_aic_grouped_fpd(self, failures_per_day, *model_parameters):
         return -2 * self.grouped_fpd_log_likelihood(failures_per_day, *model_parameters) + (2 * len(model_parameters))
 
@@ -106,22 +93,6 @@ class NHPPEstimator(PureBirthsEstimator):
             lambda_tk = self.calculate_lambda(t_k, *model_parameters)
             sum += np.log(lambda_tk)
         return sum - (mu_tn - mu_t0)
-
-    # At this moment, this code is not being used
-    # The grouped cumulative data AIC is calculated using the FPD log likelihood (kinda hard-coded)
-    def grouped_cumulative_log_likelihood(self, cumulative_failures, *model_parameters):
-        times = np.arange(1, len(cumulative_failures) + 1)
-        sum = 0
-        n = len(times)
-        t_0 = 0
-        mu_t0 = self.calculate_mean(t_0, *model_parameters)
-        for i in range(len(times)):
-            t_i = times[i]
-            y_i = cumulative_failures[i]
-            mu_ti = self.calculate_mean(t_i, *model_parameters)
-            y_i_factorial = np.math.factorial(y_i)
-            sum += y_i * np.log(mu_ti - mu_t0) - np.math.log(y_i_factorial) - mu_ti
-        return sum + n * mu_t0
 
     def grouped_fpd_log_likelihood(self, failures_per_day, *model_parameters):
         times = np.arange(1, len(failures_per_day) + 1)

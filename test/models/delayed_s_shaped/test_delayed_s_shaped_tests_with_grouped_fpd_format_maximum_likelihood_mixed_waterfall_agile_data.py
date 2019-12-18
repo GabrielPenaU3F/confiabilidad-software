@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import GroupedFPDFitter
+from src.domain.fitters.fitter import Fitter
 
 
 class DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData(unittest.TestCase):
@@ -9,7 +9,7 @@ class DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWa
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = GroupedFPDFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
 
     def test_mixed_waterfall_agile_delayed_s_shaped_maximum_likelihood_a_parameter_is_976_comma_831477(self):
         a = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[0]

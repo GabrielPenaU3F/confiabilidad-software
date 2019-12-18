@@ -44,30 +44,6 @@ class DelayedSShapedEstimator(NHPPEstimator):
         t_n = times[-1]
         return (2 * n/b) - sum_tk - a * b * (t_n**2) * self.calculate_exp_minus_bt(b, t_n)
 
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        a, b = vec
-        return (self.grouped_cumulative_ml_equation_1(a, b, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_2(a, b, days, cumulative_failures))
-
-    def grouped_cumulative_ml_equation_1(self, a, b, days, cumulative_failures):
-        sum_yi = np.sum(cumulative_failures)
-        sum_mu_ti = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            mu_ti = self.calculate_mean(t_i, a, b)
-            sum_mu_ti += mu_ti
-        return sum_yi - sum_mu_ti
-
-    def grouped_cumulative_ml_equation_2(self, a, b, days, cumulative_failures):
-        sum = 0
-        for i in range(len(days)):
-            t_i = days[i]
-            y_i = cumulative_failures[i]
-            mu_ti = self.calculate_mean(t_i, a, b)
-            square_brackets_factor = (y_i / mu_ti) - 1
-            sum += ((t_i**2) * self.calculate_exp_minus_bt(b, t_i) * square_brackets_factor)
-        return sum
-
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
         return (self.grouped_fpd_ml_equation_1(a, b, days, failures_per_day),
