@@ -32,6 +32,8 @@ class OptionalArguments:
             try:
                 if float(x0) > 0:
                     return x0
+                else:
+                    raise ValueError
             except (ValueError, TypeError):
                 raise InvalidArgumentException('Initial condition x0 must be a positive number')
         else:
@@ -49,6 +51,8 @@ class OptionalArguments:
             try:
                 if (int(end_sample) == end_sample) and (end_sample > 0):
                     return end_sample
+                else:
+                    raise ValueError
             except (ValueError, TypeError):
                 raise InvalidArgumentException('The end sample must be a positive integer')
         else:
@@ -64,7 +68,7 @@ class OptionalArguments:
         if initial_approx is None:
             return None
         try:
-            np.array(initial_approx)
+            np.array(float(initial_approx))
             return initial_approx
         except (ValueError, TypeError):
             raise InvalidArgumentException('Initial approximation must be a real tuple or array')
