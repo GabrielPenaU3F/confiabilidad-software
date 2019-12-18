@@ -7,11 +7,11 @@ class TTFFormatStrategy(FormatStrategy):
         super().__init__(data, model)
         self.execute_ml_function = self.model.estimate_ttf_parameters_by_maximum_likelihood
 
-    def fit_model(self, **kwargs):
+    def fit_model(self, optional_arguments):
 
-        end = self.determine_end_sample(kwargs.get('end_sample'))
+        end = self.determine_end_sample(optional_arguments.get_end_sample())
 
-        initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
+        initial_approx = self.determine_initial_approx(optional_arguments.get_initial_approx())
 
         times_from_zero = self.data.get_times()[0:end + 1]
         cumulative_failures = self.data.get_cumulative_failures()[0:end + 1]
@@ -20,7 +20,7 @@ class TTFFormatStrategy(FormatStrategy):
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times_from_zero, cumulative_failures,
                                                                          initial_approx)
         ml_function_parameters = ttf_original_data, lsq_params
-        ml_params = self.determine_ml_parameters(kwargs.get('lsq_only'), *ml_function_parameters)
+        ml_params = self.determine_ml_parameters(optional_arguments.get_lsq_only(), *ml_function_parameters)
         return lsq_params, ml_params
 
     def determine_initial_approx(self, initial_approx_arg):

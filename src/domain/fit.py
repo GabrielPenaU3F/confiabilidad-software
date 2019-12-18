@@ -9,8 +9,7 @@ class Fit:
     project_name = None
     mttf = None
 
-    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params, **kwargs):
-        optional_arguments = self.decode_kwargs(**kwargs)
+    def __init__(self, project_name, model_name, fit_strategy, lsq_params, ml_params, optional_arguments):
         if project_name is not None:
             data_object = fit_strategy.get_data()
             format_strategy = fit_strategy.get_format_strategy()
@@ -82,11 +81,6 @@ class Fit:
 
     def get_data(self):
         return self.data
-
-    def decode_kwargs(self, **kwargs):
-        x0 = kwargs.get('x0')
-        mts_flag = kwargs.get('mts')
-        return OptionalArguments(x0, mts_flag=mts_flag)
 
     def determine_times(self, data, optional_arguments, format_strategy):
         times = data.get_times()

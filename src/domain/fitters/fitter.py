@@ -1,5 +1,6 @@
 from colorama import Back, Fore
 from src.domain.fit import Fit
+from src.domain.fitters.optional_arguments import OptionalArguments
 from src.exceptions.exceptions import InvalidArgumentException
 from src.domain.fitters.fit_strategy.barraza_contagion_fit_strategy import BarrazaContagionFitStrategy
 from src.domain.fitters.fit_strategy.ds_fit_strategy import DSFitStrategy
@@ -31,6 +32,7 @@ class Fitter:
 
     """
     Accepted models
+        Homogeneous Poisson: 'poisson'
         Musa-Okumoto: 'musa-okumoto'
         Goel-Okumoto: 'goel-okumoto'
         Delayed S-Shaped: 'delayed-s-shaped'
@@ -39,11 +41,14 @@ class Fitter:
         Gompertz: 'gompertz'
     """
     def fit(self, model, project_name, **kwargs):
-
+        optional_arguments = self.decode_kwargs(**kwargs)
         try:
             fit_strategy = self.get_model_strategy(model)(project_name)
-            lsq_params, ml_params = fit_strategy.fit_model(**kwargs)
-            return Fit(project_name, model, fit_strategy, lsq_params, ml_params, **kwargs)
+            lsq_params, ml_params = fit_strategy.fit_model(optional_arguments)
+            return Fit(project_name, model, fit_strategy, lsq_params, ml_params, optional_arguments)
         except TypeError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-            return Fit(None, None, None, None, None)
+            return Fit(None, None, None, None, None, None)
+
+    def decode_kwargs(self, **kwargs):
+        return OptionalArguments(**kwargs)

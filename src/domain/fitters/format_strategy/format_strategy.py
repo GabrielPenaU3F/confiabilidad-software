@@ -12,19 +12,16 @@ class FormatStrategy(ABC):
         self.model = model
 
     def determine_end_sample(self, end_sample_arg):
-        end = None
-        if end_sample_arg is None:
-            end = len(self.data.get_times())
+        default_end_sample = len(self.data.get_times())
+        if end_sample_arg > default_end_sample:
+            raise InvalidArgumentException('The end sample must not exceed the length of the dataset')
+        if end_sample_arg != 0:
+            return end_sample_arg
         else:
-            try:
-                if end_sample_arg == int(end_sample_arg):
-                    end = int(end_sample_arg)
-            except TypeError:
-                raise InvalidArgumentException('The end sample argument must be an integer')
-        return end
+            return default_end_sample
 
     @abstractmethod
-    def fit_model(self, **kwargs):
+    def fit_model(self, optional_arguments):
         pass
 
     def determine_ml_parameters(self, lsq_only_arg, *ml_function_parameters):

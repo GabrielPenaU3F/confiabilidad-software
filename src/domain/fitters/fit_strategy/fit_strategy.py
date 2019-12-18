@@ -30,8 +30,8 @@ class FitStrategy(ABC):
     def get_format_strategy(self):
         return self.format_strategy
 
-    def fit_model(self, **kwargs):
-        return self.format_strategy.fit_model(**kwargs)
+    def fit_model(self, optional_arguments):
+        return self.format_strategy.fit_model(optional_arguments)
 
     def calculate_prr(self, *model_parameters):
         times = self.data.get_times()
