@@ -24,12 +24,12 @@ class FormatStrategy(ABC):
     def fit_model(self, optional_arguments):
         pass
 
-    def determine_ml_parameters(self, lsq_only_arg, *ml_function_parameters):
+    def determine_ml_estimates(self, lsq_only_arg, *ml_function_parameters):
         if lsq_only_arg is True:
-            ml_params = None
+            ml_estimates = None
         else:
-            ml_params = self.execute_ml_function(*ml_function_parameters, solving_method='krylov')
-        return ml_params
+            ml_estimates = self.execute_ml_function(*ml_function_parameters, solving_method='krylov')
+        return ml_estimates
 
     @abstractmethod
     def determine_initial_approx(self, initial_approx_arg):

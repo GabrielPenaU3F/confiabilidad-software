@@ -10,7 +10,6 @@ class GroupedFPDFormatStrategy(FormatStrategy):
     def fit_model(self, optional_arguments):
 
         end = self.determine_end_sample(optional_arguments.get_end_sample())
-
         initial_approx = self.determine_initial_approx(optional_arguments.get_initial_approx())
 
         fpd = self.data.get_data()[0:end]
@@ -19,7 +18,7 @@ class GroupedFPDFormatStrategy(FormatStrategy):
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, initial_approx)
         ml_function_parameters = times, fpd, lsq_params
-        ml_params = self.determine_ml_parameters(optional_arguments.get_lsq_only(), *ml_function_parameters)
+        ml_params = self.determine_ml_estimates(optional_arguments.get_lsq_only(), *ml_function_parameters)
         return lsq_params, ml_params
 
     def determine_initial_approx(self, initial_approx_arg):

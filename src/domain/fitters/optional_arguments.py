@@ -68,7 +68,7 @@ class OptionalArguments:
         if initial_approx is None:
             return None
         try:
-            np.array(float(initial_approx))
+            [float(np.array(initial_approx)[i]) for i in range(len(initial_approx))]
             return initial_approx
         except (ValueError, TypeError):
             raise InvalidArgumentException('Initial approximation must be a real tuple or array')
