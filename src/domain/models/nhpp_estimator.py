@@ -66,7 +66,7 @@ class NHPPEstimator(PureBirthsEstimator):
         pass
 
     def calculate_prr(self, times, cumulative_failures, *model_parameters):
-        # The first value is always zero. It has to be eliminated in order to allow the division
+        #  The first value is always zero. It has to be eliminated in order to allow the division
         times = times[1:]
         cumulative_failures = cumulative_failures[1:]
 

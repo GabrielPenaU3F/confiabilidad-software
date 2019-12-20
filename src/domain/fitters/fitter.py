@@ -45,10 +45,10 @@ class Fitter:
         try:
             fit_strategy = self.get_model_strategy(model)(project_name)
             lsq_params, ml_params = fit_strategy.fit_model(optional_arguments)
-            return Fit(project_name, model, fit_strategy, lsq_params, ml_params, optional_arguments)
+            return Fit(model, fit_strategy, lsq_params, ml_params, optional_arguments)
         except TypeError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-            return Fit(None, None, None, None, None, None)
+            return Fit(None, None, None, None, None)
 
     def decode_kwargs(self, **kwargs):
         return OptionalArguments(**kwargs)
