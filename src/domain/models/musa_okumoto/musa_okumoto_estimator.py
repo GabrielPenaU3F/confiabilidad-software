@@ -32,34 +32,23 @@ class MusaOkumotoEstimator(NHPPEstimator):
                 self.ttf_ml_equation_2(a, b, times))
 
     def ttf_ml_equation_1(self, a, b, times):
-        n = len(times)
-        t_0 = 0
+        n = len(times) - 1
+        t_0 = times[0]
         t_n = times[-1]
         return n - (self.calculate_mean(t_n, a, b) - self.calculate_mean(t_0, a, b))
 
     def ttf_ml_equation_2(self, a, b, times):
-        n = len(times)
+        n = len(times) - 1
         t_n = times[-1]
-        t_0 = 0
+        t_0 = times[0]
         lambda_tn = self.calculate_lambda(t_n, a, b)
         lambda_t0 = self.calculate_lambda(t_0, a, b)
         sum = 0
-        for k in range(n):
+        for k in range(1, n + 1):
             t_k = times[k]
             lambda_tk = self.calculate_lambda(t_k, a, b)
             sum += t_k * lambda_tk
         return n - (t_n * lambda_tn - t_0 * lambda_t0) - sum/a
-
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        a, b = vec
-        return (self.grouped_cumulative_ml_equation_1(a, b, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_2(a, b, days, cumulative_failures))
-
-    def grouped_cumulative_ml_equation_1(self, a, b, days, cumulative_failures):
-        pass
-
-    def grouped_cumulative_ml_equation_2(self, a, b, days, cumulative_failures):
-        pass
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
@@ -69,25 +58,23 @@ class MusaOkumotoEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
-        t_0 = 0
+        t_0 = days[0]
         t_n = days[-1]
         mu_t0 = self.calculate_mean(t_0, a, b)
         mu_tn = self.calculate_mean(t_n, a, b)
         return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, days, failures_per_day):
-        t_0 = 0
+        n = len(days) - 1
+        t_0 = days[0]
         t_n = days[-1]
         lambda_t0 = self.calculate_lambda(t_0, a, b)
         lambda_tn = self.calculate_lambda(t_n, a, b)
         deltas_yi = failures_per_day
         sum_delta_x_phi = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = 0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(a, b, t_i, t_i_minus_1))
         return sum_delta_x_phi - (t_n * lambda_tn - t_0 * lambda_t0)
 

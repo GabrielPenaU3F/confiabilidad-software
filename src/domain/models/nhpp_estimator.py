@@ -63,8 +63,7 @@ class NHPPEstimator(PureBirthsEstimator):
                             method=solving_method).x
         except ValueError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
-            # TODO: Find a way to handle this exception
-            # raise InvalidFitException(str(error))
+            raise InvalidFitException(str(error))
 
     @abstractmethod
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):

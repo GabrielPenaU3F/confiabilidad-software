@@ -18,8 +18,8 @@ class GroupedFPDFormatStrategy(FormatStrategy):
         times = self.data.get_times()[0:end]
 
         lsq_params = self.model.fit_mean_failure_number_by_least_squares(times, cumulative_failures, optional_arguments)
-        ml_function_parameters = times, fpd, lsq_params, optional_arguments.get_x0()
-        ml_params = self.determine_ml_estimates(optional_arguments.get_lsq_only(), *ml_function_parameters)
+        ml_function_parameters = optional_arguments.get_lsq_only(), times, fpd, lsq_params, optional_arguments.get_x0()
+        ml_params = self.determine_ml_estimates(*ml_function_parameters)
         return lsq_params, ml_params
 
     def set_initial_approx(self, optional_arguments):
