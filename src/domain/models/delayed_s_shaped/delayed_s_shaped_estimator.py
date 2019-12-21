@@ -34,15 +34,20 @@ class DelayedSShapedEstimator(NHPPEstimator):
                 self.ttf_ml_equation_2(a, b, times))
 
     def ttf_ml_equation_1(self, a, b, times):
-        n = len(times)
+        n = len(times) - 1
+        t_0 = times[0]
         t_n = times[-1]
-        return n / a + (1 + b * t_n) * self.calculate_exp_minus_bt(b, t_n) - 1
+        mu_t0 = self.calculate_mean(t_0, a, b)
+        mu_tn = self.calculate_mean(t_n, a, b)
+        return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, times):
-        n = len(times)
-        sum_tk = np.sum(times)
+        n = len(times) - 1
+        sum_tk = np.sum(times[1:len(times)])
+        t_0 = times[0]
         t_n = times[-1]
-        return (2 * n/b) - sum_tk - a * b * (t_n**2) * self.calculate_exp_minus_bt(b, t_n)
+        psi_tn_t0 = self.calculate_psi(b, t_n, t_0)
+        return (2*n/b) - sum_tk - a * b * psi_tn_t0
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
@@ -74,12 +79,15 @@ class DelayedSShapedEstimator(NHPPEstimator):
         return np.exp(-b * t)
 
     def calculate_phi(self, b, t_1, t_2):
-        first_term = (1 + b*t_2) * self.calculate_exp_minus_bt(b, t_2)
-        second_term = (1 + b*t_1) * self.calculate_exp_minus_bt(b, t_1)
+        first_term = self.calculate_zeta(b, t_2)
+        second_term = self.calculate_zeta(b, t_1)
         return first_term - second_term
 
     def calculate_psi(self, b, t_1, t_2):
         first_term = (t_1**2) * self.calculate_exp_minus_bt(b, t_1)
         second_term = (t_2**2) * self.calculate_exp_minus_bt(b, t_2)
         return first_term - second_term
+
+    def calculate_zeta(self, b, t):
+        return (1 + b*t) * self.calculate_exp_minus_bt(b, t)
 
