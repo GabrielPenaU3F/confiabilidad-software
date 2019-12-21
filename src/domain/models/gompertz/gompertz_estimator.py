@@ -34,57 +34,42 @@ class GompertzEstimator(NHPPEstimator):
                 self.ttf_ml_equation_3(a, b, c, times))
 
     def ttf_ml_equation_1(self, a, b, c, times):
-        n = len(times)
-        t0 = 0
+        n = len(times) - 1
+        t0 = times[0]
         tn = times[-1]
         mu_t0 = self.calculate_mean(t0, a, b, c)
         mu_tn = self.calculate_mean(tn, a, b, c)
         return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, c, times):
-        n = len(times)
+        n = len(times) - 1
         logb = np.log(b)
         logc = np.log(c)
-        t0 = 0
+        t0 = times[0]
         tn = times[-1]
         lambda_t0 = self.calculate_lambda(t0, a, b, c)
         lambda_tn = self.calculate_lambda(tn, a, b, c)
         sum_second_term = 0
-        for k in range(n):
+        for k in range(1, n + 1):
             sum_second_term += (c ** times[k])
         third_term = (lambda_tn - lambda_t0)/logc
         return n + logb * sum_second_term - third_term
 
     def ttf_ml_equation_3(self, a, b, c, times):
-        n = len(times)
+        n = len(times) - 1
         logb = np.log(b)
         logc = np.log(c)
-        t0 = 0
+        t0 = times[0]
         tn = times[-1]
         lambda_t0 = self.calculate_lambda(t0, a, b, c)
         lambda_tn = self.calculate_lambda(tn, a, b, c)
         sum_second_term = 0
-        for k in range(n):
+        for k in range(1, n + 1):
             tk = times[k]
             c_pow_tk = (c ** tk)
             sum_second_term += (tk * (1 + c_pow_tk * logb))
         third_term = tn * lambda_tn - t0 * lambda_t0
         return n + logc * sum_second_term - third_term
-
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
-        a, b, c = vec
-        return (self.grouped_cumulative_ml_equation_1(a, b, c, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_2(a, b, c, days, cumulative_failures),
-                self.grouped_cumulative_ml_equation_3(a, b, c, days, cumulative_failures))
-
-    def grouped_cumulative_ml_equation_1(self, a, b, c, days, cumulative_failures):
-        pass
-
-    def grouped_cumulative_ml_equation_2(self, a, b, c, days, cumulative_failures):
-        pass
-
-    def grouped_cumulative_ml_equation_3(self, a, b, c, days, cumulative_failures):
-        pass
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b, c = vec
@@ -95,25 +80,23 @@ class GompertzEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, c, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_deltas_yi = np.sum(deltas_yi)
-        t_0 = 0
+        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         return sum_deltas_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, c, days, failures_per_day):
+        n = len(days) - 1
         deltas_yi = failures_per_day
-        t_0 = 0
+        t_0 = days[0]
         phi_t0 = self.calculate_phi(t_0, b, c)
         t_n = days[-1]
         phi_tn = self.calculate_phi(t_n, b, c)
         sum_first_term = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = t_0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             mu_ti_minus_1 = self.calculate_mean(t_i_minus_1, a, b, c)
             phi_ti = self.calculate_phi(t_i, b, c)
@@ -122,18 +105,16 @@ class GompertzEstimator(NHPPEstimator):
         return sum_first_term - (phi_tn - phi_t0)
 
     def grouped_fpd_ml_equation_3(self, a, b, c, days, failures_per_day):
+        n = len(days) - 1
         deltas_yi = failures_per_day
         t_0 = 0
         psi_t0 = self.calculate_psi(t_0, b, c)
         t_n = days[-1]
         psi_tn = self.calculate_psi(t_n, b, c)
         sum_first_term = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = t_0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             mu_ti_minus_1 = self.calculate_mean(t_i_minus_1, a, b, c)
             psi_ti = self.calculate_psi(t_i, b, c)
