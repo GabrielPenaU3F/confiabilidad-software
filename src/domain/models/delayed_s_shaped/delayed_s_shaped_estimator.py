@@ -57,23 +57,29 @@ class DelayedSShapedEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
+        t_0 = days[0]
         t_n = days[-1]
+        mu_t0 = self.calculate_mean(t_0, a, b)
         mu_tn = self.calculate_mean(t_n, a, b)
-        return sum_delta_yi - mu_tn
+        return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, days, failures_per_day):
         deltas_yi = failures_per_day
         sum = 0
-        for i in range (len(days)):
+        n = len(days)
+        for i in range(1, n):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = 0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             delta_yi = deltas_yi[i]
-            sum += delta_yi * self.calculate_psi(b, t_i, t_i_minus_1) / self.calculate_phi(b, t_i, t_i_minus_1)
+            psi_ti_ti_minus_1 = self.calculate_psi(b, t_i, t_i_minus_1)
+            mu_ti = self.calculate_mean(t_i, a, b)
+            mu_t_i_minus_1 = self.calculate_mean(t_i_minus_1, a, b)
+            sum += (delta_yi * psi_ti_ti_minus_1) / (mu_ti - mu_t_i_minus_1)
+        t_0 = days[0]
+        mu_t0 = self.calculate_mean(t_0, a, b)
         t_n = days[-1]
-        return b * sum - a * (1 + b * (t_n**2) * self.calculate_exp_minus_bt(b, t_n))
+        mu_tn = self.calculate_mean(t_n, a, b)
+        return sum - self.calculate_psi(b, mu_tn, mu_t0)
 
     def calculate_exp_minus_bt(self, b, t):
         return np.exp(-b * t)

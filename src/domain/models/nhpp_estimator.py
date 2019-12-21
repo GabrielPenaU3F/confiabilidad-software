@@ -53,7 +53,11 @@ class NHPPEstimator(PureBirthsEstimator):
         pass
 
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
-                                                              solving_method):
+                                                              initial_condition, solving_method):
+        y0 = initial_condition
+        times = list(times)
+        times.insert(0, 0)
+        failures_per_day.insert(0, y0)
         try:
             return opt.root(partial(self.grouped_fpd_ml_equations, times, failures_per_day), initial_approx,
                             method=solving_method).x
