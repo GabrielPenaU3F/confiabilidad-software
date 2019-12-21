@@ -9,6 +9,8 @@ class GroupedFPDFormatStrategy(FormatStrategy):
 
     def fit_model(self, optional_arguments):
 
+        optional_arguments = self.set_initial_approx(optional_arguments)
+
         end = self.determine_end_sample(optional_arguments.get_end_sample())
         initial_approx = self.determine_initial_approx(optional_arguments.get_initial_approx())
 
@@ -21,11 +23,8 @@ class GroupedFPDFormatStrategy(FormatStrategy):
         ml_params = self.determine_ml_estimates(optional_arguments.get_lsq_only(), *ml_function_parameters)
         return lsq_params, ml_params
 
-    def determine_initial_approx(self, initial_approx_arg):
-        if initial_approx_arg is not None:
-            return initial_approx_arg
-        else:
-            return self.model.get_default_initial_approx('grouped-fpd')
+    def set_initial_approx(self, optional_arguments):
+        return self.determine_initial_approx(optional_arguments, 'grouped-fpd')
 
     def calculate_aic(self, *model_parameters):
         fpd = self.data.get_data()

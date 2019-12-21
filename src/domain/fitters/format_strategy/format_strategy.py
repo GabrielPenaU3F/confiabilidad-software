@@ -31,8 +31,16 @@ class FormatStrategy(ABC):
             ml_estimates = self.execute_ml_function(*ml_function_parameters, solving_method='krylov')
         return ml_estimates
 
+    def determine_initial_approx(self, optional_arguments, format):
+        initial_approx_arg = optional_arguments.get_initial_approx()
+        if initial_approx_arg is not None:
+            return optional_arguments
+        else:
+            optional_arguments.set_initial_approx(self.model.get_default_initial_approx(str(format)))
+            return optional_arguments
+
     @abstractmethod
-    def determine_initial_approx(self, initial_approx_arg):
+    def set_initial_approx(self, optional_arguments):
         pass
 
     @abstractmethod

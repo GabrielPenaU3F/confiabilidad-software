@@ -9,7 +9,7 @@ class TTFFormatStrategy(FormatStrategy):
 
     def fit_model(self, optional_arguments):
 
-        optional_arguments = self.determine_initial_approx(optional_arguments)
+        optional_arguments = self.set_initial_approx(optional_arguments)
 
         end = self.determine_end_sample(optional_arguments.get_end_sample())
 
@@ -23,13 +23,8 @@ class TTFFormatStrategy(FormatStrategy):
         ml_params = self.determine_ml_estimates(optional_arguments.get_lsq_only(), *ml_function_parameters)
         return lsq_params, ml_params
 
-    def determine_initial_approx(self, optional_arguments):
-        initial_approx_arg = optional_arguments.get_initial_approx()
-        if initial_approx_arg is not None:
-            return optional_arguments
-        else:
-            optional_arguments.set_initial_approx(self.model.get_default_initial_approx('ttf'))
-            return optional_arguments
+    def set_initial_approx(self, optional_arguments):
+        return self.determine_initial_approx(optional_arguments, 'ttf')
 
     def calculate_aic(self, *model_parameters):
         original_times = self.data.get_data()
