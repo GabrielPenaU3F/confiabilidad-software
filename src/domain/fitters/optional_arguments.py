@@ -72,3 +72,6 @@ class OptionalArguments:
             return initial_approx
         except (ValueError, TypeError):
             raise InvalidArgumentException('Initial approximation must be a real tuple or array')
+
+    def set_initial_approx(self, initial_approx):
+        self.initial_approx = initial_approx
