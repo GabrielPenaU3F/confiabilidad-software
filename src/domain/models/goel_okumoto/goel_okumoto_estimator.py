@@ -33,15 +33,20 @@ class GoelOkumotoEstimator(NHPPEstimator):
                 self.ttf_ml_equation_2(a, b, times))
 
     def ttf_ml_equation_1(self, a, b, times):
-        n = len(times)
+        n = len(times) - 1
+        t_0 = times[0]
+        mu_t0 = self.calculate_mean(t_0, a, b)
         t_n = times[-1]
-        return self.calculate_mean(t_n, a, b) - n
+        mu_tn = self.calculate_mean(t_n, a, b)
+        return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, times):
-        n = len(times)
+        n = len(times) - 1
+        t_0 = times[0]
         t_n = times[-1]
         sum_tk = np.sum(times)
-        return sum_tk + a * t_n * self.calculate_exp_minus_bt(b, t_n) - (n / b)
+        zeta_tn_t0 = self.calculate_zeta(b, t_n, t_0)
+        return -sum_tk - a * zeta_tn_t0 + n/b
 
     def grouped_fpd_ml_equations(self, days, failures_per_day, vec):
         a, b = vec
@@ -51,29 +56,36 @@ class GoelOkumotoEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
+        t_0 = days[0]
+        mu_t0 = self.calculate_mean(t_0, a, b)
         t_n = days[-1]
-        return sum_delta_yi - self.calculate_mean(t_n, a, b)
+        mu_tn = self.calculate_mean(t_n, a, b)
+        return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, days, failures_per_day):
+        n = len(days) - 1
+        t_0 = days[0]
         t_n = days[-1]
         deltas_yi = failures_per_day
         sum_delta_x_phi = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = 0
-            else:
-                t_i_minus_1 = days[i - 1]
-            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(b, t_i, t_i_minus_1))
-        return sum_delta_x_phi + a * t_n * self.calculate_exp_minus_bt(b, t_n)
+            t_i_minus_1 = days[i - 1]
+            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(a, b, t_i, t_i_minus_1))
+        zeta_tn_t0 = self.calculate_zeta(b, t_n, t_0)
+        return sum_delta_x_phi - zeta_tn_t0
 
-    def calculate_phi(self, b, t_i, t_i_minus_1):
-        num = t_i_minus_1 * self.calculate_exp_minus_bt(b, t_i_minus_1) - t_i * self.calculate_exp_minus_bt(b, t_i)
-        den = self.calculate_exp_minus_bt(b, t_i_minus_1) - self.calculate_exp_minus_bt(b, t_i)
+    def calculate_zeta(self, b, t_1, t_2):
+        return t_1 * self.calculate_exp_minus_bt(b, t_1) - t_2 * self.calculate_exp_minus_bt(b, t_2)
+
+    def calculate_phi(self, a, b, t_1, t_2):
+        num = self.calculate_zeta(b, t_1, t_2)
+        den = self.calculate_mean(t_1, a, b) - self.calculate_mean(t_2, a, b)
         return num/den
 
     def calculate_exp_minus_bt(self, b, t):
         return np.exp(-b * t)
+
 
 
 
