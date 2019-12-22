@@ -21,7 +21,7 @@ class TestInitialCondition(unittest.TestCase):
         cls.ttf_fit_go = Fitter().fit('goel-okumoto', 'ntds', x0=5)
         cls.fpd_fit_go = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile', x0=5)
         cls.ttf_fit_log = Fitter().fit('logistic', 'ntds', x0=5)
-        cls.fpd_fit_log = Fitter().fit('logistic', 'mixed-waterfall-agile', x0=5)
+        cls.fpd_fit_log = Fitter().fit('logistic', 'mixed-waterfall-agile', x0=2)
 
     def test_ntds_delayed_s_shaped_maximum_likelihood_a_parameter_with_x0_equal_5_is_33_comma_590445(self):
         a = TestInitialCondition.ttf_fit_ds.get_ml_parameters()[0]
@@ -63,10 +63,18 @@ class TestInitialCondition(unittest.TestCase):
         b = TestInitialCondition.ttf_fit_log.get_ml_parameters()[1]
         self.assertAlmostEqual(b, 0.041331, places=6)
 
-    def test_mixed_logistic_maximum_likelihood_a_parameter_with_x0_equal_5_is_835_comma_495462(self):
-        a = TestInitialCondition.fpd_fit_log.get_ml_parameters()[0]
-        self.assertAlmostEqual(a, 835.495462, places=6)
+    def test_ntds_logistic_maximum_likelihood_c_parameter_with_x0_equal_5_is_76_comma_484488(self):
+        c = TestInitialCondition.ttf_fit_log.get_ml_parameters()[2]
+        self.assertAlmostEqual(c, 76.484488, places=6)
 
-    def test_mixed_logistic_maximum_likelihood_b_parameter_with_x0_equal_5_is_0_comma_022889(self):
+    def test_mixed_logistic_maximum_likelihood_a_parameter_with_x0_equal_2_is_1242_comma_786355(self):
+        a = TestInitialCondition.fpd_fit_log.get_ml_parameters()[0]
+        self.assertAlmostEqual(a, 1242.786355, places=6)
+
+    def test_mixed_logistic_maximum_likelihood_b_parameter_with_x0_equal_2_is_0_comma_016706(self):
         b = TestInitialCondition.fpd_fit_log.get_ml_parameters()[1]
-        self.assertAlmostEqual(b, 0.022889, places=6)
+        self.assertAlmostEqual(b, 0.016706, places=6)
+
+    def test_mixed_logistic_maximum_likelihood_c_parameter_with_x0_equal_2_is_92_comma_333889(self):
+        c = TestInitialCondition.fpd_fit_log.get_ml_parameters()[2]
+        self.assertAlmostEqual(c, 92.333889, places=6)

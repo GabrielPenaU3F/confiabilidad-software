@@ -31,16 +31,14 @@ class NHPPEstimator(PureBirthsEstimator):
     def calculate_mean_failure_numbers(self, times, *model_parameters):
         return self.calculate_mean(np.array(times), *model_parameters)
 
-    def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, optional_arguments):
-        initial_approx = optional_arguments.get_initial_approx()
+    def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
         parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
         return parameters
 
     # The methods 'hybr', 'lm' y 'krylov' are the only ones working for this particular problem.
     # For more details, read the docs:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimate_ttf_parameters_by_maximum_likelihood(self, times, optional_arguments, solving_method):
-        initial_approx = optional_arguments.get_initial_approx()
+    def estimate_ttf_parameters_by_maximum_likelihood(self, times, initial_approx, solving_method):
         try:
             return opt.root(partial(self.ttf_ml_equations, times), initial_approx, method=solving_method).x
         except ValueError as error:

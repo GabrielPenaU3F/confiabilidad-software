@@ -12,7 +12,6 @@ class GroupedFPDFormatStrategy(FormatStrategy):
         optional_arguments = self.set_initial_approx(optional_arguments)
 
         end = self.determine_end_sample(optional_arguments.get_end_sample())
-
         fpd = self.data.get_data()[0:end]
         cumulative_failures = self.data.get_cumulative_failures()[0:end]
 

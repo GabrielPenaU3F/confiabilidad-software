@@ -18,7 +18,7 @@ class TestInitialApprox(unittest.TestCase):
     def test_goel_okumoto_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
         fit = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile')
         a, b = fit.get_lsq_parameters()
-        self.assertAlmostEqual(a, 1416.913890, places=6)
+        self.assertAlmostEqual(a, 1416.913896, places=6)
         self.assertAlmostEqual(b, 0.004807, places=6)
 
     def test_delayed_s_shaped_ttf_without_initial_approx_should_take_the_default_initial_approx(self):

@@ -7,18 +7,10 @@ class FormatStrategy(ABC):
 
     execute_ml_function = None
 
-    def __init__(self, data, model):
+    def __init__(self, data, model, data_formater):
         self.data = data
         self.model = model
-
-    def determine_end_sample(self, end_sample_arg):
-        default_end_sample = len(self.data.get_times())
-        if end_sample_arg > default_end_sample:
-            raise InvalidArgumentException('The end sample must not exceed the length of the dataset')
-        if end_sample_arg != 0:
-            return end_sample_arg
-        else:
-            return default_end_sample
+        self.data_formater = data_formater
 
     @abstractmethod
     def fit_model(self, optional_arguments):
