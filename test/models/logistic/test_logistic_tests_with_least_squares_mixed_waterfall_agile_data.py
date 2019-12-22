@@ -9,7 +9,8 @@ class LogisticTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('logistic', 'mixed-waterfall-agile', initial_approx=(0.01, 0.001, 0.00001))
+        cls.fit = Fitter().fit('logistic', 'mixed-waterfall-agile', initial_approx=(0.01, 0.001, 0.00001),
+                               lsq_only=True)
 
     def test_mixed_waterfall_agile_logistic_least_squares_a_parameter_is_835_comma_410586(self):
         a = LogisticTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]

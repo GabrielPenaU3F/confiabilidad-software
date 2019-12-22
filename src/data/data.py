@@ -21,9 +21,9 @@ class Data(ABC):
     def calculate_cumulative_failures(self, data):
         # It begins on 0, result including '0 faults at t=0'
         if self.format == 'ttf':
-            return np.arange(0, len(data) + 1, 1)
+            return list(np.arange(0, len(data) + 1, 1))
         elif self.format == 'grouped':
-            return np.cumsum(data)
+            return list(np.cumsum(data))
 
     def get_cumulative_failures(self):
         return self.cumulative_failures
@@ -39,10 +39,10 @@ class Data(ABC):
 
     def get_times(self):
         if self.format == 'ttf':
-            return [0] + self.data
+            return list([0] + self.data)
         elif self.format == 'grouped':
             if self.times is None:
-                return np.arange(1, len(self.data) + 1)
+                return list(np.arange(1, len(self.data) + 1))
             return self.times
 
     def get_time_between_failures(self):

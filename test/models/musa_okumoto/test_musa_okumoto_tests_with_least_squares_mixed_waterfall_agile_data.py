@@ -9,7 +9,7 @@ class MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase)
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('musa-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('musa-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5), lsq_only=True)
 
     def test_mixed_waterfall_agile_musa_okumoto_least_squares_a_parameter_is_1006_comma_374772(self):
         a = MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]

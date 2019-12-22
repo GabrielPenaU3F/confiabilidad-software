@@ -9,11 +9,11 @@ class GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase)
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile', initial_approx=(1, 0.5), lsq_only=True)
 
-    def test_mixed_waterfall_agile_goel_okumoto_least_squares_a_parameter_is_1416_comma_913890(self):
+    def test_mixed_waterfall_agile_goel_okumoto_least_squares_a_parameter_is_1416_comma_913895(self):
         a = GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]
-        self.assertAlmostEqual(a, 1416.913890, places=6)
+        self.assertAlmostEqual(a, 1416.913895, places=6)
 
     def test_mixed_waterfall_agile_goel_okumoto_least_squares_b_parameter_is_0_comma_004806(self):
         b = GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[1]

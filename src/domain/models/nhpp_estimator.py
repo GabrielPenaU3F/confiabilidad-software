@@ -39,9 +39,8 @@ class NHPPEstimator(PureBirthsEstimator):
     # The methods 'hybr', 'lm' y 'krylov' are the only ones working for this particular problem.
     # For more details, read the docs:
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
-    def estimate_ttf_parameters_by_maximum_likelihood(self, times, initial_approx, initial_condition, solving_method):
-        t0 = initial_condition
-        times.insert(0, t0)
+    def estimate_ttf_parameters_by_maximum_likelihood(self, times, optional_arguments, solving_method):
+        initial_approx = optional_arguments.get_initial_approx()
         try:
             return opt.root(partial(self.ttf_ml_equations, times), initial_approx, method=solving_method).x
         except ValueError as error:
@@ -52,12 +51,9 @@ class NHPPEstimator(PureBirthsEstimator):
     def ttf_ml_equations(self, times, vec):
         pass
 
-    def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
-                                                              initial_condition, solving_method):
-        y0 = initial_condition
-        times = list(times)
-        times.insert(0, 0)
-        failures_per_day.insert(0, y0)
+    def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, optional_arguments,
+                                                              solving_method):
+        initial_approx = optional_arguments.get_initial_approx()
         try:
             return opt.root(partial(self.grouped_fpd_ml_equations, times, failures_per_day), initial_approx,
                             method=solving_method).x

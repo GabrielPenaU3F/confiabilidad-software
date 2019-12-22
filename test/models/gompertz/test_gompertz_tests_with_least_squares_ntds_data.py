@@ -9,7 +9,7 @@ class GompertzTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.5))
+        cls.fit = Fitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.5), lsq_only=True)
 
     def test_ntds_gompertz_least_squares_a_parameter_is_25_comma_340913(self):
         a = GompertzTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

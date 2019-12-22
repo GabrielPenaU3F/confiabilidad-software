@@ -9,7 +9,7 @@ class DelayedSShapedTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCa
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5), lsq_only=True)
 
     def test_mixed_waterfall_agile_delayed_s_shaped_least_squares_a_parameter_is_893_comma_638883(self):
         a = DelayedSShapedTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[0]
