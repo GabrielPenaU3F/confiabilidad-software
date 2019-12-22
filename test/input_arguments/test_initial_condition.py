@@ -9,6 +9,8 @@ class TestInitialCondition(unittest.TestCase):
     fpd_fit_ds = None
     ttf_fit_go = None
     fpd_fit_go = None
+    ttf_fit_log = None
+    fpd_fit_log = None
 
     @classmethod
     def setUpClass(cls):
@@ -18,6 +20,8 @@ class TestInitialCondition(unittest.TestCase):
         cls.fpd_fit_ds = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', x0=5)
         cls.ttf_fit_go = Fitter().fit('goel-okumoto', 'ntds', x0=5)
         cls.fpd_fit_go = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile', x0=5)
+        cls.ttf_fit_log = Fitter().fit('logistic', 'ntds', x0=5)
+        cls.fpd_fit_log = Fitter().fit('logistic', 'mixed-waterfall-agile', x0=5)
 
     def test_ntds_delayed_s_shaped_maximum_likelihood_a_parameter_with_x0_equal_5_is_33_comma_590445(self):
         a = TestInitialCondition.ttf_fit_ds.get_ml_parameters()[0]
@@ -50,3 +54,19 @@ class TestInitialCondition(unittest.TestCase):
     def test_mixed_goel_okumoto_maximum_likelihood_b_parameter_with_x0_equal_5_is_0_comma_004757(self):
         b = TestInitialCondition.fpd_fit_go.get_ml_parameters()[1]
         self.assertAlmostEqual(b, 0.004757, places=6)
+
+    def test_ntds_logistic_maximum_likelihood_a_parameter_with_x0_equal_5_is_24_comma_611413(self):
+        a = TestInitialCondition.ttf_fit_log.get_ml_parameters()[0]
+        self.assertAlmostEqual(a, 24.611413, places=6)
+
+    def test_ntds_logistic_maximum_likelihood_b_parameter_with_x0_equal_5_is_0_comma_041331(self):
+        b = TestInitialCondition.ttf_fit_log.get_ml_parameters()[1]
+        self.assertAlmostEqual(b, 0.041331, places=6)
+
+    def test_mixed_logistic_maximum_likelihood_a_parameter_with_x0_equal_5_is_835_comma_495462(self):
+        a = TestInitialCondition.fpd_fit_log.get_ml_parameters()[0]
+        self.assertAlmostEqual(a, 835.495462, places=6)
+
+    def test_mixed_logistic_maximum_likelihood_b_parameter_with_x0_equal_5_is_0_comma_022889(self):
+        b = TestInitialCondition.fpd_fit_log.get_ml_parameters()[1]
+        self.assertAlmostEqual(b, 0.022889, places=6)

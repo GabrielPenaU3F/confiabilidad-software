@@ -38,24 +38,23 @@ class LogisticEstimator(NHPPEstimator):
                 self.ttf_ml_equation_3(a, b, c, times))
 
     def ttf_ml_equation_1(self, a, b, c, times):
-        n = len(times)
-        t_0 = 0
+        n = len(times) - 1
+        t_0 = times[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         t_n = times[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, c, times):
-        n = len(times)
+        n = len(times) - 1
         sum_tk = np.sum(times)
         fourth_term_sum = 0
-        for k in range(n):
+        for k in range(1, n + 1):
             t_k = times[k]
             psi_tk = self.calculate_psi(b, c, t_k)
             mu_tk = self.calculate_mean(t_k, a, b, c)
             fourth_term_sum += (psi_tk * mu_tk)
-
-        t_0 = 0
+        t_0 = times[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         psi_t0 = self.calculate_psi(b, c, t_0)
         t_n = times[-1]
@@ -66,15 +65,14 @@ class LogisticEstimator(NHPPEstimator):
         return n/b + sum_tk - n * c + (2/a) * fourth_term_sum + (1/a) * fifth_term
 
     def ttf_ml_equation_3(self, a, b, c, times):
-        n = len(times)
+        n = len(times) - 1
         second_term_sum = 0
-        for k in range(n):
+        for k in range(1, n + 1):
             t_k = times[k]
             mu_tk = self.calculate_mean(t_k, a, b, c)
             phi_tk = self.calculate_phi(t_k, b, c)
             second_term_sum += mu_tk * phi_tk
-
-        t_0 = 0
+        t_0 = times[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         phi_t0 = self.calculate_phi(b, c, t_0)
         t_n = times[-1]
@@ -93,27 +91,25 @@ class LogisticEstimator(NHPPEstimator):
     def grouped_fpd_ml_equation_1(self, a, b, c, days, failures_per_day):
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
-        t_0 = 0
+        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, c, days, failures_per_day):
+        n = len(days) - 1
         deltas_yi = failures_per_day
-        t_0 = 0
+        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         psi_t0 = self.calculate_psi(b, c, t_0)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         psi_tn = self.calculate_psi(b, c, t_n)
         sum = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = t_0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             delta_yi = deltas_yi[i]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             psi_ti = self.calculate_psi(b, c, t_i)
@@ -125,20 +121,18 @@ class LogisticEstimator(NHPPEstimator):
         return sum - ((mu_tn**2) * psi_tn - (mu_t0**2) * psi_t0)
 
     def grouped_fpd_ml_equation_3(self, a, b, c, days, failures_per_day):
+        n = len(days) - 1
         deltas_yi = failures_per_day
-        t_0 = 0
+        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         phi_t0 = self.calculate_phi(b, c, t_0)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         phi_tn = self.calculate_phi(b, c, t_n)
         sum = 0
-        for i in range(len(days)):
+        for i in range(1, n + 1):
             t_i = days[i]
-            if i == 0:
-                t_i_minus_1 = t_0
-            else:
-                t_i_minus_1 = days[i - 1]
+            t_i_minus_1 = days[i - 1]
             delta_yi = deltas_yi[i]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             phi_ti = self.calculate_phi(b, c, t_i)
