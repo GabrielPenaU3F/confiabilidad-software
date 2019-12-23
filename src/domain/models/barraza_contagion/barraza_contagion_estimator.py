@@ -31,8 +31,7 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
     def calculate_mean_failure_numbers(self, times, *model_parameters):
         return self.calculate_mean(np.array(times), *model_parameters)
 
-    def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, optional_arguments):
-        initial_approx = optional_arguments.get_initial_approx()
+    def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
         parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
         return parameters
 
