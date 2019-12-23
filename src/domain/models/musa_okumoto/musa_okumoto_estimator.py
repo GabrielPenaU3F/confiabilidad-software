@@ -31,19 +31,19 @@ class MusaOkumotoEstimator(NHPPEstimator):
                 self.ttf_ml_equation_2(a, b, times))
 
     def ttf_ml_equation_1(self, a, b, times):
-        n = len(times) - 1
-        t_0 = times[0]
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         t_n = times[-1]
         return n - (self.calculate_mean(t_n, a, b) - self.calculate_mean(t_0, a, b))
 
     def ttf_ml_equation_2(self, a, b, times):
-        n = len(times) - 1
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         t_n = times[-1]
-        t_0 = times[0]
         lambda_tn = self.calculate_lambda(t_n, a, b)
         lambda_t0 = self.calculate_lambda(t_0, a, b)
         sum = 0
-        for k in range(1, n + 1):
+        for k in range(n):
             t_k = times[k]
             lambda_tk = self.calculate_lambda(t_k, a, b)
             sum += t_k * lambda_tk
@@ -64,17 +64,18 @@ class MusaOkumotoEstimator(NHPPEstimator):
         return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, days, failures_per_day):
-        n = len(days) - 1
+        n = len(days)
         t_0 = days[0]
         t_n = days[-1]
         lambda_t0 = self.calculate_lambda(t_0, a, b)
         lambda_tn = self.calculate_lambda(t_n, a, b)
         deltas_yi = failures_per_day
         sum_delta_x_phi = 0
-        for i in range(1, n + 1):
+        for i in range(1, n):
             t_i = days[i]
             t_i_minus_1 = days[i - 1]
-            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(a, b, t_i, t_i_minus_1))
+            delta_y_i = deltas_yi[i - 1]
+            sum_delta_x_phi += (delta_y_i * self.calculate_phi(a, b, t_i, t_i_minus_1))
         return sum_delta_x_phi - (t_n * lambda_tn - t_0 * lambda_t0)
 
     def calculate_phi(self, a, b, t_i, t_i_minus_1):
