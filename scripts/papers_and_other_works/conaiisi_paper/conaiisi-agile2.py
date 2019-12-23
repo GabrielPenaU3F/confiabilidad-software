@@ -6,7 +6,7 @@ from src.domain.fitters.fitter import Fitter
 fpd_fitter = Fitter()
 
 data = DataRepository.provide_project_data('agile-n2')
-x_axis_data = data.get_times()
+x_axis_data = data.get_formated_times()
 cumulative_failures = data.get_cumulative_failures()
 
 ds = DelayedSShapedEstimator()

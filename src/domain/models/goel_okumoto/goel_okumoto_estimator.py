@@ -9,7 +9,6 @@ class GoelOkumotoEstimator(NHPPEstimator):
     def __init__(self):
         self.default_initial_approximations = {
             'ttf': (1, 0.5),
-            'grouped-cumulative': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
         saddlepoint_calculator = GoelOkumotoSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
@@ -33,16 +32,16 @@ class GoelOkumotoEstimator(NHPPEstimator):
                 self.ttf_ml_equation_2(a, b, times))
 
     def ttf_ml_equation_1(self, a, b, times):
-        n = len(times) - 1
-        t_0 = times[0]
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         mu_t0 = self.calculate_mean(t_0, a, b)
         t_n = times[-1]
         mu_tn = self.calculate_mean(t_n, a, b)
         return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, times):
-        n = len(times) - 1
-        t_0 = times[0]
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         t_n = times[-1]
         sum_tk = np.sum(times)
         zeta_tn_t0 = self.calculate_zeta(b, t_n, t_0)
@@ -54,9 +53,9 @@ class GoelOkumotoEstimator(NHPPEstimator):
                 self.grouped_fpd_ml_equation_2(a, b, days, failures_per_day))
 
     def grouped_fpd_ml_equation_1(self, a, b, days, failures_per_day):
+        t_0, days = self.separate_time_data(days)
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
-        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b)
@@ -71,7 +70,8 @@ class GoelOkumotoEstimator(NHPPEstimator):
         for i in range(1, n + 1):
             t_i = days[i]
             t_i_minus_1 = days[i - 1]
-            sum_delta_x_phi += (deltas_yi[i] * self.calculate_phi(a, b, t_i, t_i_minus_1))
+            delta_y_i = deltas_yi[i - 1]
+            sum_delta_x_phi += (delta_y_i * self.calculate_phi(a, b, t_i, t_i_minus_1))
         zeta_tn_t0 = self.calculate_zeta(b, t_n, t_0)
         return sum_delta_x_phi - zeta_tn_t0
 

@@ -10,7 +10,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 agile1 = DataRepository.provide_project_data('agile-n1')
-agile1_times = agile1.get_times()
+agile1_times = agile1.get_formated_times()
 
 a_ds = 72.4203
 b_ds = 0.0031

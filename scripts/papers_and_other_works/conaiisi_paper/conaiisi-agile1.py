@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 ttf_fitter = Fitter()
 
 data = DataRepository.provide_project_data('agile-n1')
-x_axis_data = data.get_times()
+x_axis_data = data.get_formated_times()
 cumulative_failures = data.get_cumulative_failures()
 
 ds = DelayedSShapedEstimator()

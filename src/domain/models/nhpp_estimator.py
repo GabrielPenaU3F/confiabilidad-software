@@ -49,9 +49,8 @@ class NHPPEstimator(PureBirthsEstimator):
     def ttf_ml_equations(self, times, vec):
         pass
 
-    def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, optional_arguments,
+    def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
                                                               solving_method):
-        initial_approx = optional_arguments.get_initial_approx()
         try:
             return opt.root(partial(self.grouped_fpd_ml_equations, times, failures_per_day), initial_approx,
                             method=solving_method).x
@@ -142,4 +141,9 @@ class NHPPEstimator(PureBirthsEstimator):
         except OverflowError:
             mttf = np.nan
         return mttf
+
+    def separate_time_data(self, times):
+        t_0 = times[0]
+        times = times[1:len(times)]
+        return t_0, times
 

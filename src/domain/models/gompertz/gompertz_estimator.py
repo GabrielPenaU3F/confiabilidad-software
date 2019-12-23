@@ -9,7 +9,6 @@ class GompertzEstimator(NHPPEstimator):
     def __init__(self):
         self.default_initial_approximations = {
             'ttf': (25, 0.5, 0.5),
-            'grouped-cumulative': (25, 0.5, 0.5),
             'grouped-fpd': (250, 0.5, 0.5)
         }
         saddlepoint_calculator = GompertzSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)

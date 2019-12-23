@@ -10,7 +10,6 @@ class LogisticEstimator(NHPPEstimator):
     def __init__(self):
         self.default_initial_approximations = {
             'ttf': (10, 0.05, 20),
-            'grouped-cumulative': (0.01, 0.001, 0.000001),
             'grouped-fpd': (0.01, 0.001, 0.00001)
         }
         saddlepoint_calculator = LogisticSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)

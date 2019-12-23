@@ -12,7 +12,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 ntds = DataRepository.provide_project_data('ntds')
-ntds_times = ntds.get_times()
+ntds_times = ntds.get_formated_times()
 
 a_go = 33.5994
 b_go = 0.0063

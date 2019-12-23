@@ -12,7 +12,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 mixed = DataRepository.provide_project_data('mixed-waterfall-agile')
-mixed_times = mixed.get_times()
+mixed_times = mixed.get_formated_times()
 
 a_go = 1416.9139
 b_go = 0.0048

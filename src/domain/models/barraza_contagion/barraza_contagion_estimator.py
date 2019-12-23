@@ -9,7 +9,6 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
     def __init__(self):
         self.default_initial_approximations = {
             'ttf': (1, 0.5),
-            'grouped-cumulative': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
 

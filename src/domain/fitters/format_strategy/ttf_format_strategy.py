@@ -14,7 +14,7 @@ class TTFFormatStrategy(FormatStrategy):
 
         optional_arguments = self.set_initial_approx(optional_arguments)
         formated_data = self.data_formater.give_format(self.data, optional_arguments)
-        ttf = formated_data.get_times()
+        ttf = formated_data.get_formated_times()
         cumulative_failures = formated_data.get_cumulative_failures()
         initial_approx = optional_arguments.get_initial_approx()
 
