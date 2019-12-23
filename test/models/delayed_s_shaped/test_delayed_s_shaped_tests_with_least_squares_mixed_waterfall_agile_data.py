@@ -19,6 +19,6 @@ class DelayedSShapedTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCa
         b = DelayedSShapedTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[1]
         self.assertAlmostEqual(b, 0.021788, places=6)
 
-    def test_mixed_waterfall_agile_delayed_s_shaped_least_squares_prr_is_2371_comma_329475(self):
+    def test_mixed_waterfall_agile_delayed_s_shaped_least_squares_prr_is_2371_comma_329471(self):
         prr = DelayedSShapedTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 2371.329475, places=6)
+        self.assertAlmostEqual(prr, 2371.329471, places=6)
