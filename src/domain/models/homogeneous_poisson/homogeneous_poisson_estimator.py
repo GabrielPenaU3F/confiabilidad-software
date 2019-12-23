@@ -10,7 +10,6 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
     def __init__(self):
         self.default_initial_approximations = {
             'ttf': 0.5,
-            'grouped-cumulative': 0.5,
             'grouped-fpd': 0.5
         }
         saddlepoint_calculator = HomogeneousPoissonSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
@@ -28,28 +27,21 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
 
     def estimate_ttf_parameters_by_maximum_likelihood(self, times, initial_approx,
                                                       solving_method):
-        t_0 = 0
-        n = len(times) - 1
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         t_n = times[n]
         return [n / t_n - t_0]
 
-    def estimate_grouped_cumulative_parameters_by_maximum_likelihood(self, days, cumulative_failures,
-                                                                     initial_approx, solving_method):
-        pass
-
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
                                                               solving_method):
-        t_0 = 0
-        n = len(times) - 1
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         t_n = times[n]
         deltas_yi = failures_per_day
         sum_deltas_yi = np.sum(deltas_yi)
         return [sum_deltas_yi / (t_n - t_0)]
 
     def ttf_ml_equations(self, times, vec):
-        pass
-
-    def grouped_cumulative_ml_equations(self, days, cumulative_failures, vec):
         pass
 
     def grouped_fpd_ml_equations(self, times, failures_per_day, vec):

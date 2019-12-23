@@ -44,10 +44,10 @@ class TestLSQOnly(unittest.TestCase):
     def test_logistic_lsq_only_with_ntds_data_lsq_estimates_and_prr(self):
         a, b, c = TestLSQOnly.log_ntds_fit.get_lsq_parameters()
         prr = TestLSQOnly.log_ntds_fit.get_prr_lsq()
-        self.assertAlmostEqual(a, 24.611413, places=6)
-        self.assertAlmostEqual(b, 0.041331, places=6)
-        self.assertAlmostEqual(c, 76.485839, places=6)
-        self.assertAlmostEqual(prr, 0.181087, places=6)
+        self.assertAlmostEqual(a, 24.640875, places=6)
+        self.assertAlmostEqual(b, 0.040930, places=6)
+        self.assertAlmostEqual(c, 76.510170, places=6)
+        self.assertAlmostEqual(prr, 0.193478, places=6)
 
     def test_logistic_lsq_only_ml_estimates_prr_and_aic_must_be_none(self):
         ml_params = TestLSQOnly.log_ntds_fit.get_ml_parameters()
