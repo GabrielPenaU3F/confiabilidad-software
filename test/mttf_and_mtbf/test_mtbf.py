@@ -39,14 +39,14 @@ class MTBFTest(unittest.TestCase):
         mtbf = MTBFTest.fit_ntds_ds.get_mtbf(20)
         self.assertAlmostEqual(mtbf, 9.0, delta=0.1)
 
-    def test_ntds_logistic_mtbf_for_k_equal_1_is_5_comma_6(self):
+    def test_ntds_logistic_mtbf_for_k_equal_1_is_5_comma_4(self):
         mtbf = MTBFTest.fit_ntds_log.get_mtbf(1)
-        self.assertAlmostEqual(mtbf, 5.6, delta=0.1)
+        self.assertAlmostEqual(mtbf, 5.4, delta=0.1)
 
     def test_ntds_logistic_mtbf_for_k_equal_5_is_7_comma_1(self):
         mtbf = MTBFTest.fit_ntds_log.get_mtbf(5)
-        self.assertAlmostEqual(mtbf, 7.1, delta=0.1)
+        self.assertAlmostEqual(mtbf, 7.2, delta=0.1)
 
     def test_ntds_logistic_mtbf_for_k_equal_20_is_4_comma_1(self):
         mtbf = MTBFTest.fit_ntds_log.get_mtbf(20)
-        self.assertAlmostEqual(mtbf, 4.1, delta=0.1)
+        self.assertAlmostEqual(mtbf, 4.2, delta=0.1)

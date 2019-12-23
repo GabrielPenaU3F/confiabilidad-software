@@ -9,7 +9,7 @@ class GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.5))
+        cls.fit = Fitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.9))
 
     def test_ntds_gompertz_maximum_likelihood_a_parameter_is_27_comma_973184(self):
         a = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]

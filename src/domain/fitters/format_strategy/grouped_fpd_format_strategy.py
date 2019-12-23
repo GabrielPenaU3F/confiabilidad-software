@@ -13,13 +13,14 @@ class GroupedFPDFormatStrategy(FormatStrategy):
 
         optional_arguments = self.set_initial_approx(optional_arguments)
         formated_data = self.data_formater.give_format(self.data, optional_arguments)
+        original_times = formated_data.get_original_times()
         formated_times = formated_data.get_formated_times()
         fpd = formated_data.get_fpd()
         cumulative_failures = formated_data.get_cumulative_failures()
         initial_approx = optional_arguments.get_initial_approx()
 
-        lsq_params = self.model.fit_mean_failure_number_by_least_squares(formated_times, cumulative_failures,
-                                                                         initial_approx)
+        lsq_params = self.model.fit_mean_failure_number_by_least_squares(
+            original_times, cumulative_failures[1:len(cumulative_failures)], initial_approx)
         ml_function_parameters = optional_arguments.get_lsq_only(), formated_times, fpd, lsq_params
         ml_params = self.determine_ml_estimates(*ml_function_parameters)
         return lsq_params, ml_params

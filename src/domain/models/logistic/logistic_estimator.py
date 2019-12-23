@@ -37,23 +37,23 @@ class LogisticEstimator(NHPPEstimator):
                 self.ttf_ml_equation_3(a, b, c, times))
 
     def ttf_ml_equation_1(self, a, b, c, times):
-        n = len(times) - 1
-        t_0 = times[0]
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         t_n = times[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         return n - (mu_tn - mu_t0)
 
     def ttf_ml_equation_2(self, a, b, c, times):
-        n = len(times) - 1
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         sum_tk = np.sum(times)
         fourth_term_sum = 0
-        for k in range(1, n + 1):
+        for k in range(n):
             t_k = times[k]
             psi_tk = self.calculate_psi(b, c, t_k)
             mu_tk = self.calculate_mean(t_k, a, b, c)
             fourth_term_sum += (psi_tk * mu_tk)
-        t_0 = times[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         psi_t0 = self.calculate_psi(b, c, t_0)
         t_n = times[-1]
@@ -64,14 +64,14 @@ class LogisticEstimator(NHPPEstimator):
         return n/b + sum_tk - n * c + (2/a) * fourth_term_sum + (1/a) * fifth_term
 
     def ttf_ml_equation_3(self, a, b, c, times):
-        n = len(times) - 1
+        t_0, times = self.separate_time_data(times)
+        n = len(times)
         second_term_sum = 0
-        for k in range(1, n + 1):
+        for k in range(n):
             t_k = times[k]
             mu_tk = self.calculate_mean(t_k, a, b, c)
             phi_tk = self.calculate_phi(t_k, b, c)
             second_term_sum += mu_tk * phi_tk
-        t_0 = times[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         phi_t0 = self.calculate_phi(b, c, t_0)
         t_n = times[-1]
@@ -88,58 +88,58 @@ class LogisticEstimator(NHPPEstimator):
                 self.grouped_fpd_ml_equation_3(a, b, c, days, failures_per_day))
 
     def grouped_fpd_ml_equation_1(self, a, b, c, days, failures_per_day):
+        t_0, days = self.separate_time_data(days)
         deltas_yi = failures_per_day
         sum_delta_yi = np.sum(deltas_yi)
-        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         return sum_delta_yi - (mu_tn - mu_t0)
 
     def grouped_fpd_ml_equation_2(self, a, b, c, days, failures_per_day):
-        n = len(days) - 1
+        t_0, days = self.separate_time_data(days)
+        n = len(days)
         deltas_yi = failures_per_day
-        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         psi_t0 = self.calculate_psi(b, c, t_0)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         psi_tn = self.calculate_psi(b, c, t_n)
         sum = 0
-        for i in range(1, n + 1):
+        for i in range(1, n):
             t_i = days[i]
             t_i_minus_1 = days[i - 1]
-            delta_yi = deltas_yi[i]
+            delta_y_i = deltas_yi[i - 1]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             psi_ti = self.calculate_psi(b, c, t_i)
             mu_ti_minus_1 = self.calculate_mean(t_i_minus_1, a, b, c)
             psi_ti_minus_1 = self.calculate_psi(b, c, t_i_minus_1)
             numerator = (mu_ti**2) * psi_ti - (mu_ti_minus_1**2) * psi_ti_minus_1
             denominator = mu_ti - mu_ti_minus_1
-            sum += delta_yi * numerator / denominator
+            sum += delta_y_i * numerator / denominator
         return sum - ((mu_tn**2) * psi_tn - (mu_t0**2) * psi_t0)
 
     def grouped_fpd_ml_equation_3(self, a, b, c, days, failures_per_day):
-        n = len(days) - 1
+        t_0, days = self.separate_time_data(days)
+        n = len(days)
         deltas_yi = failures_per_day
-        t_0 = days[0]
         mu_t0 = self.calculate_mean(t_0, a, b, c)
         phi_t0 = self.calculate_phi(b, c, t_0)
         t_n = days[-1]
         mu_tn = self.calculate_mean(t_n, a, b, c)
         phi_tn = self.calculate_phi(b, c, t_n)
         sum = 0
-        for i in range(1, n + 1):
+        for i in range(1, n):
             t_i = days[i]
             t_i_minus_1 = days[i - 1]
-            delta_yi = deltas_yi[i]
+            delta_y_i = deltas_yi[i - 1]
             mu_ti = self.calculate_mean(t_i, a, b, c)
             phi_ti = self.calculate_phi(b, c, t_i)
             mu_ti_minus_1 = self.calculate_mean(t_i_minus_1, a, b, c)
             phi_ti_minus_1 = self.calculate_phi(b, c, t_i_minus_1)
             numerator = -(mu_ti**2) * phi_ti + (mu_ti_minus_1**2) * phi_ti_minus_1
             denominator = mu_ti - mu_ti_minus_1
-            sum += delta_yi * numerator / denominator
+            sum += delta_y_i * numerator / denominator
         return sum - ((mu_tn**2) * phi_tn - (mu_t0**2) * phi_t0)
 
     def calculate_phi(self, b, c, t):
