@@ -28,7 +28,7 @@ class TTFDataFormater(DataFormater):
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
         ttf_original_data = data.get_data()[0:end]
         cumulative_failures = data.get_cumulative_failures()[0:end + 1]
-        t0 = optional_arguments.get_x0()
+        t0 = optional_arguments.get_t0()
         ttf_formated = list(np.copy(ttf_original_data))
         ttf_formated.insert(0, t0)
         return TTFFormatedData(ttf_original_data, ttf_formated, cumulative_failures)
@@ -40,8 +40,7 @@ class FPDDataFormater(DataFormater):
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
         cumulative_failures = data.get_cumulative_failures()[0:end]
 
-        y0 = optional_arguments.get_x0()
-        cumulative_failures.insert(0, y0)
+        t0 = optional_arguments.get_t0()
         fpd = list(np.copy(data.get_data()))
         original_times = data.get_times()[0:end]
         formated_times = list(np.copy(original_times))

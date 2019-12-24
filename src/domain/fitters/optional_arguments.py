@@ -8,7 +8,7 @@ class OptionalArguments:
     def __init__(self, **kwargs):
         self.end_sample = self.determine_end_sample(kwargs.get('end_sample'))
         self.lsq_only = self.determine_lsq_only(kwargs.get('lsq_only'))
-        self.x0 = self.determine_x0(kwargs.get('x0'))
+        self.t0 = self.determine_t0(kwargs.get('t0'))
         self.mts_flag = self.determine_mts_flag(kwargs.get('mts'))
         self.initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
 
@@ -18,8 +18,8 @@ class OptionalArguments:
     def get_lsq_only(self):
         return self.lsq_only
 
-    def get_x0(self):
-        return self.x0
+    def get_t0(self):
+        return self.t0
 
     def get_mts_flag(self):
         return self.mts_flag
@@ -27,15 +27,15 @@ class OptionalArguments:
     def get_initial_approx(self):
         return self.initial_approx
 
-    def determine_x0(self, x0):
-        if x0 is not None:
+    def determine_t0(self, t0):
+        if t0 is not None:
             try:
-                if float(x0) > 0:
-                    return x0
+                if float(t0) > 0:
+                    return t0
                 else:
                     raise ValueError
             except (ValueError, TypeError):
-                raise InvalidArgumentException('Initial condition x0 must be a positive number')
+                raise InvalidArgumentException('Initial condition t0 must be a positive number')
         else:
             return 0
 

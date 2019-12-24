@@ -31,7 +31,7 @@ class TestWrongParameters(unittest.TestCase):
             Fitter().fit('goel-okumoto', 'ntds', end_sample=-2)
         self.assertEqual(error.exception.strerror, 'The end sample must be a positive integer')
 
-    def test_negative_x0(self):
+    def test_negative_t0(self):
         with self.assertRaises(InvalidArgumentException) as error:
-            Fitter().fit('goel-okumoto', 'ntds', x0=-2)
-        self.assertEqual(error.exception.strerror, 'Initial condition x0 must be a positive number')
+            Fitter().fit('goel-okumoto', 'ntds', t0=-2)
+        self.assertEqual(error.exception.strerror, 'Initial condition t0 must be a positive number')
