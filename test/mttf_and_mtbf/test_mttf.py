@@ -17,11 +17,9 @@ class MTTFTest(unittest.TestCase):
     def setUpClass(cls):
         cls.fit_ntds_go = Fitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
         cls.fit_mixed_ds = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
-        cls.fit_agile1_log = Fitter().fit('logistic', 'agile-n1')
+        cls.fit_agile1_log = Fitter().fit('logistic', 'agile-n1', initial_approx=(100, 0.05, 20))
         cls.fit_ntds_ds = Fitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_ntds_log = Fitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20))
-
-
+        cls.fit_ntds_log = Fitter().fit('logistic', 'ntds', initial_approx=(100, 0.05, 20))
 
     def test_ntds_data_goel_okumoto_mttf_is_non_decreasing(self):
         mttf = MTTFTest.fit_ntds_go.get_all_mttf()
@@ -51,9 +49,9 @@ class MTTFTest(unittest.TestCase):
         mttf = MTTFTest.fit_ntds_go.get_mttf(1)
         self.assertAlmostEqual(5.2397, mttf, delta=0.0001)
 
-    def test_agile1_data_log_mttf_10_is_202_comma_6267(self):
+    def test_agile1_data_log_mttf_10_is_202_comma_1979(self):
         mttf = MTTFTest.fit_agile1_log.get_mttf(10)
-        self.assertAlmostEqual(208.6267, mttf, delta=0.0001)
+        self.assertAlmostEqual(208.1979, mttf, delta=0.0001)
 
     def test_mixed_data_delayed_s_shaped_mttf_does_not_contain_nan_on_the_first_100_failures(self):
         mttf = MTTFTest.fit_mixed_ds.get_all_mttf()
@@ -87,14 +85,14 @@ class MTTFTest(unittest.TestCase):
         mttf = MTTFTest.fit_ntds_go.get_mttf(3)
         self.assertAlmostEqual(mttf, 16.2, delta=0.1)
 
-    def test_ntds_logistic_mttf_for_k_equal_1_is_5_comma_6(self):
+    def test_ntds_logistic_mttf_for_k_equal_1_is_5_comma_5(self):
         mttf = MTTFTest.fit_ntds_log.get_mttf(1)
-        self.assertAlmostEqual(mttf, 5.6, delta=0.1)
+        self.assertAlmostEqual(mttf, 5.5, delta=0.1)
 
-    def test_ntds_logistic_mttf_for_k_equal_2_is_15_comma_4(self):
+    def test_ntds_logistic_mttf_for_k_equal_2_is_15_comma_0(self):
         mttf = MTTFTest.fit_ntds_log.get_mttf(2)
-        self.assertAlmostEqual(mttf, 15.4, delta=0.1)
+        self.assertAlmostEqual(mttf, 15.0, delta=0.1)
 
-    def test_ntds_logistic_mttf_for_k_equal_3_is_25_comma_3(self):
+    def test_ntds_logistic_mttf_for_k_equal_3_is_24_comma_9(self):
         mttf = MTTFTest.fit_ntds_log.get_mttf(3)
-        self.assertAlmostEqual(mttf, 25.3, delta=0.1)
+        self.assertAlmostEqual(mttf, 24.9, delta=0.1)
