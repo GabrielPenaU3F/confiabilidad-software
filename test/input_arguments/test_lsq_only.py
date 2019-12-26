@@ -1,15 +1,15 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class TestLSQOnly(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.go_ntds_fit = Fitter().fit('goel-okumoto', 'ntds', lsq_only=True)
-        cls.ds_ntds_fit = Fitter().fit('delayed-s-shaped', 'ntds', lsq_only=True)
-        cls.log_ntds_fit = Fitter().fit('logistic', 'ntds', lsq_only=True)
+        cls.go_ntds_fit = ModelFitter().fit('goel-okumoto', 'ntds', lsq_only=True)
+        cls.ds_ntds_fit = ModelFitter().fit('delayed-s-shaped', 'ntds', lsq_only=True)
+        cls.log_ntds_fit = ModelFitter().fit('logistic', 'ntds', lsq_only=True)
 
     def test_goel_okumoto_lsq_only_with_ntds_data_lsq_estimates_and_prr(self):
         a, b = TestLSQOnly.go_ntds_fit.get_lsq_parameters()

@@ -1,5 +1,5 @@
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
-fitter = Fitter()
+fitter = ModelFitter()
 fit = fitter.fit('gompertz', 'mixed-waterfall-agile')
 fit.show_results(plot_mttf=True, plot_mtbf=True)

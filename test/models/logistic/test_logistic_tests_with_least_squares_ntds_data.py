@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class LogisticTestsWithLeastSquaresNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class LogisticTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20), lsq_only=True)
+        cls.fit = ModelFitter().fit('logistic', 'ntds', initial_approx=(10, 0.05, 20), lsq_only=True)
 
     def test_ntds_logistic_least_squares_a_parameter_is_24_comma_640875(self):
         a = LogisticTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

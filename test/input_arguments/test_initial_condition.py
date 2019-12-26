@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class TestInitialCondition(unittest.TestCase):
@@ -16,12 +16,12 @@ class TestInitialCondition(unittest.TestCase):
     def setUpClass(cls):
         #  t0 = 5 in ttf format means '0 failures reported at t=5'
         #  t0 = 5 in fpd format means 'the dataset begins at t=6'
-        cls.ttf_fit_ds = Fitter().fit('delayed-s-shaped', 'ntds', t0=5)
-        cls.fpd_fit_ds = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', t0=5)
-        cls.ttf_fit_go = Fitter().fit('goel-okumoto', 'ntds', t0=5)
-        cls.fpd_fit_go = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile', t0=5)
-        cls.ttf_fit_log = Fitter().fit('logistic', 'ntds', t0=5)
-        cls.fpd_fit_log = Fitter().fit('logistic', 'mixed-waterfall-agile', t0=5)
+        cls.ttf_fit_ds = ModelFitter().fit('delayed-s-shaped', 'ntds', t0=5)
+        cls.fpd_fit_ds = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', t0=5)
+        cls.ttf_fit_go = ModelFitter().fit('goel-okumoto', 'ntds', t0=5)
+        cls.fpd_fit_go = ModelFitter().fit('goel-okumoto', 'mixed-waterfall-agile', t0=5)
+        cls.ttf_fit_log = ModelFitter().fit('logistic', 'ntds', t0=5)
+        cls.fpd_fit_log = ModelFitter().fit('logistic', 'mixed-waterfall-agile', t0=5)
 
     def test_ntds_delayed_s_shaped_maximum_likelihood_a_parameter_with_t0_equal_5_is_27_comma_876270(self):
         a = TestInitialCondition.ttf_fit_ds.get_ml_parameters()[0]

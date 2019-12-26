@@ -1,6 +1,6 @@
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
-fpd_fitter = Fitter()
+fpd_fitter = ModelFitter()
 
 #fit_go_50 = fpd_fitter.fit('goel-okumoto', 'mixed-waterfall-agile', end_sample=49, lsq_only=True)
 #fit_bc_50 = fpd_fitter.fit('barraza-contagion', 'mixed-waterfall-agile', end_sample=49, lsq_only=True)

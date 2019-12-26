@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class GompertzTestsWithLeastSquaresNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class GompertzTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.9), lsq_only=True)
+        cls.fit = ModelFitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.9), lsq_only=True)
 
     def test_ntds_gompertz_least_squares_a_parameter_is_25_comma_344149(self):
         a = GompertzTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

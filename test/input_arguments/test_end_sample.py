@@ -1,19 +1,19 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class TestEndSample(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ds_agile1_25samples = Fitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25, mts=False)
-        cls.fit_ds_agile1_15samples = Fitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15, mts=False)
-        cls.fit_log_agile1_25samples = Fitter().fit('logistic', 'agile-n1', end_sample=25, mts=False)
-        cls.fit_log_agile1_20samples = Fitter().fit('logistic', 'agile-n1', end_sample=20, mts=False)
+        cls.fit_ds_agile1_25samples = ModelFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_ds_agile1_15samples = ModelFitter().fit('delayed-s-shaped', 'agile-n1', end_sample=15, mts=False)
+        cls.fit_log_agile1_25samples = ModelFitter().fit('logistic', 'agile-n1', end_sample=25, mts=False)
+        cls.fit_log_agile1_20samples = ModelFitter().fit('logistic', 'agile-n1', end_sample=20, mts=False)
 
-        cls.fit_ds_mixed_35samples = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35, mts=False)
-        cls.fit_ds_mixed_15samples = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15, mts=False)
+        cls.fit_ds_mixed_35samples = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=35, mts=False)
+        cls.fit_ds_mixed_15samples = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', end_sample=15, mts=False)
 
     def test_agile_n1_delayed_s_shaped_with_a_partial_dataset_of_25_samples(self):
         a = TestEndSample.fit_ds_agile1_25samples.get_ml_parameters()[0]

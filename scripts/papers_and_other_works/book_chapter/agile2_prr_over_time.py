@@ -1,6 +1,6 @@
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
-fpd_fitter = Fitter()
+fpd_fitter = ModelFitter()
 
 ds_fit_151 = fpd_fitter.fit('delayed-s-shaped', 'agile-n2', end_sample=4, initial_approx=(100, 0.001))
 log_fit_151 = fpd_fitter.fit('logistic', 'agile-n2', end_sample=4, initial_approx=(8000, 0.003, 1))

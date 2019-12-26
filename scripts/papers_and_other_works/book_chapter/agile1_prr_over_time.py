@@ -1,6 +1,6 @@
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
-ttf_fitter = Fitter()
+ttf_fitter = ModelFitter()
 
 bc_fit_217 = ttf_fitter.fit('barraza-contagion', 'agile-n1', end_sample=9)
 

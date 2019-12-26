@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class MTTFTest(unittest.TestCase):
@@ -15,11 +15,11 @@ class MTTFTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit_ntds_go = Fitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_mixed_ds = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
-        cls.fit_agile1_log = Fitter().fit('logistic', 'agile-n1', initial_approx=(100, 0.05, 20))
-        cls.fit_ntds_ds = Fitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
-        cls.fit_ntds_log = Fitter().fit('logistic', 'ntds', initial_approx=(100, 0.05, 20))
+        cls.fit_ntds_go = ModelFitter().fit('goel-okumoto', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_mixed_ds = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', initial_approx=(1, 0.5))
+        cls.fit_agile1_log = ModelFitter().fit('logistic', 'agile-n1', initial_approx=(100, 0.05, 20))
+        cls.fit_ntds_ds = ModelFitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5))
+        cls.fit_ntds_log = ModelFitter().fit('logistic', 'ntds', initial_approx=(100, 0.05, 20))
 
     def test_ntds_data_goel_okumoto_mttf_is_non_decreasing(self):
         mttf = MTTFTest.fit_ntds_go.get_all_mttf()

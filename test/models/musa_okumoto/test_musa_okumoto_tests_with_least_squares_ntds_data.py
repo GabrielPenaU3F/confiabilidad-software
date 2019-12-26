@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class MusaOkumotoTestsWithLeastSquaresNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class MusaOkumotoTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('musa-okumoto', 'ntds', initial_approx=(1, 0.5), lsq_only=True)
+        cls.fit = ModelFitter().fit('musa-okumoto', 'ntds', initial_approx=(1, 0.5), lsq_only=True)
 
     def test_ntds_musa_okumoto_least_squares_a_parameter_is_20_comma_926829(self):
         a = MusaOkumotoTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

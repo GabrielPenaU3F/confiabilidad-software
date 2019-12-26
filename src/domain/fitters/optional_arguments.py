@@ -30,7 +30,7 @@ class OptionalArguments:
     def determine_t0(self, t0):
         if t0 is not None:
             try:
-                if float(t0) > 0:
+                if float(t0) >= 0:
                     return t0
                 else:
                     raise ValueError

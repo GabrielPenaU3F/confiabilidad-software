@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class BarrazaContagionTestsWithLeastSquaresNtdsData(unittest.TestCase):
@@ -9,7 +9,7 @@ class BarrazaContagionTestsWithLeastSquaresNtdsData(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.fit = Fitter().fit('barraza-contagion', 'ntds', initial_approx=(1, 0.5))
+        cls.fit = ModelFitter().fit('barraza-contagion', 'ntds', initial_approx=(1, 0.5))
 
     def test_ntds_barraza_contagion_least_squares_a_parameter_is_0_comma_379868(self):
         a = BarrazaContagionTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]

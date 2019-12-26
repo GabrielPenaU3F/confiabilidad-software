@@ -1,9 +1,9 @@
 from src.data.data_repository import DataRepository
 from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import DelayedSShapedEstimator
 from src.domain.models.logistic.logistic_estimator import LogisticEstimator
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
-fpd_fitter = Fitter()
+fpd_fitter = ModelFitter()
 
 data = DataRepository.provide_project_data('mixed-waterfall-agile')
 x_axis_data = data.get_formated_times()

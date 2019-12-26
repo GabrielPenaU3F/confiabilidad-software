@@ -1,6 +1,6 @@
 import unittest
 
-from src.domain.fitters.fitter import Fitter
+from src.domain.fitters.model_fitter import ModelFitter
 
 
 class TestInitialApprox(unittest.TestCase):
@@ -10,38 +10,38 @@ class TestInitialApprox(unittest.TestCase):
     # For a better testing, replace one or the other for a different p0=(a0, b0)
 
     def test_goel_okumoto_ttf_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('goel-okumoto', 'ntds')
+        fit = ModelFitter().fit('goel-okumoto', 'ntds')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 33.599359, places=6)
         self.assertAlmostEqual(b, 0.006296, places=6)
 
     def test_goel_okumoto_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('goel-okumoto', 'mixed-waterfall-agile')
+        fit = ModelFitter().fit('goel-okumoto', 'mixed-waterfall-agile')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 1416.913890, places=6)
         self.assertAlmostEqual(b, 0.004807, places=6)
 
     def test_delayed_s_shaped_ttf_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('delayed-s-shaped', 'ntds')
+        fit = ModelFitter().fit('delayed-s-shaped', 'ntds')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 26.715478, places=6)
         self.assertAlmostEqual(b, 0.021213, places=6)
 
     def test_delayed_s_shaped_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('delayed-s-shaped', 'mixed-waterfall-agile')
+        fit = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile')
         a, b = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 893.638883, places=6)
         self.assertAlmostEqual(b, 0.021788, places=6)
 
     def test_logistic_ttf_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('logistic', 'ntds')
+        fit = ModelFitter().fit('logistic', 'ntds')
         a, b, c = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 24.640875, places=6)
         self.assertAlmostEqual(b, 0.040930, places=6)
         self.assertAlmostEqual(c, 76.510170, places=6)
 
     def test_logistic_grouped_fpd_without_initial_approx_should_take_the_default_initial_approx(self):
-        fit = Fitter().fit('logistic', 'mixed-waterfall-agile')
+        fit = ModelFitter().fit('logistic', 'mixed-waterfall-agile')
         a, b, c = fit.get_lsq_parameters()
         self.assertAlmostEqual(a, 835.410586, places=6)
         self.assertAlmostEqual(b, 0.030741, places=6)
