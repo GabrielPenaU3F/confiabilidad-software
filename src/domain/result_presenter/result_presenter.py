@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from colorama import Back, Fore
 
+from src.data.data_repository import DataRepository
 from src.domain.result_presenter.result_displaying_strategy.barraza_contagion_result_displaying_strategy import \
     BarrazaContagionResultDisplayingStrategy
 from src.domain.result_presenter.result_displaying_strategy.delayed_s_shaped_result_displaying_strategy import \
@@ -33,6 +34,11 @@ class ResultPresenter(ABC):
     @abstractmethod
     def display_data(self, *args):
         pass
+
+    def print_project_name(self, project_name):
+        project_data = DataRepository.provide_project_data(project_name)
+        project_title = project_data.get_project_title()
+        print((Fore.YELLOW + 'Project: ') + (Fore.LIGHTRED_EX + project_title))
 
     def reset_console_colors(self):
         print(Back.RESET + Fore.RESET)

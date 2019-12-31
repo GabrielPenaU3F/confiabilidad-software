@@ -1,4 +1,5 @@
 from src.domain.fit import Fit
+from src.domain.result_presenter.multistage_result_presenter import MultistageResultPresenter
 
 
 class MultistageFit(Fit):
@@ -8,10 +9,8 @@ class MultistageFit(Fit):
         self.stages = stages
 
     def show_results(self, **kwargs):
-        for stage in self.stages:
-            stage_presenter = MultistageResultPresenter()
-            stage_presenter.display_data(self.project_name, stage.get_model(), stage.get_lsq_params(),
-                                         stage.get_ml_params())
+        multistage_result_presenter = MultistageResultPresenter()
+        multistage_result_presenter.display_data(self.project_name, self.stages)
 
     def get_number_of_stages(self):
         return len(self.stages)

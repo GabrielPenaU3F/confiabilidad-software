@@ -11,18 +11,15 @@ class ResultDisplayingStrategy(ABC):
         self.project_name = project_name
         self.model_title = model_title
 
-    def display(self, lsq_params, ml_params, prr_lsq, prr_ml, aic):
-        project_data = DataRepository.provide_project_data(self.project_name)
-        project_title = project_data.get_project_title()
-        self.print_title(project_title, self.model_title)
+    def display_model_results(self, lsq_params, ml_params, prr_lsq, prr_ml, aic):
+        self.print_model(self.model_title)
         self.print_least_squares_parameters(*lsq_params)
         if ml_params is not None:
             self.print_maximum_likelihood_parameters(*ml_params)
         self.print_prr(prr_lsq, prr_ml)
         self.print_aic(aic)
 
-    def print_title(self, project_title, model_title):
-        print((Fore.YELLOW + 'Project: ') + (Fore.LIGHTRED_EX + project_title))
+    def print_model(self, model_title):
         print((Fore.YELLOW + 'Model: ') + (Fore.LIGHTRED_EX + model_title))
         print()
 
