@@ -36,6 +36,6 @@ class MultistageFitter(Fitter):
             ttfs = data.get_data()
             for i in range(len(ttfs)):
                 if ttfs[i] > end_t:
-                    return ttfs[i - 1]
+                    return i - 1
         elif format == 'grouped':
             pass
