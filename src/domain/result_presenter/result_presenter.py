@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from colorama import Back, Fore
 
 from src.domain.result_presenter.result_displaying_strategy.barraza_contagion_result_displaying_strategy import \
@@ -16,7 +18,7 @@ from src.domain.result_presenter.result_displaying_strategy.musa_okumoto_result_
     MusaOkumotoResultDisplayingStrategy
 
 
-class ResultPresenter:
+class ResultPresenter(ABC):
 
     result_displaying_strategy = {
         'poisson': HomogeneousPoissonResultDisplayingStrategy,
@@ -28,10 +30,9 @@ class ResultPresenter:
         'gompertz': GompertzResultDisplayingStrategy
     }
 
-    def display_data(self, project_name, model, lsq_params, ml_params, prr_lsq, prr_ml, aic):
-        displaying_strategy = self.get_model_strategy(model)(project_name)
-        self.reset_console_colors()
-        displaying_strategy.display(lsq_params, ml_params, prr_lsq, prr_ml, aic)
+    @abstractmethod
+    def display_data(self, *args):
+        pass
 
     def reset_console_colors(self):
         print(Back.RESET + Fore.RESET)

@@ -1,6 +1,6 @@
 from src.domain.fit import Fit
 from src.domain.plotter.plotter import Plotter
-from src.domain.result_presenter.result_presenter import ResultPresenter
+from src.domain.result_presenter.model_result_presenter import ModelResultPresenter
 
 
 class ModelFit(Fit):
@@ -31,7 +31,7 @@ class ModelFit(Fit):
 
     def show_results(self, **kwargs):
         if self.project_name is not None:
-            presenter = ResultPresenter()
+            presenter = ModelResultPresenter()
             presenter.display_data(self.project_name, self.model,
                                    self.lsq_params, self.ml_params, self.prr_lsq, self.prr_ml, self.aic)
 

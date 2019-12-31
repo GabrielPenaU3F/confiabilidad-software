@@ -41,3 +41,23 @@ class TestMultistageStages(unittest.TestCase):
 
     def test_multistage_fit_with_2_stages_has_2_stages(self):
         self.assertEqual(2, TestMultistageStages.ds_go_fit.get_number_of_stages())
+
+    def test_ds_go_stage_1_begins_at_t_equal_0(self):
+        stages = TestMultistageStages.ds_go_fit.get_stages()
+        stage_1 = stages[0]
+        self.assertEqual(0, stage_1.get_initial_t())
+
+    def test_ds_go_stage_1_ends_at_t_equal_90(self):
+        stages = TestMultistageStages.ds_go_fit.get_stages()
+        stage_1 = stages[0]
+        self.assertEqual(90, stage_1.get_end_t())
+
+    def test_ds_go_stage_2_begins_at_t_equal_91(self):
+        stages = TestMultistageStages.ds_go_fit.get_stages()
+        stage_2 = stages[1]
+        self.assertEqual(91, stage_2.get_initial_t())
+
+    def test_ds_go_stage_2_ends_at_t_equal_250(self):
+        stages = TestMultistageStages.ds_go_fit.get_stages()
+        stage_2 = stages[1]
+        self.assertEqual(250, stage_2.get_end_t())
