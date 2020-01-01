@@ -4,8 +4,8 @@ from src.domain.result_presenter.result_displaying_strategy.result_displaying_st
 
 class GoelOkumotoResultDisplayingStrategy(ResultDisplayingStrategy):
 
-    def __init__(self, project_name):
-        super().__init__(project_name, 'Goel-Okumoto')
+    def __init__(self):
+        super().__init__('Goel-Okumoto')
 
     def print_least_squares_parameters(self, a_lsq, b_lsq):
         print(Fore.YELLOW + 'Least squares estimates:')

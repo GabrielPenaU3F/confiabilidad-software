@@ -2,13 +2,10 @@ from abc import ABC, abstractmethod
 
 from colorama import Fore
 
-from src.data.data_repository import DataRepository
-
 
 class ResultDisplayingStrategy(ABC):
 
-    def __init__(self, project_name, model_title):
-        self.project_name = project_name
+    def __init__(self, model_title):
         self.model_title = model_title
 
     def display_model_results(self, lsq_params, ml_params, prr_lsq, prr_ml, aic):
@@ -19,9 +16,12 @@ class ResultDisplayingStrategy(ABC):
         self.print_prr(prr_lsq, prr_ml)
         self.print_aic(aic)
 
+    def display_stage_results(self, stage):
+        self.print_model(self.model_title)
+        print("\n")
+
     def print_model(self, model_title):
-        print((Fore.YELLOW + 'Model: ') + (Fore.LIGHTRED_EX + model_title))
-        print()
+        print((Fore.YELLOW + 'Model: ') + (Fore.LIGHTRED_EX + model_title) + "\n")
 
     @abstractmethod
     def print_least_squares_parameters(self, *lsq_params):

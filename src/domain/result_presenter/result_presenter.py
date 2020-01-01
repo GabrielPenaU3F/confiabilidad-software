@@ -36,9 +36,10 @@ class ResultPresenter(ABC):
         pass
 
     def print_project_name(self, project_name):
+        self.reset_console_colors()
         project_data = DataRepository.provide_project_data(project_name)
         project_title = project_data.get_project_title()
-        print((Fore.YELLOW + 'Project: ') + (Fore.LIGHTRED_EX + project_title))
+        print((Fore.YELLOW + 'Project: ') + (Fore.LIGHTRED_EX + project_title) + "\n")
 
     def reset_console_colors(self):
         print(Back.RESET + Fore.RESET)

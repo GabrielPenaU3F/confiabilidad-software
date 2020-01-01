@@ -4,8 +4,8 @@ from src.domain.result_presenter.result_displaying_strategy.result_displaying_st
 
 class HomogeneousPoissonResultDisplayingStrategy(ResultDisplayingStrategy):
 
-    def __init__(self, project_name):
-        super().__init__(project_name, 'Poisson')
+    def __init__(self):
+        super().__init__('Poisson')
 
     def print_least_squares_parameters(self, *lsq_params):
         lambda_lsq = lsq_params[0]
