@@ -11,6 +11,6 @@ class StageResultPresenter(ResultPresenter):
         displaying_strategy.display_stage_results(stage)
 
     def print_stage_title(self, number, stage):
-        print((Fore.YELLOW + 'Stage ') + (Fore.YELLOW + str(number)))
-        print((Fore.YELLOW + 'From t = ') + (Fore.YELLOW + str(stage.get_initial_t())) +
+        print((Fore.YELLOW + 'Stage ') + (Fore.YELLOW + str(number)) + " - " +
+              (Fore.YELLOW + 'From t = ') + (Fore.YELLOW + str(stage.get_initial_t())) +
               (Fore.YELLOW + ' to t = ') + (Fore.YELLOW + str(stage.get_end_t())))
