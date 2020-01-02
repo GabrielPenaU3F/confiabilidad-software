@@ -1,5 +1,5 @@
 from src.domain.fit import Fit
-from src.domain.plotter.plotter import Plotter
+from src.domain.plotter.model_plotter import ModelPlotter
 from src.domain.result_presenter.model_result_presenter import ModelResultPresenter
 
 
@@ -35,13 +35,13 @@ class ModelFit(Fit):
             presenter.display_data(self.project_name, self.model,
                                    self.lsq_params, self.ml_params, self.prr_lsq, self.prr_ml, self.aic)
 
-            plotter = Plotter()
+            plotter = ModelPlotter()
             plotter.plot_results(self.project_name, self.model, self.lsq_params, self.ml_params)
             if kwargs.get("plot_mttf") is True:
-                plotter.show_mt_warning(self.model, self.project_name)
+                plotter.show_mt_warning(self.model)
                 plotter.plot_mttf(self.mttf)
             if kwargs.get("plot_mtbf") is True:
-                plotter.show_mt_warning(self.model, self.project_name)
+                plotter.show_mt_warning(self.model)
                 plotter.plot_mtbf(self.mtbf)
 
     def get_lsq_parameters(self):

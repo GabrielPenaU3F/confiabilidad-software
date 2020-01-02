@@ -1,4 +1,5 @@
 from src.domain.fit import Fit
+from src.domain.plotter.multistage_plotter import MultistagePlotter
 from src.domain.result_presenter.multistage_result_presenter import MultistageResultPresenter
 
 
@@ -11,6 +12,8 @@ class MultistageFit(Fit):
     def show_results(self, **kwargs):
         multistage_result_presenter = MultistageResultPresenter()
         multistage_result_presenter.display_data(self.project_name, self.stages)
+        multistage_plotter = MultistagePlotter()
+        multistage_plotter.plot_results(self.project_name, self.stages)
 
     def get_number_of_stages(self):
         return len(self.stages)

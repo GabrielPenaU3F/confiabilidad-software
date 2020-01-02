@@ -8,13 +8,11 @@ from matplotlib import pyplot as plt
 
 class BarrazaContagionPlotStrategy(PlotStrategy):
 
-    def __init__(self, project_name):
-        super().__init__(project_name)
-
     def plot(self, project_name, lsq_params, ml_params):
-        project_title = DataRepository.provide_project_data(project_name).get_project_title()
-        x_axis_data = self.data.get_times()
-        cumulative_failures = self.data.get_cumulative_failures()
+        data = DataRepository.provide_project_data(project_name)
+        project_title = data.get_project_title()
+        x_axis_data = data.get_times()
+        cumulative_failures = data.get_cumulative_failures()
         bc = BarrazaContagionEstimator()
 
         fig, ax = plt.subplots()
