@@ -12,13 +12,14 @@ class PlotStrategy(ABC):
         self.plot_maximum_likelihood(axes, self.estimator, times, ml_params)
         self.do_plot_format(axes)
 
-    @abstractmethod
-    def plot_least_squares(self, axes, model, x_data, lsq_params):
-        pass
+    def plot_maximum_likelihood(self, axes, go, x_data, ml_params):
+        if ml_params is not None:
+            axes.plot(x_data, go.calculate_mean_failure_numbers(x_data, *ml_params),
+                      linewidth=1, color='#58b368', linestyle='-', label='Maximum likelihood')
 
-    @abstractmethod
-    def plot_maximum_likelihood(self, axes, model, x_data, ml_params):
-        pass
+    def plot_least_squares(self, axes, go, x_data, lsq_params):
+        axes.plot(x_data, go.calculate_mean_failure_numbers(x_data, *lsq_params),
+                  linewidth=1, color='#ca3e47', linestyle='-', label='Least squares')
 
     def do_plot_format(self, axes):
         axes.set_xlabel('Time (days)')
