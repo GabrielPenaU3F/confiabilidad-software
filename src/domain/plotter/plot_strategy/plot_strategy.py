@@ -3,9 +3,14 @@ from abc import ABC, abstractmethod
 
 class PlotStrategy(ABC):
 
+    def __init__(self):
+        self.estimator = None
+
     @abstractmethod
     def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
-        pass
+        self.plot_least_squares(axes, self.estimator, times, lsq_params)
+        self.plot_maximum_likelihood(axes, self.estimator, times, ml_params)
+        self.do_plot_format(axes)
 
     @abstractmethod
     def plot_least_squares(self, axes, model, x_data, lsq_params):

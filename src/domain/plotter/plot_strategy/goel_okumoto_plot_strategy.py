@@ -1,15 +1,12 @@
 from src.domain.plotter.plot_strategy.plot_strategy import PlotStrategy
-
 from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEstimator
 
 
 class GoelOkumotoPlotStrategy(PlotStrategy):
 
     def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
-        go = GoelOkumotoEstimator()
-        self.plot_least_squares(axes, go, times, lsq_params)
-        self.plot_maximum_likelihood(axes, go, times, ml_params)
-        self.do_plot_format(axes)
+        self.estimator = GoelOkumotoEstimator()
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
 
     def plot_maximum_likelihood(self, axes, go, x_data, ml_params):
         if ml_params is not None:

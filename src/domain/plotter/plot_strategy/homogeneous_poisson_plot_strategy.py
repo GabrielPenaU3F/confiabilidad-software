@@ -5,10 +5,8 @@ from src.domain.plotter.plot_strategy.plot_strategy import PlotStrategy
 class HomogeneousPoissonPlotStrategy(PlotStrategy):
 
     def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
-        p = HomogeneousPoissonEstimator()
-        self.plot_least_squares(axes, p, times, lsq_params)
-        self.plot_maximum_likelihood(axes, p, times, ml_params)
-        self.do_plot_format(axes)
+        self.estimator = HomogeneousPoissonEstimator()
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
 
     def plot_least_squares(self, axes, p, x_data, lsq_params):
         axes.plot(x_data,

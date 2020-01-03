@@ -5,10 +5,8 @@ from src.domain.models.musa_okumoto.musa_okumoto_estimator import MusaOkumotoEst
 class MusaOkumotoPlotStrategy(PlotStrategy):
 
     def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
-        mo = MusaOkumotoEstimator()
-        self.plot_least_squares(axes, mo, times, lsq_params)
-        self.plot_maximum_likelihood(axes, mo, times, ml_params)
-        self.do_plot_format(axes)
+        self.estimator = MusaOkumotoEstimator()
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
 
     def plot_maximum_likelihood(self, axes, mo, x_data, ml_params):
         if ml_params is not None:

@@ -5,10 +5,8 @@ from src.domain.models.logistic.logistic_estimator import LogisticEstimator
 class LogisticPlotStrategy(PlotStrategy):
 
     def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
-        log = LogisticEstimator()
-        self.plot_least_squares(axes, log, times, lsq_params)
-        self.plot_maximum_likelihood(axes, log, times, ml_params)
-        self.do_plot_format(axes)
+        self.estimator = LogisticEstimator()
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
 
     def plot_least_squares(self, axes, log, x_data, lsq_params):
         axes.plot(x_data,
