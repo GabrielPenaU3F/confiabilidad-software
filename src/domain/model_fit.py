@@ -16,7 +16,8 @@ class ModelFit(Fit):
         self.lsq_params = lsq_params
         self.ml_params = ml_params
         self.prr_lsq = fit_strategy.calculate_prr(*lsq_params)
-        if ml_params is not None:
+        self.optional_arguments = optional_arguments
+        if self.ml_params is not None:
             self.prr_ml = fit_strategy.calculate_prr(*ml_params)
             self.aic = fit_strategy.calculate_aic(*ml_params)
             if optional_arguments.get_mts_flag() is True:
@@ -36,7 +37,8 @@ class ModelFit(Fit):
                                    self.lsq_params, self.ml_params, self.prr_lsq, self.prr_ml, self.aic)
 
             plotter = ModelPlotter()
-            plotter.plot_results(self.project_name, self.model, self.lsq_params, self.ml_params)
+            plotter.plot_results(self.project_name, self.model, self.lsq_params, self.ml_params,
+                                 self.optional_arguments)
             if kwargs.get("plot_mttf") is True:
                 plotter.show_mt_warning(self.model)
                 plotter.plot_mttf(self.mttf)

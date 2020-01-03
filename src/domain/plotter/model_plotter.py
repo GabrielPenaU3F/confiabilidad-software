@@ -5,8 +5,8 @@ from src.domain.plotter.plotter import Plotter
 
 class ModelPlotter(Plotter):
 
-    def plot_results(self, project_name, model, lsq_params, ml_params):
-        project_title, times, cumulative_failures = self.obtain_plot_data(project_name)
+    def plot_results(self, project_name, model, lsq_params, ml_params, optional_arguments):
+        project_title, times, cumulative_failures = self.obtain_plot_data(project_name, optional_arguments)
         fig, axes = plt.subplots()
         self.plot_real_data(axes, times, cumulative_failures, project_title)
         plot_strategy = self.get_model_strategy(model)()

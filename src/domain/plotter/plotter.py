@@ -60,6 +60,8 @@ class Plotter(ABC):
         axes.legend()
         plt.show()
 
-    def obtain_plot_data(self, project_name):
+    def obtain_plot_data(self, project_name, optional_arguments):
+        start = optional_arguments.get_initial_sample()
+        end = optional_arguments.get_end_sample()
         data = DataRepository.provide_project_data(project_name)
-        return data.get_project_title(), data.get_times(), data.get_cumulative_failures()
+        return data.get_project_title(), data.get_times()[start:end], data.get_cumulative_failures()[start:end]

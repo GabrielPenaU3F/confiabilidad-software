@@ -16,7 +16,7 @@ class DataFormater(ABC):
         default_end_sample = len(data.get_data())
         if end_sample_arg > default_end_sample:
             raise InvalidArgumentException('The end sample must not exceed the length of the dataset')
-        if end_sample_arg != 0:
+        if 0 < end_sample_arg < default_end_sample:
             return end_sample_arg
         else:
             return default_end_sample
