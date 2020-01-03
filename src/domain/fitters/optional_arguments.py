@@ -6,11 +6,15 @@ from src.exceptions.exceptions import InvalidArgumentException
 class OptionalArguments:
 
     def __init__(self, **kwargs):
+        self.initial_sample = self.determine_initial_sample(kwargs.get('initial_sample'))
         self.end_sample = self.determine_end_sample(kwargs.get('end_sample'))
         self.lsq_only = self.determine_lsq_only(kwargs.get('lsq_only'))
         self.t0 = self.determine_t0(kwargs.get('t0'))
         self.mts_flag = self.determine_mts_flag(kwargs.get('mts'))
         self.initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
+
+    def get_initial_sample(self):
+        return self.initial_sample
 
     def get_end_sample(self):
         return self.end_sample
@@ -72,6 +76,18 @@ class OptionalArguments:
             return initial_approx
         except (ValueError, TypeError):
             raise InvalidArgumentException('Initial approximation must be a real tuple or array')
+
+    def determine_initial_sample(self, initial_sample):
+        if initial_sample is not None:
+            try:
+                if (int(initial_sample) == initial_sample) and (initial_sample > 0):
+                    return initial_sample
+                else:
+                    raise ValueError
+            except (ValueError, TypeError):
+                raise InvalidArgumentException('The initial sample must be a positive integer')
+        else:
+            return 0
 
     def set_initial_approx(self, initial_approx):
         self.initial_approx = initial_approx

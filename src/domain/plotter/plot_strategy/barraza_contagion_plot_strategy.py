@@ -10,5 +10,5 @@ class BarrazaContagionPlotStrategy(PlotStrategy):
         super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
 
     def show_mt_warning(self):
-        print(Back.LIGHTYELLOW_EX + Fore.RED + 'Be careful. Please take into account that these are '
-                                               'CONDITIONAL MTTFs or MTBFs based on the given data')
+        print("\n" + Back.LIGHTYELLOW_EX + Fore.RED + 'Be careful. Please take into account that these are '
+              'CONDITIONAL MTTFs or MTBFs based on the given data')
