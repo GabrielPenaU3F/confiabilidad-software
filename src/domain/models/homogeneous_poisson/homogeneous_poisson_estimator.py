@@ -29,14 +29,14 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
                                                       solving_method):
         t_0, times = self.separate_time_data(times)
         n = len(times)
-        t_n = times[n]
+        t_n = times[-1]
         return [n / t_n - t_0]
 
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, times, failures_per_day, initial_approx,
                                                               solving_method):
         t_0, times = self.separate_time_data(times)
         n = len(times)
-        t_n = times[n]
+        t_n = times[-1]
         deltas_yi = failures_per_day
         sum_deltas_yi = np.sum(deltas_yi)
         return [sum_deltas_yi / (t_n - t_0)]

@@ -4,12 +4,8 @@ from abc import ABC, abstractmethod
 class PlotStrategy(ABC):
 
     @abstractmethod
-    def plot(self, project_name, lsq_params, ml_params):
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
         pass
-
-    def plot_real_data(self, axes, x_data, cumulative_failures, project_title):
-        axes.plot(x_data, cumulative_failures, linewidth=1, color='#263859', linestyle='--',
-                  label='Real data (' + project_title + ')')
 
     @abstractmethod
     def plot_least_squares(self, axes, model, x_data, lsq_params):

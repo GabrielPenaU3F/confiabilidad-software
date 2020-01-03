@@ -6,6 +6,7 @@ from src.domain.plotter.plot_strategy.musa_okumoto_plot_strategy import MusaOkum
 from src.domain.plotter.plot_strategy.goel_okumoto_plot_strategy import GoelOkumotoPlotStrategy
 from src.domain.plotter.plot_strategy.gompertz_plot_strategy import GompertzPlotStrategy
 from src.domain.plotter.plot_strategy.logistic_plot_strategy import LogisticPlotStrategy
+from matplotlib import pyplot as plt
 
 
 class Plotter(ABC):
@@ -32,6 +33,10 @@ class Plotter(ABC):
     def plot_mtbf(self, *args):
         pass
 
+    def plot_real_data(self, axes, x_data, cumulative_failures, project_title):
+        axes.plot(x_data, cumulative_failures, linewidth=1, color='#263859', linestyle='--',
+                  label='Real data (' + project_title + ')')
+
     def get_model_strategy(self, model):
         return self.plot_strategy.get(model)
 
@@ -45,3 +50,10 @@ class Plotter(ABC):
         axes.patch.set_linewidth('1')
         axes.set_facecolor("#ffffff")
         axes.grid(color='black', linestyle='--', linewidth=0.5)
+
+    def do_format_mt_plot(self, axes):
+        axes.set_xlabel('Failure')
+        self.config_axes_limits(axes)
+        self.config_plot_background(axes)
+        axes.legend()
+        plt.show()

@@ -1,23 +1,14 @@
-from src.data.data_repository import DataRepository
 from src.domain.models.homogeneous_poisson.homogeneous_poisson_estimator import HomogeneousPoissonEstimator
 from src.domain.plotter.plot_strategy.plot_strategy import PlotStrategy
-from matplotlib import pyplot as plt
 
 
 class HomogeneousPoissonPlotStrategy(PlotStrategy):
 
-    def plot(self, project_name, lsq_params, ml_params):
-        data = DataRepository.provide_project_data(project_name)
-        project_title = data.get_project_title()
-        x_axis_data = data.get_times()
-        cumulative_failures = data.get_cumulative_failures()
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
         p = HomogeneousPoissonEstimator()
-
-        fig, ax = plt.subplots()
-        self.plot_real_data(ax, x_axis_data, cumulative_failures, project_title)
-        self.plot_least_squares(ax, p, x_axis_data, lsq_params)
-        self.plot_maximum_likelihood(ax, p, x_axis_data, ml_params)
-        self.do_plot_format(ax)
+        self.plot_least_squares(axes, p, times, lsq_params)
+        self.plot_maximum_likelihood(axes, p, times, ml_params)
+        self.do_plot_format(axes)
 
     def plot_least_squares(self, axes, p, x_data, lsq_params):
         axes.plot(x_data,
