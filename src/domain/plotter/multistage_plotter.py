@@ -7,11 +7,13 @@ from src.domain.plotter.stage_plotter import StagePlotter
 class MultistagePlotter(Plotter):
 
     def plot_results(self, project_name, stages):
-        axes = plt.subplots()
+        fig, axes = plt.subplots()
+        project_title, times, cumulative_failures = self.obtain_plot_data(project_name)
+        self.plot_real_data(axes, times, cumulative_failures, project_title)
         for stage in stages:
             stage_plotter = StagePlotter()
-            stage_plotter.plot_results(stage, axes)
-        self.do_format_mt_plot()
+            stage_plotter.plot_results(axes, stage, times, cumulative_failures)
+        plt.show()
 
     def plot_mttf(self, *args):
         pass

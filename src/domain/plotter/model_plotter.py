@@ -1,21 +1,16 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
-from src.data.data_repository import DataRepository
 from src.domain.plotter.plotter import Plotter
 
 
 class ModelPlotter(Plotter):
 
     def plot_results(self, project_name, model, lsq_params, ml_params):
-        data = DataRepository.provide_project_data(project_name)
-        project_title = data.get_project_title()
-        x_axis_data = data.get_times()
-        cumulative_failures = data.get_cumulative_failures()
+        project_title, times, cumulative_failures = self.obtain_plot_data(project_name)
         fig, axes = plt.subplots()
-        self.plot_real_data(axes, x_axis_data, cumulative_failures, project_title)
+        self.plot_real_data(axes, times, cumulative_failures, project_title)
         plot_strategy = self.get_model_strategy(model)()
-        plot_strategy.plot(axes, x_axis_data, cumulative_failures, lsq_params, ml_params)
+        plot_strategy.plot(axes, times, cumulative_failures, lsq_params, ml_params)
         plt.show()
 
     def plot_mttf(self, mttf):

@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+
+from src.data.data_repository import DataRepository
 from src.domain.plotter.plot_strategy.barraza_contagion_plot_strategy import BarrazaContagionPlotStrategy
 from src.domain.plotter.plot_strategy.ds_plot_strategy import DSPlotStrategy
 from src.domain.plotter.plot_strategy.homogeneous_poisson_plot_strategy import HomogeneousPoissonPlotStrategy
@@ -57,3 +59,7 @@ class Plotter(ABC):
         self.config_plot_background(axes)
         axes.legend()
         plt.show()
+
+    def obtain_plot_data(self, project_name):
+        data = DataRepository.provide_project_data(project_name)
+        return data.get_project_title(), data.get_times(), data.get_cumulative_failures()
