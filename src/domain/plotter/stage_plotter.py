@@ -27,4 +27,3 @@ class StagePlotter(Plotter):
         for i in range(len(times)):
             if times[i] >= initial_t:
                 return i
-
