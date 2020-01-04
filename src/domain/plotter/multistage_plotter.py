@@ -8,7 +8,7 @@ class MultistagePlotter(Plotter):
 
     def plot_results(self, project_name, stages):
         fig, axes = plt.subplots()
-        project_title, times, cumulative_failures = self.obtain_plot_data(project_name)
+        project_title, times, cumulative_failures = self.obtain_full_data(project_name)
         self.plot_real_data(axes, times, cumulative_failures, project_title)
         for stage in stages:
             stage_plotter = StagePlotter()

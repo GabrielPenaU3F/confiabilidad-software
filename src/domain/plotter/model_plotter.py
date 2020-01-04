@@ -6,11 +6,12 @@ from src.domain.plotter.plotter import Plotter
 class ModelPlotter(Plotter):
 
     def plot_results(self, project_name, model, lsq_params, ml_params, optional_arguments):
-        project_title, times, cumulative_failures = self.obtain_plot_data(project_name, optional_arguments)
+        project_title, times, cumulative_failures = self.obtain_full_data(project_name)
+        plot_times, plot_cumulative_failures = self.obtain_plot_data(times, cumulative_failures, optional_arguments)
         fig, axes = plt.subplots()
         self.plot_real_data(axes, times, cumulative_failures, project_title)
         plot_strategy = self.get_model_strategy(model)()
-        plot_strategy.plot(axes, times, cumulative_failures, lsq_params, ml_params)
+        plot_strategy.plot(axes, plot_times, plot_cumulative_failures, lsq_params, ml_params)
         plt.show()
 
     def plot_mttf(self, mttf):

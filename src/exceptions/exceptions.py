@@ -20,3 +20,8 @@ class InvalidFitException(ExceptionWithMessage):
 
     pass
 
+
+class InvalidStageDefinitionException(ExceptionWithMessage):
+
+    pass
+

@@ -80,12 +80,12 @@ class OptionalArguments:
     def determine_initial_sample(self, initial_sample):
         if initial_sample is not None:
             try:
-                if (int(initial_sample) == initial_sample) and (initial_sample > 0):
+                if (int(initial_sample) == initial_sample) and (initial_sample >= 0):
                     return initial_sample
                 else:
                     raise ValueError
             except (ValueError, TypeError):
-                raise InvalidArgumentException('The initial sample must be a positive integer')
+                raise InvalidArgumentException('The initial sample must be a positive integer or zero')
         else:
             return 0
 
