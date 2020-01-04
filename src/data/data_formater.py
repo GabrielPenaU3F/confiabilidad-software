@@ -46,7 +46,7 @@ class TTFDataFormater(DataFormater):
         start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
         ttf_original_data = data.get_data()[start:end]
-        cumulative_failures = data.get_cumulative_failures()[start:end + 1]
+        cumulative_failures = data.get_cumulative_failures()[start + 1:end + 1]
         t0 = optional_arguments.get_t0()
         formated_ttf = list(np.copy(ttf_original_data))
         formated_ttf.insert(0, t0)
