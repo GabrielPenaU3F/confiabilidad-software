@@ -24,6 +24,6 @@ class LogisticTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
         c = LogisticTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[2]
         self.assertAlmostEqual(c, 75.800786, places=6)
 
-    def test_mixed_waterfall_agile_logistic_least_squares_prr_is_7_comma_001083(self):
+    def test_mixed_waterfall_agile_logistic_least_squares_prr_is_7_comma_710594(self):
         prr = LogisticTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 7.000887, places=6)
+        self.assertAlmostEqual(prr, 7.710594, places=6)

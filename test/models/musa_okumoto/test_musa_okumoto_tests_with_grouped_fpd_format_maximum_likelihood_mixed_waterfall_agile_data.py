@@ -19,9 +19,9 @@ class MusaOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWater
         b = MusaOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[1]
         self.assertAlmostEqual(b, 0.006937, places=6)
 
-    def test_mixed_waterfall_agile_musa_okumoto_maximum_likelihood_prr_is_9_comma_130799(self):
+    def test_mixed_waterfall_agile_musa_okumoto_maximum_likelihood_prr_is_9_comma_701588(self):
         prr = MusaOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 9.130799, places=6)
+        self.assertAlmostEqual(prr, 9.701588, places=6)
 
     def test_mixed_waterfall_agile_musa_okumoto_aic_is_1300_comma_538681(self):
         aic = MusaOkumotoTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()

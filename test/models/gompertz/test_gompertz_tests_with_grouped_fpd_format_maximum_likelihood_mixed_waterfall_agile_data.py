@@ -23,9 +23,9 @@ class GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfal
         c = GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[2]
         self.assertAlmostEqual(c, 0.985023, places=6)
 
-    def test_mixed_waterfall_agile_gompertz_maximum_likelihood_prr_is_16_comma_974590(self):
+    def test_mixed_waterfall_agile_gompertz_maximum_likelihood_prr_is_17_comma_762008(self):
         prr = GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 16.974590, places=6)
+        self.assertAlmostEqual(prr, 17.762008, places=6)
 
     def test_mixed_waterfall_agile_gompertz_aic_is_1279_comma_818464(self):
         aic = GompertzTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()

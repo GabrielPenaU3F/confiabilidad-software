@@ -63,13 +63,9 @@ class NHPPEstimator(PureBirthsEstimator):
         pass
 
     def calculate_prr(self, times, cumulative_failures, *model_parameters):
-        #  The first value is always zero. It has to be eliminated in order to allow the division
-        times = times[1:]
-        cumulative_failures = cumulative_failures[1:]
-
-        estimated_failures = [self.calculate_mean(times[i], *model_parameters) for i in range(len(times))]
+        estimated_failures = self.calculate_mean(np.array(times), *model_parameters)
         prr = 0
-        for i in range(len(times)):
+        for i in range(len(estimated_failures)):
             prr += (1 - cumulative_failures[i] / estimated_failures[i]) ** 2
         return prr
 

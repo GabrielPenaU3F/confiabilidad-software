@@ -62,9 +62,12 @@ class Plotter(ABC):
 
     def obtain_full_data(self, project_name):
         data = DataRepository.provide_project_data(project_name)
-        return data.get_project_title(), data.get_times(), data.get_cumulative_failures()
+        return data.get_project_title(), [0] + data.get_times(), [0] + data.get_cumulative_failures()
 
     def obtain_plot_data(self, times, cumulative_failures, optional_arguments):
         start = optional_arguments.get_initial_sample()
         end = optional_arguments.get_end_sample()
-        return times[start:end], cumulative_failures[start:end]
+        if end == 0:
+            return times[start:], cumulative_failures[start:]
+        else:
+            return times[start:end + 1], cumulative_failures[start:end + 1]

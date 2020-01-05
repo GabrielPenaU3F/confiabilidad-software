@@ -60,7 +60,7 @@ class OptionalArguments:
             except (ValueError, TypeError):
                 raise InvalidArgumentException('The end sample must be a positive integer')
         else:
-            return -1
+            return 0
 
     def determine_lsq_only(self, lsq_only):
         if lsq_only is not True:

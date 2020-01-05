@@ -25,4 +25,4 @@ class GompertzTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase):
 
     def test_mixed_waterfall_agile_gompertz_least_squares_prr_is_2_comma_522043(self):
         prr = GompertzTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 2.522043, places=6)
+        self.assertAlmostEqual(prr, 2.988003, places=6)

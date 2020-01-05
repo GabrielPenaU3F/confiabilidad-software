@@ -19,9 +19,9 @@ class DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWa
         b = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[1]
         self.assertAlmostEqual(b, 0.023049, places=6)
 
-    def test_mixed_waterfall_agile_delayed_s_shaped_maximum_likelihood_prr_is_1733_comma_312768(self):
+    def test_mixed_waterfall_agile_delayed_s_shaped_maximum_likelihood_prr_is_4070_comma_316622(self):
         prr = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 1733.312768, places=6)
+        self.assertAlmostEqual(prr, 4070.316622, places=6)
 
     def test_mixed_waterfall_agile_delayed_s_shaped_aic_is_minus_1442_comma_000199(self):
         aic = DelayedSShapedTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()

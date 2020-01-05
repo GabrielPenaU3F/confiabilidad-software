@@ -19,6 +19,6 @@ class MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase)
         b = MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[1]
         self.assertAlmostEqual(b, 0.007034, places=6)
 
-    def test_mixed_waterfall_agile_musa_okumoto_least_squares_prr_is_8_comma_847486(self):
+    def test_mixed_waterfall_agile_musa_okumoto_least_squares_prr_is_9_comma_339123(self):
         prr = MusaOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 8.847486, places=6)
+        self.assertAlmostEqual(prr, 9.339123, places=6)

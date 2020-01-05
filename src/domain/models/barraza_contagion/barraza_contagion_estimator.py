@@ -60,10 +60,6 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
         return parenthesis / (a * (parenthesis**b - 1))
 
     def calculate_prr(self, times, cumulative_failures, *model_parameters):
-        # The first value is always zero. It has to be eliminated in order to allow the division
-        times = times[1:]
-        cumulative_failures = cumulative_failures[1:]
-
         estimated_failures = [self.calculate_mean(times[i], *model_parameters) for i in range(len(times))]
         prr = 0
         for i in range(len(times)):

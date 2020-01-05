@@ -18,7 +18,7 @@ class DataFormater(ABC):
         default_end_sample = len(data.get_data())
         if end_sample_arg + 1 > default_end_sample:
             raise InvalidArgumentException('The end sample must not exceed the length of the dataset')
-        if 0 < end_sample_arg + 1 < default_end_sample:
+        if 0 < end_sample_arg < default_end_sample:
             return end_sample_arg + 1
         else:
             return default_end_sample
@@ -54,7 +54,7 @@ class TTFDataFormater(DataFormater):
         start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
         ttf_original_data = data.get_data()[start:end]
-        cumulative_failures = data.get_cumulative_failures()[start + 1:end + 1]
+        cumulative_failures = data.get_cumulative_failures()[start:end]
         t0 = self.determine_t0(data.get_data(), optional_arguments.get_t0(), start)
         formated_ttf = list(np.copy(ttf_original_data))
         formated_ttf.insert(0, t0)

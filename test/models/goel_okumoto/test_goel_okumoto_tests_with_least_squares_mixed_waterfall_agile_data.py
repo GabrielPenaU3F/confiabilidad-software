@@ -19,6 +19,6 @@ class GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData(unittest.TestCase)
         b = GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[1]
         self.assertAlmostEqual(b, 0.004807, places=6)
 
-    def test_mixed_waterfall_agile_goel_okumoto_least_squares_prr_is_9_comma_015730(self):
+    def test_mixed_waterfall_agile_goel_okumoto_least_squares_prr_is_9_comma_602622(self):
         prr = GoelOkumotoTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 9.015730, places=6)
+        self.assertAlmostEqual(prr, 9.602622, places=6)

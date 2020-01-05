@@ -19,6 +19,6 @@ class BarrazaContagionTestsWithLeastSquaresMixedWaterfallAgileData(unittest.Test
         b = BarrazaContagionTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_lsq_parameters()[1]
         self.assertAlmostEqual(b, 0.786906, places=6)
 
-    def test_mixed_waterfall_agile_barraza_contagion_least_squares_prr_is_7_comma_700165(self):
+    def test_mixed_waterfall_agile_barraza_contagion_least_squares_prr_is_7_comma_708683(self):
         prr = BarrazaContagionTestsWithLeastSquaresMixedWaterfallAgileData.fit.get_prr_lsq()
-        self.assertAlmostEqual(prr, 7.700165, places=6)
+        self.assertAlmostEqual(prr, 7.708683, places=6)

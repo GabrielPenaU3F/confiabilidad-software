@@ -23,9 +23,9 @@ class LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfal
         c = LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_ml_parameters()[2]
         self.assertAlmostEqual(c, 89.594643, places=6)
 
-    def test_mixed_waterfall_agile_logistic_maximum_likelihood_prr_is_14_comma_067516(self):
+    def test_mixed_waterfall_agile_logistic_maximum_likelihood_prr_is_14_comma_834693(self):
         prr = LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 14.067516, places=6)
+        self.assertAlmostEqual(prr, 14.834693, places=6)
 
     def test_mixed_waterfall_agile_logistic_aic_is_minus_1408_comma_129803(self):
         aic = LogisticTestsWithGroupedFailuresPerDayFormatMaximumLikelihoodMixedWaterfallAgileData.fit.get_aic()
