@@ -33,6 +33,14 @@ class DataFormater(ABC):
         else:
             return default_initial_sample
 
+    def determine_t0(self, times, t0_arg, start):
+        t0 = 0
+        if t0_arg > t0:
+            t0 = t0_arg
+        elif start > 0:
+            t0 = times[start - 1]
+        return t0
+
 
 class TTFDataFormater(DataFormater):
 
@@ -47,18 +55,10 @@ class TTFDataFormater(DataFormater):
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
         ttf_original_data = data.get_data()[start:end]
         cumulative_failures = data.get_cumulative_failures()[start + 1:end + 1]
-        t0 = self.determine_t0(data, optional_arguments.get_t0(), start)
+        t0 = self.determine_t0(data.get_data(), optional_arguments.get_t0(), start)
         formated_ttf = list(np.copy(ttf_original_data))
         formated_ttf.insert(0, t0)
         return TTFFormatedData(ttf_original_data, formated_ttf, cumulative_failures)
-
-    def determine_t0(self, data, t0_arg, start):
-        t0 = 0
-        if t0_arg > t0:
-            t0 = t0_arg
-        elif start > 0:
-            t0 = data.get_data()[start - 1]
-        return t0
 
 
 class FPDDataFormater(DataFormater):
@@ -72,11 +72,11 @@ class FPDDataFormater(DataFormater):
     def give_format(self, data, optional_arguments):
         start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
         end = self.determine_end_sample(data, optional_arguments.get_end_sample())
-        cumulative_failures = data.get_cumulative_failures()[start + 1:end + 1]
+        cumulative_failures = data.get_cumulative_failures()[start:end]
         fpd = list(np.copy(data.get_data()[start:end]))
         original_times = list(np.copy(data.get_times()[start:end]))
         formated_times = list(np.copy(original_times))
-        t0 = optional_arguments.get_t0()
+        t0 = self.determine_t0(data.get_times(), optional_arguments.get_t0(), start)
         formated_times.insert(0, t0)
         return FPDFormatedData(original_times, formated_times, fpd, cumulative_failures)
 
