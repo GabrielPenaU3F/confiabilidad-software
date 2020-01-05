@@ -15,5 +15,5 @@ class TestInitialSample(unittest.TestCase):
     def test_ntds_goel_okumoto_with_a_partial_dataset_from_sample_10(self):
         a = TestInitialSample.ntds_go_fit_from_sample_10.get_ml_parameters()[0]
         b = TestInitialSample.ntds_go_fit_from_sample_10.get_ml_parameters()[1]
-        self.assertAlmostEqual(a, 36.575219, places=6)
-        self.assertAlmostEqual(b, 0.009860, places=6)
+        self.assertAlmostEqual(a, 31.601673, places=6)
+        self.assertAlmostEqual(b, 0.009406, places=6)

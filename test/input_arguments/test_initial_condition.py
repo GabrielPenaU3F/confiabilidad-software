@@ -14,8 +14,6 @@ class TestInitialCondition(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        #  t0 = 5 in ttf format means '0 failures reported at t=5'
-        #  t0 = 5 in fpd format means 'the dataset begins at t=6'
         cls.ttf_fit_ds = ModelFitter().fit('delayed-s-shaped', 'ntds', t0=5)
         # cls.fpd_fit_ds = ModelFitter().fit('delayed-s-shaped', 'mixed-waterfall-agile', t0=5)
         cls.ttf_fit_go = ModelFitter().fit('goel-okumoto', 'ntds', t0=5)

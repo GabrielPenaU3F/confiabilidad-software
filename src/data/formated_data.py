@@ -26,6 +26,7 @@ class TTFFormatedData(FormatedData):
     def __init__(self, original_times, ttf, cumulative_failures):
         self.original_times = original_times
         self.formated_times = ttf
+        self.fpd = None
         self.cumulative_failures = cumulative_failures
 
 
