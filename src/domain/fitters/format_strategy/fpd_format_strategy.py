@@ -2,7 +2,7 @@ from src.data.data_formater import FPDDataFormater
 from src.domain.fitters.format_strategy.format_strategy import FormatStrategy
 
 
-class GroupedFPDFormatStrategy(FormatStrategy):
+class FPDFormatStrategy(FormatStrategy):
 
     def __init__(self, data, model):
         data_formater = FPDDataFormater()

@@ -1,7 +1,7 @@
 from abc import ABC
 
 from src.data.data_repository import DataRepository
-from src.domain.fitters.format_strategy.grouped_fpd_format_strategy import GroupedFPDFormatStrategy
+from src.domain.fitters.format_strategy.fpd_format_strategy import FPDFormatStrategy
 from src.domain.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
 from src.exceptions.exceptions import InvalidArgumentException
 
@@ -15,7 +15,7 @@ class FitStrategy(ABC):
         self.format_strategy = self.choose_format_strategy(self.data.get_format())
         self.format_strategies = {
             'ttf': TTFFormatStrategy,
-            'grouped': GroupedFPDFormatStrategy
+            'grouped': FPDFormatStrategy
         }
 
     def get_project_name(self):
@@ -52,6 +52,6 @@ class FitStrategy(ABC):
         if format == 'ttf':
             return TTFFormatStrategy(self.data, self.model)
         elif format == 'grouped':
-            return GroupedFPDFormatStrategy(self.data, self.model)
+            return FPDFormatStrategy(self.data, self.model)
         else:
             raise InvalidArgumentException('The data format is invalid')
