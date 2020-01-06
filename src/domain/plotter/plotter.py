@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from src.data.data_formater import DataFormater
 from src.data.data_repository import DataRepository
 from src.domain.plotter.plot_strategy.barraza_contagion_plot_strategy import BarrazaContagionPlotStrategy
 from src.domain.plotter.plot_strategy.ds_plot_strategy import DSPlotStrategy
@@ -67,7 +68,5 @@ class Plotter(ABC):
     def obtain_plot_data(self, times, cumulative_failures, optional_arguments):
         start = optional_arguments.get_initial_sample()
         end = optional_arguments.get_end_sample()
-        if end == 0:
-            return times[start:], cumulative_failures[start:]
-        else:
-            return times[start:end + 1], cumulative_failures[start:end + 1]
+        times, cumulative_failures = DataFormater.slice_data(start, end, times, cumulative_failures)
+        return times, cumulative_failures

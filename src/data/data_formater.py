@@ -41,6 +41,27 @@ class DataFormater(ABC):
             t0 = times[start - 1]
         return t0
 
+    def determine_format_parameters(self, data, optional_arguments):
+        start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
+        end = self.determine_end_sample(data, optional_arguments.get_end_sample())
+        t0 = self.determine_t0(data.get_times(), optional_arguments.get_t0(), start)
+        return start, end, t0
+
+    def format_times(self, times, t0):
+        formated_times = list(np.copy(times))
+        formated_times.insert(0, t0)
+        return formated_times
+
+    @classmethod
+    def slice_data(cls, start, end, *data_arrays):
+        sliced = []
+        for data in data_arrays:
+            if end == 0:
+                sliced.append(list(np.copy(data))[start:])
+            else:
+                sliced.append(list(np.copy(data))[start:end])
+        return sliced
+
 
 class TTFDataFormater(DataFormater):
 
@@ -51,14 +72,11 @@ class TTFDataFormater(DataFormater):
         return cls.singleton
 
     def give_format(self, data, optional_arguments):
-        start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
-        end = self.determine_end_sample(data, optional_arguments.get_end_sample())
-        ttf_original_data = data.get_data()[start:end]
-        cumulative_failures = data.get_cumulative_failures()[start:end]
-        t0 = self.determine_t0(data.get_data(), optional_arguments.get_t0(), start)
-        formated_ttf = list(np.copy(ttf_original_data))
-        formated_ttf.insert(0, t0)
-        return TTFFormatedData(ttf_original_data, formated_ttf, cumulative_failures)
+        start, end, t0 = self.determine_format_parameters(data, optional_arguments)
+        sliced_ttf_original_data, sliced_cumulative_failures = DataFormater.\
+            slice_data(start, end, data.get_data(), data.get_cumulative_failures())
+        formated_ttf = self.format_times(sliced_ttf_original_data, t0)
+        return TTFFormatedData(sliced_ttf_original_data, formated_ttf, sliced_cumulative_failures)
 
 
 class FPDDataFormater(DataFormater):
@@ -70,13 +88,9 @@ class FPDDataFormater(DataFormater):
         return cls.singleton
 
     def give_format(self, data, optional_arguments):
-        start = self.determine_initial_sample(data, optional_arguments.get_initial_sample())
-        end = self.determine_end_sample(data, optional_arguments.get_end_sample())
-        cumulative_failures = data.get_cumulative_failures()[start:end]
-        fpd = list(np.copy(data.get_data()[start:end]))
-        original_times = list(np.copy(data.get_times()[start:end]))
-        formated_times = list(np.copy(original_times))
-        t0 = self.determine_t0(data.get_times(), optional_arguments.get_t0(), start)
-        formated_times.insert(0, t0)
-        return FPDFormatedData(original_times, formated_times, fpd, cumulative_failures)
+        start, end, t0 = self.determine_format_parameters(data, optional_arguments)
+        sliced_original_times, sliced_cumulative_failures, sliced_fpd = DataFormater.\
+            slice_data(start, end, data.get_times(), data.get_cumulative_failures(), data.get_data())
+        formated_times = self.format_times(sliced_original_times, t0)
+        return FPDFormatedData(sliced_original_times, formated_times, sliced_fpd, sliced_cumulative_failures)
 
