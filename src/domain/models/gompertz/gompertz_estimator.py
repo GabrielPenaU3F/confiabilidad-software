@@ -11,6 +11,7 @@ class GompertzEstimator(NHPPEstimator):
             'ttf': (25, 0.5, 0.9),
             'grouped-fpd': (25, 0.5, 0.9)
         }
+        self.bounds = (0, [+np.inf, 1, 1])
         saddlepoint_calculator = GompertzSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 

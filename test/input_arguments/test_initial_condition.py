@@ -20,7 +20,7 @@ class TestInitialCondition(unittest.TestCase):
         cls.fpd_fit_go = ModelFitter().fit('goel-okumoto', 'mixed-waterfall-agile', t0=5, mts=False)
         cls.ttf_fit_log = ModelFitter().fit('logistic', 'ntds', t0=5, mts=False)
         cls.fpd_fit_log = ModelFitter().fit('logistic', 'mixed-waterfall-agile', t0=5, mts=False,
-                                            initial_approx=(800, 0.001, 70))
+                                            initial_approx=(1000, 0.001, 100))
 
     def test_ntds_delayed_s_shaped_maximum_likelihood_a_parameter_with_t0_equal_5_is_27_comma_572573(self):
         a = TestInitialCondition.ttf_fit_ds.get_ml_parameters()[0]
@@ -46,9 +46,9 @@ class TestInitialCondition(unittest.TestCase):
         b = TestInitialCondition.ttf_fit_go.get_ml_parameters()[1]
         self.assertAlmostEqual(b, 0.006599, places=6)
 
-    def test_mixed_goel_okumoto_maximum_likelihood_a_parameter_with_t0_equal_5_is_1296_comma_800825(self):
+    def test_mixed_goel_okumoto_maximum_likelihood_a_parameter_with_t0_equal_5_is_1296_comma_800824(self):
         a = TestInitialCondition.fpd_fit_go.get_ml_parameters()[0]
-        self.assertAlmostEqual(a, 1296.800825, places=6)
+        self.assertAlmostEqual(a, 1296.800824, places=6)
 
     def test_mixed_goel_okumoto_maximum_likelihood_b_parameter_with_t0_equal_5_is_0_comma_004957(self):
         b = TestInitialCondition.fpd_fit_go.get_ml_parameters()[1]
@@ -66,14 +66,14 @@ class TestInitialCondition(unittest.TestCase):
         c = TestInitialCondition.ttf_fit_log.get_ml_parameters()[2]
         self.assertAlmostEqual(c, 76.510170, places=6)
 
-    def test_mixed_logistic_maximum_likelihood_a_parameter_with_t0_equal_5_is_1164_comma_821763(self):
+    def test_mixed_logistic_maximum_likelihood_a_parameter_with_t0_equal_5_is_835_comma_529793(self):
         a = TestInitialCondition.fpd_fit_log.get_ml_parameters()[0]
-        self.assertAlmostEqual(a, 1164.821763, places=6)
+        self.assertAlmostEqual(a, 835.529793, places=6)
 
-    def test_mixed_logistic_maximum_likelihood_b_parameter_with_t0_equal_5_is_0_comma_017831(self):
+    def test_mixed_logistic_maximum_likelihood_b_parameter_with_t0_equal_5_is_0_comma_022703(self):
         b = TestInitialCondition.fpd_fit_log.get_ml_parameters()[1]
-        self.assertAlmostEqual(b, 0.017831, places=6)
+        self.assertAlmostEqual(b, 0.022703, places=6)
 
-    def test_mixed_logistic_maximum_likelihood_c_parameter_with_t0_equal_5_is_93_comma_341248(self):
+    def test_mixed_logistic_maximum_likelihood_c_parameter_with_t0_equal_5_is_90_comma_442185(self):
         c = TestInitialCondition.fpd_fit_log.get_ml_parameters()[2]
-        self.assertAlmostEqual(c, 93.341248, places=6)
+        self.assertAlmostEqual(c, 90.442185, places=6)

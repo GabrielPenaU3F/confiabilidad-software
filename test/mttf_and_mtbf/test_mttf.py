@@ -49,9 +49,9 @@ class MTTFTest(unittest.TestCase):
         mttf = MTTFTest.fit_ntds_go.get_mttf(1)
         self.assertAlmostEqual(5.2397, mttf, delta=0.0001)
 
-    def test_agile1_data_log_mttf_10_is_202_comma_1979(self):
+    def test_agile1_data_log_mttf_10_is_202_comma_1978(self):
         mttf = MTTFTest.fit_agile1_log.get_mttf(10)
-        self.assertAlmostEqual(208.1979, mttf, delta=0.0001)
+        self.assertAlmostEqual(208.1978, mttf, delta=0.0001)
 
     def test_mixed_data_delayed_s_shaped_mttf_does_not_contain_nan_on_the_first_100_failures(self):
         mttf = MTTFTest.fit_mixed_ds.get_all_mttf()

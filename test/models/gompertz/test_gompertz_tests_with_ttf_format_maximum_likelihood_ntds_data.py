@@ -11,9 +11,9 @@ class GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
     def setUpClass(cls):
         cls.fit = ModelFitter().fit('gompertz', 'ntds', initial_approx=(25, 0.5, 0.9))
 
-    def test_ntds_gompertz_maximum_likelihood_a_parameter_is_27_comma_973184(self):
+    def test_ntds_gompertz_maximum_likelihood_a_parameter_is_27_comma_973179(self):
         a = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[0]
-        self.assertAlmostEqual(a, 27.973184, places=6)
+        self.assertAlmostEqual(a, 27.973179, places=6)
 
     def test_ntds_gompertz_maximum_likelihood_b_parameter_is_0_comma_036386(self):
         b = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[1]
@@ -23,9 +23,9 @@ class GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
         c = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_ml_parameters()[2]
         self.assertAlmostEqual(c, 0.981935, places=6)
 
-    def test_ntds_gompertz_maximum_likelihood_prr_is_0_comma_580192(self):
+    def test_ntds_gompertz_maximum_likelihood_prr_is_0_comma_580188(self):
         prr = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_prr_ml()
-        self.assertAlmostEqual(prr, 0.580192, places=6)
+        self.assertAlmostEqual(prr, 0.580188, places=6)
 
     def test_ntds_gompertz_aic_is_168_comma_713381(self):
         aic = GompertzTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_aic()

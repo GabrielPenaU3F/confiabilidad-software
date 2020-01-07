@@ -5,6 +5,10 @@ from src.domain.fitters.model_fitter import ModelFitter
 
 class TestLSQOnly(unittest.TestCase):
 
+    go_ntds_fit = None
+    ds_ntds_fit = None
+    log_ntds_fit = None
+
     @classmethod
     def setUpClass(cls):
         cls.go_ntds_fit = ModelFitter().fit('goel-okumoto', 'ntds', lsq_only=True)
@@ -14,9 +18,9 @@ class TestLSQOnly(unittest.TestCase):
     def test_goel_okumoto_lsq_only_with_ntds_data_lsq_estimates_and_prr(self):
         a, b = TestLSQOnly.go_ntds_fit.get_lsq_parameters()
         prr = TestLSQOnly.go_ntds_fit.get_prr_lsq()
-        self.assertAlmostEqual(a, 33.599359, places=6)
+        self.assertAlmostEqual(a, 33.599461, places=6)
         self.assertAlmostEqual(b, 0.006296, places=6)
-        self.assertAlmostEqual(prr, 1.507181, places=6)
+        self.assertAlmostEqual(prr, 1.507177, places=6)
 
     def test_goel_okumoto_lsq_only_ml_estimates_prr_and_aic_must_be_none(self):
         ml_params = TestLSQOnly.go_ntds_fit.get_ml_parameters()
@@ -29,7 +33,7 @@ class TestLSQOnly(unittest.TestCase):
     def test_delayed_s_shaped_lsq_only_with_ntds_data_lsq_estimates_and_prr(self):
         a, b = TestLSQOnly.ds_ntds_fit.get_lsq_parameters()
         prr = TestLSQOnly.ds_ntds_fit.get_prr_lsq()
-        self.assertAlmostEqual(a, 26.715478, places=6)
+        self.assertAlmostEqual(a, 26.715480, places=6)
         self.assertAlmostEqual(b, 0.021213, places=6)
         self.assertAlmostEqual(prr, 2.044758, places=6)
 

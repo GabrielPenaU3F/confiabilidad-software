@@ -11,9 +11,9 @@ class DelayedSShapedTestsWithLeastSquaresNtdsData(unittest.TestCase):
     def setUpClass(cls):
         cls.fit = ModelFitter().fit('delayed-s-shaped', 'ntds', initial_approx=(1, 0.5), lsq_only=True)
 
-    def test_ntds_delayed_s_shaped_least_squares_a_parameter_is_26_comma_715478(self):
+    def test_ntds_delayed_s_shaped_least_squares_a_parameter_is_26_comma_715480(self):
         a = DelayedSShapedTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[0]
-        self.assertAlmostEqual(a, 26.715478, places=6)
+        self.assertAlmostEqual(a, 26.715480, places=6)
 
     def test_ntds_delayed_s_shaped_least_squares_b_parameter_is_0_comma_021213(self):
         b = DelayedSShapedTestsWithLeastSquaresNtdsData.fit.get_lsq_parameters()[1]

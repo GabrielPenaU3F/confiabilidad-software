@@ -27,6 +27,6 @@ class LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData(unittest.TestCase):
         prr = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_prr_ml()
         self.assertAlmostEqual(prr, 0.193478, places=6)
 
-    def test_ntds_logistic_aic_is_180_comma_515936(self):
+    def test_ntds_logistic_aic_is_180_comma_177298(self):
         aic = LogisticTestsWithTTFFormatMaximumLikelihoodNtdsData.fit.get_aic()
-        self.assertAlmostEqual(aic, 180.177299, places=6)
+        self.assertAlmostEqual(aic, 180.177298, places=6)

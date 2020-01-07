@@ -13,6 +13,8 @@ from src.exceptions.exceptions import InvalidFitException
 
 class NHPPEstimator(PureBirthsEstimator):
 
+    bounds = None
+
     def __init__(self, saddlepoint_calculator):
         self.saddlepoint_calculator = saddlepoint_calculator
 
@@ -32,7 +34,8 @@ class NHPPEstimator(PureBirthsEstimator):
         return self.calculate_mean(np.array(times), *model_parameters)
 
     def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
-        parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
+        parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx,
+                                        bounds=self.bounds)
         return parameters
 
     # The methods 'hybr', 'lm' y 'krylov' are the only ones working for this particular problem.

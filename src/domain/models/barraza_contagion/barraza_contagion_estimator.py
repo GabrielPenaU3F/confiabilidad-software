@@ -11,6 +11,7 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
             'ttf': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
+        self.bounds = (0, [+np.inf, +np.inf])
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
@@ -32,7 +33,8 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
         return self.calculate_mean(np.array(times), *model_parameters)
 
     def fit_mean_failure_number_by_least_squares(self, times, cumulative_failures, initial_approx):
-        parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx)
+        parameters, cov = opt.curve_fit(self.calculate_mean, times, cumulative_failures, p0=initial_approx,
+                                        bounds=self.bounds)
         return parameters
 
     def estimate_ttf_parameters_by_maximum_likelihood(self, *parameters, **kwargs):

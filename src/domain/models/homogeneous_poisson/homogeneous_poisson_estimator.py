@@ -12,6 +12,7 @@ class HomogeneousPoissonEstimator(NHPPEstimator):
             'ttf': 0.5,
             'grouped-fpd': 0.5
         }
+        self.bounds = (0, +np.inf)
         saddlepoint_calculator = HomogeneousPoissonSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 
