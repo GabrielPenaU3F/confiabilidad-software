@@ -135,3 +135,11 @@ class TestDataFormater(unittest.TestCase):
         expected = self.mixed_data.get_cumulative_failures()[19:40]
         cumulative_failures = formated_data.get_cumulative_failures()
         self.assertListEqual(expected, cumulative_failures)
+
+    def test_ttf_formater_determine_stage_t0_should_return_0_if_initial_t_is_0(self):
+        t0 = self.ttf_formater.determine_stage_t0(self.ntds_data, 0)
+        self.assertEqual(0, t0)
+
+    def test_ttf_formater_determine_stage_t0_should_return_21_if_initial_t_is_32(self):
+        t0 = self.ttf_formater.determine_stage_t0(self.ntds_data, 32)
+        self.assertEqual(21, t0)

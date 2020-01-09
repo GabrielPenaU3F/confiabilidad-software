@@ -52,6 +52,18 @@ class DataFormater(ABC):
         formated_times.insert(0, t0)
         return formated_times
 
+    @abstractmethod
+    def determine_stage_end_sample(self, data, end_t):
+        pass
+
+    @abstractmethod
+    def determine_stage_initial_sample(self, data, initial_t):
+        pass
+
+    @abstractmethod
+    def determine_stage_t0(self, data, initial_t):
+        pass
+
     @classmethod
     def slice_data(cls, start, end, *data_arrays):
         sliced = []
@@ -78,6 +90,26 @@ class TTFDataFormater(DataFormater):
         formated_ttf = self.format_times(sliced_ttf_original_data, t0)
         return TTFFormatedData(sliced_ttf_original_data, formated_ttf, sliced_cumulative_failures)
 
+    def determine_stage_end_sample(self, data, end_t):
+        ttfs = data.get_data()
+        for i in range(len(ttfs)):
+            if ttfs[i] > end_t:
+                return i - 1
+        return len(ttfs) - 1
+
+    def determine_stage_initial_sample(self, data, initial_t):
+        ttfs = data.get_data()
+        for i in range(len(ttfs)):
+            if ttfs[i] >= initial_t:
+                return i
+
+    def determine_stage_t0(self, data, initial_t):
+        ttfs = list(np.copy(data.get_data()))
+        ttfs.insert(0, 0)
+        for i in range(1, len(ttfs)):
+            if ttfs[i] >= initial_t:
+                return ttfs[i - 1]
+
 
 class FPDDataFormater(DataFormater):
 
@@ -94,3 +126,11 @@ class FPDDataFormater(DataFormater):
         formated_times = self.format_times(sliced_original_times, t0)
         return FPDFormatedData(sliced_original_times, formated_times, sliced_fpd, sliced_cumulative_failures)
 
+    def determine_stage_end_sample(self, data, end_t):
+        pass
+
+    def determine_stage_initial_sample(self, data, initial_t):
+        pass
+
+    def determine_stage_t0(self, data, initial_t):
+        pass

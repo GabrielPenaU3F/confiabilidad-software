@@ -1,6 +1,7 @@
 class Stage:
 
-    def __init__(self, initial_t, end_t, model):
+    def __init__(self, initial_t, end_t, model, optional_arguments):
+        self.optional_arguments = optional_arguments
         self.initial_t = initial_t
         self.end_t = end_t
         self.model = model
@@ -14,14 +15,17 @@ class Stage:
     def get_model(self):
         return self.model
 
+    def get_optional_arguments(self):
+        return self.optional_arguments
+
     def be_fitted(self, lsq_params, ml_params):
-        return FittedStage(self.initial_t, self.end_t, self.model, lsq_params, ml_params)
+        return FittedStage(self.initial_t, self.end_t, self.model, self.optional_arguments, lsq_params, ml_params)
 
 
 class FittedStage(Stage):
 
-    def __init__(self, initial_t, end_t, model, lsq_params, ml_params):
-        super().__init__(initial_t, end_t, model)
+    def __init__(self, initial_t, end_t, model, optional_arguments, lsq_params, ml_params):
+        super().__init__(initial_t, end_t, model, optional_arguments)
         self.lsq_params = lsq_params
         self.ml_params = ml_params
 

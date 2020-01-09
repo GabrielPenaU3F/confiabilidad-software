@@ -16,7 +16,7 @@ class TestNTDSMultistageFit(unittest.TestCase):
     def define_ds_go_fit(cls):
         ds_go_fitter = MultistageFitter()
         ds_go_fitter.add_stage(0, 98, 'delayed-s-shaped')
-        ds_go_fitter.add_stage(98, 250, 'goel-okumoto')
+        ds_go_fitter.add_stage(98, 250, 'goel-okumoto', initial_approx=(90, 0.001))
         cls.ds_go_fit = ds_go_fitter.fit('ntds')
 
     def define_invalid_ds_go_fit(self):
