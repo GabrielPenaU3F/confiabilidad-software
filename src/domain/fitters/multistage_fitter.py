@@ -2,10 +2,10 @@ import numpy as np
 
 from src.data.data_repository import DataRepository
 from src.domain.fitters.fitter import Fitter
-from src.domain.fitters.optional_arguments import OptionalArguments
-from src.domain.fitters.stage import Stage
+from src.domain.optional_arguments import OptionalArguments
+from src.domain.stage import Stage
 from src.domain.multistage_fit import MultistageFit
-from src.exceptions.exceptions import InvalidStageDefinitionException
+from src.exceptions.exceptions import InvalidStageDefinitionException, InvalidFitException
 
 
 class MultistageFitter(Fitter):
@@ -19,7 +19,8 @@ class MultistageFitter(Fitter):
         self.stages.append(stage)
 
     def fit(self, project_name):
-        for stage in self.stages:
+        for i in range(len(self.stages)):
+            stage = self.stages[i]
             fit_strategy = self.get_model_strategy(stage.get_model())(project_name)
             data = DataRepository.provide_project_data(project_name)
             initial_sample = self.determine_initial_sample(data, stage.get_initial_t())
@@ -30,10 +31,18 @@ class MultistageFitter(Fitter):
                 'end_sample': end_sample,
                 't0': t0
             }
-            stage_lsq_params, stage_ml_params = fit_strategy.fit_model(OptionalArguments(**kwargs))
+            optional_arguments = OptionalArguments(**kwargs)
+            try:
+                self.fit_stage(stage, fit_strategy, optional_arguments)
+            except InvalidFitException as error:
+                stage_number = i + 1
+                raise InvalidFitException('Stage ' + str(stage_number) + ': ' + error.strerror)
+        return MultistageFit(project_name, self.stages)
+
+    def fit_stage(self, stage, fit_strategy, optional_arguments):
+            stage_lsq_params, stage_ml_params = fit_strategy.fit_model(optional_arguments)
             stage.set_lsq_params(stage_lsq_params)
             stage.set_ml_params(stage_ml_params)
-        return MultistageFit(project_name, self.stages)
 
     def decode_kwargs(self, **kwargs):
         pass

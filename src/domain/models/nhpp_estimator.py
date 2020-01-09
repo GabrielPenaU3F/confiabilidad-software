@@ -43,10 +43,12 @@ class NHPPEstimator(PureBirthsEstimator):
     # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.optimize.root.html
     def estimate_ttf_parameters_by_maximum_likelihood(self, times, initial_approx, solving_method):
         try:
-            return opt.root(partial(self.ttf_ml_equations, times), initial_approx, method=solving_method).x
+            solution = opt.root(partial(self.ttf_ml_equations, times), initial_approx, method=solving_method).x
         except ValueError as error:
             print(Back.LIGHTYELLOW_EX + Fore.RED + str(error))
             raise InvalidFitException(str(error))
+        self.check_parameter_bounds(solution)
+        return solution
 
     @abstractmethod
     def ttf_ml_equations(self, times, vec):
@@ -145,4 +147,14 @@ class NHPPEstimator(PureBirthsEstimator):
         t_0 = times[0]
         times = times[1:len(times)]
         return t_0, times
+
+    def check_parameter_bounds(self, ml_parameters):
+        lower_bounds = self.bounds[0]
+        upper_bounds = self.bounds[1]
+        for i in range(len(ml_parameters)):
+            parameter = ml_parameters[i]
+            if parameter < lower_bounds[i] or parameter > upper_bounds[i]:
+                raise InvalidFitException(
+                    'ML equations returned an invalid solution. Try a different initial approximation')
+
 

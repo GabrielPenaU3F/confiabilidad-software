@@ -12,7 +12,7 @@ class LogisticEstimator(NHPPEstimator):
             'ttf': (10, 0.05, 20),
             'grouped-fpd': (0.01, 0.001, 0.00001)
         }
-        self.bounds = (0, [+np.inf, 1, +np.inf])
+        self.bounds = ([0, 0, 0], [+np.inf, 1, +np.inf])
         saddlepoint_calculator = LogisticSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 

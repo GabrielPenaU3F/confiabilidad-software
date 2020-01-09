@@ -12,7 +12,7 @@ class DelayedSShapedEstimator(NHPPEstimator):
             'ttf': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
-        self.bounds = (0, [+np.inf, 1])
+        self.bounds = ([0, 0], [+np.inf, 1])
         saddlepoint_calculator = DelayedSShapedSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 

@@ -2,7 +2,7 @@ import unittest
 
 from src.data.data_formater import TTFDataFormater, FPDDataFormater
 from src.data.data_repository import DataRepository
-from src.domain.fitters.optional_arguments import OptionalArguments
+from src.domain.optional_arguments import OptionalArguments
 
 
 class TestDataFormater(unittest.TestCase):

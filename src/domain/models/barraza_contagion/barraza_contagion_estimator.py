@@ -11,7 +11,7 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
             'ttf': (1, 0.5),
             'grouped-fpd': (1, 0.5)
         }
-        self.bounds = (0, [+np.inf, +np.inf])
+        self.bounds = ([0, 0], [+np.inf, +np.inf])
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters

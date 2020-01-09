@@ -1,7 +1,7 @@
 from colorama import Back, Fore
 from src.domain.model_fit import ModelFit
 from src.domain.fitters.fitter import Fitter
-from src.domain.fitters.optional_arguments import OptionalArguments
+from src.domain.optional_arguments import OptionalArguments
 
 
 class ModelFitter(Fitter):
