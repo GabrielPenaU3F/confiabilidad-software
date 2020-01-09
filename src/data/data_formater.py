@@ -52,17 +52,25 @@ class DataFormater(ABC):
         formated_times.insert(0, t0)
         return formated_times
 
-    @abstractmethod
     def determine_stage_end_sample(self, data, end_t):
-        pass
+        times = data.get_times()
+        for i in range(len(times)):
+            if times[i] > end_t:
+                return i - 1
+        return len(times) - 1
 
-    @abstractmethod
     def determine_stage_initial_sample(self, data, initial_t):
-        pass
+        times = data.get_times()
+        for i in range(len(times)):
+            if times[i] >= initial_t:
+                return i
 
-    @abstractmethod
     def determine_stage_t0(self, data, initial_t):
-        pass
+        times = list(np.copy(data.get_times()))
+        times.insert(0, 0)
+        for i in range(1, len(times)):
+            if times[i] >= initial_t:
+                return times[i - 1]
 
     @classmethod
     def slice_data(cls, start, end, *data_arrays):
@@ -97,19 +105,6 @@ class TTFDataFormater(DataFormater):
                 return i - 1
         return len(ttfs) - 1
 
-    def determine_stage_initial_sample(self, data, initial_t):
-        ttfs = data.get_data()
-        for i in range(len(ttfs)):
-            if ttfs[i] >= initial_t:
-                return i
-
-    def determine_stage_t0(self, data, initial_t):
-        ttfs = list(np.copy(data.get_data()))
-        ttfs.insert(0, 0)
-        for i in range(1, len(ttfs)):
-            if ttfs[i] >= initial_t:
-                return ttfs[i - 1]
-
 
 class FPDDataFormater(DataFormater):
 
@@ -125,12 +120,3 @@ class FPDDataFormater(DataFormater):
             slice_data(start, end, data.get_times(), data.get_cumulative_failures(), data.get_data())
         formated_times = self.format_times(sliced_original_times, t0)
         return FPDFormatedData(sliced_original_times, formated_times, sliced_fpd, sliced_cumulative_failures)
-
-    def determine_stage_end_sample(self, data, end_t):
-        pass
-
-    def determine_stage_initial_sample(self, data, initial_t):
-        pass
-
-    def determine_stage_t0(self, data, initial_t):
-        pass
