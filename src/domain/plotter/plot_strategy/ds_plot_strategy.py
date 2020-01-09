@@ -4,6 +4,6 @@ from src.domain.models.delayed_s_shaped.delayed_s_shaped_estimator import Delaye
 
 class DSPlotStrategy(PlotStrategy):
 
-    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params, **kwargs):
         self.estimator = DelayedSShapedEstimator()
-        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params, **kwargs)

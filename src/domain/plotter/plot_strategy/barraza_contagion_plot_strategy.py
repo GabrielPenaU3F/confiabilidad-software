@@ -5,9 +5,9 @@ from src.domain.plotter.plot_strategy.plot_strategy import PlotStrategy
 
 class BarrazaContagionPlotStrategy(PlotStrategy):
 
-    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params, **kwargs):
         self.estimator = BarrazaContagionEstimator()
-        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params, **kwargs)
 
     def show_mt_warning(self):
         print("\n" + Back.LIGHTYELLOW_EX + Fore.RED + 'Be careful. Please take into account that these are '

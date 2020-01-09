@@ -4,6 +4,6 @@ from src.domain.models.musa_okumoto.musa_okumoto_estimator import MusaOkumotoEst
 
 class MusaOkumotoPlotStrategy(PlotStrategy):
 
-    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params, **kwargs):
         self.estimator = MusaOkumotoEstimator()
-        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params, **kwargs)

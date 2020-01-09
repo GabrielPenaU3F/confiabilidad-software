@@ -4,6 +4,6 @@ from src.domain.models.goel_okumoto.goel_okumoto_estimator import GoelOkumotoEst
 
 class GoelOkumotoPlotStrategy(PlotStrategy):
 
-    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params):
+    def plot(self, axes, times, cumulative_failures, lsq_params, ml_params, **kwargs):
         self.estimator = GoelOkumotoEstimator()
-        super().plot(axes, times, cumulative_failures, lsq_params, ml_params)
+        super().plot(axes, times, cumulative_failures, lsq_params, ml_params, **kwargs)
