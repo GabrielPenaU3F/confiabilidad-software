@@ -54,3 +54,7 @@ class TestNTDSMultistageFit(unittest.TestCase):
             self.define_invalid_ds_go_fit()
         self.assertEqual(error.exception.strerror,
                          'Stage 1: ML equations returned an invalid solution. Try a different initial approximation')
+
+    def test_ds_go_prr_should_be_10_comma_285230(self):
+        prr = self.ds_go_fit.get_prr_ml()
+        self.assertAlmostEqual(10.285230, prr, places=6)

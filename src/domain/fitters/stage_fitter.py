@@ -20,7 +20,7 @@ class StageFitter(Fitter):
         optional_arguments = OptionalArguments(**kwargs)
         try:
             stage_lsq_params, stage_ml_params = fit_strategy.fit_model(optional_arguments)
-            return stage.be_fitted(stage_lsq_params, stage_ml_params)
+            return stage.be_fitted(fit_strategy, optional_arguments, stage_lsq_params, stage_ml_params)
         except InvalidFitException as error:
             raise InvalidFitException(str('Stage ' + str(stage_number) + ': ' + error.strerror))
 

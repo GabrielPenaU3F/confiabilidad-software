@@ -46,3 +46,16 @@ class ResultPresenter(ABC):
 
     def get_model_strategy(self, model):
         return self.result_displaying_strategy.get(model)
+
+    def print_prr(self, prr_lsq, prr_ml):
+        print(Fore.YELLOW + 'Predictive Risk Ratio (PRR):')
+        print(Fore.LIGHTRED_EX + ('Least squares: ' + prr_lsq.__str__()))
+        if prr_ml is not None:
+            print(Fore.LIGHTRED_EX + ('Maximum likelihood: ' + prr_ml.__str__()))
+            print()
+
+    def print_aic(self, aic):
+        if aic is not None:
+            print(Fore.YELLOW + 'Akaike Information Criteria (AIC):')
+            print(Fore.LIGHTRED_EX + aic.__str__())
+            print()

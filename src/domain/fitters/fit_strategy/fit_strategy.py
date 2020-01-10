@@ -1,5 +1,6 @@
 from abc import ABC
 
+from src.data.data_formater import DataFormater
 from src.data.data_repository import DataRepository
 from src.domain.fitters.format_strategy.fpd_format_strategy import FPDFormatStrategy
 from src.domain.fitters.format_strategy.ttf_format_strategy import TTFFormatStrategy
@@ -36,6 +37,13 @@ class FitStrategy(ABC):
     def calculate_prr(self, *model_parameters):
         times = self.data.get_times()
         cumulative_failures = self.data.get_cumulative_failures()
+        return self.model.calculate_prr(times, cumulative_failures, *model_parameters)
+
+    def calculate_stage_prr(self, optional_arguments, *model_parameters):
+        start = optional_arguments.get_initial_sample()
+        end = optional_arguments.get_end_sample()
+        times, cumulative_failures = DataFormater.slice_data(start, end,
+                                                             self.data.get_times(), self.data.get_cumulative_failures())
         return self.model.calculate_prr(times, cumulative_failures, *model_parameters)
 
     def calculate_aic(self, *model_parameters):
