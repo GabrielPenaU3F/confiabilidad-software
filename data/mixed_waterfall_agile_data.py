@@ -5,7 +5,7 @@ class MixedWaterfallAgileData(Data):
 
     def __init__(self):
         title = 'Mixed Waterfall-Agile'
-        format = 'grouped'
+        format = 'fpd'
         data = [12, 22, 7, 3, 0, 1, 0, 0, 0, 3, 0, 0, 21, 5, 3, 1, 3, 0, 1, 2,
                 4, 1, 4, 1, 2, 4, 2, 2, 5, 3, 5, 2, 5, 2, 1, 7, 8, 3, 4, 27, 11, 12,
                 11, 8, 1, 3, 12, 1, 8, 6, 6, 3, 12, 17, 15, 18, 19, 16, 14, 8, 12,

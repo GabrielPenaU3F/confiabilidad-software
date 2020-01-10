@@ -12,11 +12,11 @@ class FitStrategy(ABC):
         self.project_name = project_name
         self.model = model
         self.data = DataRepository.provide_project_data(project_name)
-        self.format_strategy = self.choose_format_strategy(self.data.get_format())
         self.format_strategies = {
             'ttf': TTFFormatStrategy,
-            'grouped': FPDFormatStrategy
+            'fpd': FPDFormatStrategy
         }
+        self.format_strategy = self.choose_format_strategy(self.data.get_format())
 
     def get_project_name(self):
         return self.project_name
@@ -49,9 +49,6 @@ class FitStrategy(ABC):
         return self.model.calculate_mtbfs(mttfs)
 
     def choose_format_strategy(self, format):
-        if format == 'ttf':
-            return TTFFormatStrategy(self.data, self.model)
-        elif format == 'grouped':
-            return FPDFormatStrategy(self.data, self.model)
-        else:
+        if not self.format_strategies.keys().__contains__(format):
             raise InvalidArgumentException('The data format is invalid')
+        return self.format_strategies.get(format)(self.data, self.model)

@@ -26,16 +26,28 @@ class TestNTDSMultistageFit(unittest.TestCase):
         ds_go_fitter.fit('ntds')
 
     def test_ds_go_stage_1_a_parameter_should_be_52_comma_069508(self):
-        stages = TestNTDSMultistageFit.ds_go_fit.get_stages()
+        stages = self.ds_go_fit.get_stages()
         ds_stage = stages[0]
         a = ds_stage.get_ml_params()[0]
         self.assertAlmostEqual(52.069508, a, places=6)
 
     def test_ds_go_stage_1_b_parameter_should_be_0_comma_012068(self):
-        stages = TestNTDSMultistageFit.ds_go_fit.get_stages()
+        stages = self.ds_go_fit.get_stages()
         ds_stage = stages[0]
         b = ds_stage.get_ml_params()[1]
         self.assertAlmostEqual(0.012068, b, places=6)
+        
+    def test_ds_go_stage_2_a_parameter_should_be_24_comma_745306(self):
+        stages = self.ds_go_fit.get_stages()
+        go_stage = stages[1]
+        a = go_stage.get_ml_params()[0]
+        self.assertAlmostEqual(24.745306, a, places=6)
+
+    def test_ds_go_stage_2_b_parameter_should_be_0_comma_005322(self):
+        stages = self.ds_go_fit.get_stages()
+        go_stage = stages[1]
+        b = go_stage.get_ml_params()[1]
+        self.assertAlmostEqual(0.005322, b, places=6)
 
     def test_ds_go_invalid_fit_should_raise_exception_if_a_negative_parameter_is_returned(self):
         with self.assertRaises(InvalidFitException) as error:

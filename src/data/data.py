@@ -21,7 +21,7 @@ class Data(ABC):
     def calculate_cumulative_failures(self, data):
         if self.format == 'ttf':
             return list(np.arange(1, len(data) + 1))
-        elif self.format == 'grouped':
+        elif self.format == 'fpd':
             return list(np.cumsum(data))
 
     def get_cumulative_failures(self):
@@ -39,7 +39,7 @@ class Data(ABC):
     def get_times(self):
         if self.format == 'ttf':
             return list(self.data)
-        elif self.format == 'grouped':
+        elif self.format == 'fpd':
             if self.times is None:
                 return list(np.arange(1, len(self.data) + 1))
             return self.times
