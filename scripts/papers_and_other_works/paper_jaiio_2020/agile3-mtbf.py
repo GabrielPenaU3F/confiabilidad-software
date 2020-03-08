@@ -3,6 +3,11 @@ import numpy as np
 from src.data.data_repository import DataRepository
 from src.domain.fitters.model_fitter import ModelFitter
 from matplotlib import pyplot as plt
+from matplotlib import rc
+import matplotlib.font_manager
+
+rc('font', **{'family': 'serif', 'serif': ['CMU Sans Serif']})
+plt.rcParams['pdf.fonttype'] = 42
 
 ttf_fitter = ModelFitter()
 ds_fit = ttf_fitter.fit('delayed-s-shaped', 'agile-n3')
