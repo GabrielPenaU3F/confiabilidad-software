@@ -10,7 +10,7 @@ rc('font', **{'family': 'serif', 'serif': ['CMU Sans Serif']})
 plt.rcParams['pdf.fonttype'] = 42
 
 ttf_fitter = ModelFitter()
-ds_fit = ttf_fitter.fit('delayed-s-shaped', 'agile-n3')
+ds_fit = ttf_fitter.fit('delayed-s-shaped', 'agile-n3', initial_approx=(100, 0.001))
 log_fit = ttf_fitter.fit('logistic', 'agile-n3', initial_approx=(30, 0.03, 300))
 bc_fit = ttf_fitter.fit('barraza-contagion', 'agile-n3')
 
