@@ -12,6 +12,7 @@ class OptionalArguments:
         self.t0 = self.determine_t0(kwargs.get('t0'))
         self.mts_flag = self.determine_mts_flag(kwargs.get('mts'))
         self.initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
+        self.from_file = self.determine_from_file(kwargs.get('from_file'))
 
     def get_initial_sample(self):
         return self.initial_sample
@@ -30,6 +31,9 @@ class OptionalArguments:
 
     def get_initial_approx(self):
         return self.initial_approx
+
+    def get_from_file(self):
+        return self.from_file
 
     def determine_t0(self, t0):
         if t0 is not None:
@@ -95,3 +99,8 @@ class OptionalArguments:
 
     def set_initial_approx(self, initial_approx):
         self.initial_approx = initial_approx
+
+    def determine_from_file(self, from_file):
+        if from_file is not None:
+            return from_file
+        return False
