@@ -1,21 +1,21 @@
-from abc import ABC
-
 import numpy as np
 
 
-class Data(ABC):
+class Data:
 
     title = None
     format = None
     data = None
     cumulative_failures = None
     times = None
+    project_id = None
 
     def __init__(self, title, format, data, **kwargs):
         self.title = title
         self.format = format
         self.data = data
         self.times = kwargs.get('times')
+        self.project_id = kwargs.get('project_id')
         self.cumulative_failures = self.calculate_cumulative_failures(data)
 
     def calculate_cumulative_failures(self, data):
@@ -43,6 +43,9 @@ class Data(ABC):
             if self.times is None:
                 return list(np.arange(1, len(self.data) + 1))
             return self.times
+
+    def get_project_id(self):
+        return self.project_id
 
     def get_time_between_failures(self):
         tbfs = [self.data[0]]
