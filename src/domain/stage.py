@@ -40,3 +40,8 @@ class FittedStage(Stage):
     def get_ml_params(self):
         return self.ml_params
 
+    def verify_ml_status(self):
+        if self.ml_params is None:
+            return False
+        return True
+

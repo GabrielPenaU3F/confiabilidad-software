@@ -13,11 +13,12 @@ class StageFitter(Fitter):
         initial_sample = data_formater.determine_stage_initial_sample(data, stage.get_initial_t())
         end_sample = data_formater.determine_stage_end_sample(data, stage.get_end_t())
         t0 = data_formater.determine_stage_t0(data, stage.get_initial_t())
-        kwargs = {'initial_sample': initial_sample, 'end_sample': end_sample, 't0': t0}
+        kwargs_new = {'initial_sample': initial_sample, 'end_sample': end_sample, 't0': t0,
+                      'lsq_only': kwargs.get('lsq_only')}
         initial_approx = stage.get_optional_arguments().get_initial_approx()
         if initial_approx is not None:
-            kwargs['initial_approx'] = initial_approx
-        optional_arguments = OptionalArguments(**kwargs)
+            kwargs_new['initial_approx'] = initial_approx
+        optional_arguments = OptionalArguments(**kwargs_new)
         try:
             stage_lsq_params, stage_ml_params = fit_strategy.fit_model(optional_arguments)
             return stage.be_fitted(fit_strategy, optional_arguments, stage_lsq_params, stage_ml_params)

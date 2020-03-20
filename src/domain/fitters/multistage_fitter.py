@@ -18,7 +18,7 @@ class MultistageFitter(Fitter):
         stage = Stage(initial_t, end_t, model, optional_arguments)
         self.stages.append(stage)
 
-    def fit(self, project_name):
+    def fit(self, project_name, **kwargs):
         fitted_stages = []
         for i in range(len(self.stages)):
             stage = self.stages[i]
@@ -26,7 +26,7 @@ class MultistageFitter(Fitter):
             data = DataRepository.provide_project_data(project_name)
             stage_number = i + 1
             stage_fitter = StageFitter()
-            fitted_stage = stage_fitter.fit(stage, fit_strategy, data, stage_number)
+            fitted_stage = stage_fitter.fit(stage, fit_strategy, data, stage_number, **kwargs)
             fitted_stages.append(fitted_stage)
         return MultistageFit(project_name, fitted_stages)
 

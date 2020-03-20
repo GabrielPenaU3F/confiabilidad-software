@@ -18,7 +18,8 @@ class ResultDisplayingStrategy(ABC):
     def display_stage_results(self, stage):
         self.print_model(self.model_title)
         self.print_least_squares_parameters(*stage.get_lsq_params())
-        self.print_maximum_likelihood_parameters(*stage.get_ml_params())
+        if stage.verify_ml_status():
+            self.print_maximum_likelihood_parameters(*stage.get_ml_params())
 
     def print_model(self, model_title):
         print((Fore.YELLOW + 'Model: ') + (Fore.LIGHTRED_EX + model_title) + "\n")

@@ -5,11 +5,17 @@ from src.domain.result_presenter.multistage_result_presenter import MultistageRe
 
 class MultistageFit(Fit):
 
+    project_name = None
+    stages = None
+    prr_lsq = None
+    prr_ml = None
+
     def __init__(self, project_name, stages):
         super().__init__(project_name)
         self.stages = stages
         self.prr_lsq = self.obtain_prr_lsq()
-        self.prr_ml = self.obtain_prr_ml()
+        if self.verify_ml_status():
+            self.prr_ml = self.obtain_prr_ml()
 
     def show_results(self, **kwargs):
         multistage_result_presenter = MultistageResultPresenter()
@@ -44,3 +50,9 @@ class MultistageFit(Fit):
             stage_prr = stage_fit_strategy.calculate_stage_prr(stage.get_optional_arguments(), *stage.get_ml_params())
             prr += stage_prr
         return prr
+
+    def verify_ml_status(self):
+        for stage in self.stages:
+            if not stage.verify_ml_status():
+                return False
+        return True
