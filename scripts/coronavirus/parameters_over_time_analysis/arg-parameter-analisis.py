@@ -2,7 +2,7 @@ from src.data.data_repository import DataRepository
 from src.domain.fitters.model_fitter import ModelFitter
 from matplotlib import pyplot as plt
 
-DataRepository.load_project_data_from_file(path="../../test_resource_files/covid_data_by_date/arg-22-04.ods")
+DataRepository.load_project_data_from_file(path="../../../test_resource_files/covid_data_by_date/arg-22-04.ods")
 
 fitter = ModelFitter()
 
@@ -43,7 +43,7 @@ for ax in axes:
     ax.patch.set_linewidth('1')
     ax.set_facecolor("#ffffff")
     ax.grid(color='black', linestyle='--', linewidth=0.5)
-    ax.set_xlabel('Day')
+    ax.set_xlabel('Dia')
     ax.legend()
 
 plt.show()
