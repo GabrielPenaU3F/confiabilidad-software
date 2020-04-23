@@ -23,7 +23,7 @@ bc = BarrazaContagionEstimator()
 tiempos_15 = np.linspace(1, len(data.get_times()) + 15, len(data.get_times()) + 15)
 tiempos_30 = np.linspace(1, len(data.get_times()) + 30, len(data.get_times()) + 30)
 axes.plot(data.get_times(), data.get_cumulative_failures(), linewidth=2, color='blue',
-                  label='Datos reales en China - 17/3/20')
+                  label='Datos reales en China - 20/3/20')
 axes.plot(tiempos_30, bc.calculate_mean(tiempos_30, a, b), linewidth=1, color='red',
           label='Proyección a 30 días')
 

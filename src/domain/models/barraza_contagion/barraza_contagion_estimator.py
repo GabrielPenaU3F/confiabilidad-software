@@ -15,7 +15,7 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
 
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
-        parenthesis = 1 + a * t
+        parenthesis = 1 + np.multiply(a, t)
         sq_brackets = np.power(parenthesis, b) - 1
         return sq_brackets/b
 

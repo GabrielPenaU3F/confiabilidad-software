@@ -1,5 +1,3 @@
-import numpy as np
-
 from src.data.data_formater import TTFDataFormater, FPDDataFormater
 from src.domain.fitters.fitter import Fitter
 from src.domain.optional_arguments import OptionalArguments
