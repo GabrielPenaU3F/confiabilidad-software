@@ -10,7 +10,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 agile1 = DataRepository.provide_project_data('agile-n1')
-agile1_times = agile1.get_formated_times()
+agile1_times = agile1.get_times()
 
 a_ds = 72.4203
 b_ds = 0.0031
@@ -38,9 +38,9 @@ axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
 axes.plot(agile1_times, agile1.get_cumulative_failures(), linewidth=1, color='black', linestyle='--',
           label='Real data (' + 'Agile #1' + ')')
-axes.plot(agile1_times, mean_values_ds, linewidth=1, color='#696969', linestyle='-', label='Delayed S-Shaped')
-axes.plot(agile1_times, mean_values_log, linewidth=2, color='#BDBDBD', linestyle='-', label='Logistic')
-axes.plot(agile1_times, mean_values_bc, linewidth=2, color='#595959', linestyle='-', label='Our model')
+axes.plot(agile1_times, mean_values_ds, linewidth=1, color='#303960', linestyle='-', label='Delayed S-Shaped')
+axes.plot(agile1_times, mean_values_log, linewidth=1, color='#ffd868', linestyle='-', label='Logistic')
+axes.plot(agile1_times, mean_values_bc, linewidth=1, color='#e71414', linestyle='-', label='Our model')
 
 axes.legend()
 plt.show()

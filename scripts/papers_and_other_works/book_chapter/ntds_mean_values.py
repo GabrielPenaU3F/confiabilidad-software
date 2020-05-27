@@ -12,7 +12,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 ntds = DataRepository.provide_project_data('ntds')
-ntds_times = ntds.get_formated_times()
+ntds_times = ntds.get_times()
 
 a_go = 33.5994
 b_go = 0.0063
@@ -44,10 +44,10 @@ axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
 axes.plot(ntds_times, ntds.get_cumulative_failures(), linewidth=1, color='black', linestyle='--',
           label='Real data (' + 'NTDS' + ')')
-axes.plot(ntds_times, mean_values_go, linewidth=1, color='#949494', linestyle='-', label='Goel-Okumoto')
-axes.plot(ntds_times, mean_values_ds, linewidth=1, color='#696969', linestyle='-', label='Delayed S-Shaped')
-axes.plot(ntds_times, mean_values_log, linewidth=2, color='#BDBDBD', linestyle='-', label='Logistic')
-axes.plot(ntds_times, mean_values_bc, linewidth=2, color='#595959', linestyle='-', label='Our model')
+axes.plot(ntds_times, mean_values_go, linewidth=1, color='#8cba51', linestyle='-', label='Goel-Okumoto')
+axes.plot(ntds_times, mean_values_ds, linewidth=1, color='#303960', linestyle='-', label='Delayed S-Shaped')
+axes.plot(ntds_times, mean_values_log, linewidth=1, color='#ffd868', linestyle='-', label='Logistic')
+axes.plot(ntds_times, mean_values_bc, linewidth=1, color='#e71414', linestyle='-', label='Our model')
 
 axes.legend()
 plt.show()

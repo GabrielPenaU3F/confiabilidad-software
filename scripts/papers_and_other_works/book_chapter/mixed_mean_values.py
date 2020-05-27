@@ -12,7 +12,7 @@ log = LogisticEstimator()
 bc = BarrazaContagionEstimator()
 
 mixed = DataRepository.provide_project_data('mixed-waterfall-agile')
-mixed_times = mixed.get_formated_times()
+mixed_times = mixed.get_times()
 
 a_go = 1416.9139
 b_go = 0.0048
@@ -44,10 +44,10 @@ axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
 axes.plot(mixed_times, mixed.get_cumulative_failures(), linewidth=1, color='black', linestyle='--',
           label='Real data (' + 'Mixed Waterfall-Agile' + ')')
-axes.plot(mixed_times, mean_values_go, linewidth=1, color='#949494', linestyle='-', label='Goel-Okumoto')
-axes.plot(mixed_times, mean_values_ds, linewidth=1, color='#696969', linestyle='-', label='Delayed S-Shaped')
-axes.plot(mixed_times, mean_values_log, linewidth=2, color='#BDBDBD', linestyle='-', label='Logistic')
-axes.plot(mixed_times, mean_values_bc, linewidth=2, color='#595959', linestyle='-', label='Our model')
+axes.plot(mixed_times, mean_values_go, linewidth=1, color='#8cba51', linestyle='-', label='Goel-Okumoto')
+axes.plot(mixed_times, mean_values_ds, linewidth=1, color='#303960', linestyle='-', label='Delayed S-Shaped')
+axes.plot(mixed_times, mean_values_log, linewidth=1, color='#ffd868', linestyle='-', label='Logistic')
+axes.plot(mixed_times, mean_values_bc, linewidth=1, color='#e71414', linestyle='-', label='Our model')
 
 axes.legend()
 plt.show()
