@@ -14,7 +14,7 @@ class Data:
         self.title = title
         self.format = format
         self.data = data
-        self.times = kwargs.get('times')
+        self.times = self.calculate_times(kwargs.get('times'), format)
         self.project_id = kwargs.get('project_id')
         self.cumulative_failures = self.calculate_cumulative_failures(data)
 
@@ -37,12 +37,7 @@ class Data:
         return self.title
 
     def get_times(self):
-        if self.format == 'ttf':
-            return list(self.data)
-        elif self.format == 'fpd':
-            if self.times is None:
-                return list(np.arange(1, len(self.data) + 1))
-            return self.times
+        return self.times
 
     def get_project_id(self):
         return self.project_id
@@ -53,3 +48,11 @@ class Data:
             for i in range(1, len(self.data)):
                 tbfs.append(self.data[i] - self.data[i-1])
         return tbfs
+
+    def calculate_times(self, times_arg, format):
+        if times_arg is None:
+            if format == 'ttf':
+                return list(self.data)
+            elif format == 'fpd':
+                return list(np.arange(1, len(self.data) + 1))
+        return times_arg

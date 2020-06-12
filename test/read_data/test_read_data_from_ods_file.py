@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from src.data.data_repository import DataRepository
@@ -9,6 +10,7 @@ class TestReadDataFromOdsFile(unittest.TestCase):
     agile1_repo_fit = None
     agile1_file_fit = None
 
+    #   This test will only work if executed directly, not from a higher level directory
     @classmethod
     def setUpClass(cls):
         DataRepository.load_project_data_from_file(path="../../test_resource_files/agile_n1_data.ods")
