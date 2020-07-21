@@ -50,3 +50,15 @@ class MTBFTest(unittest.TestCase):
     def test_ntds_logistic_mtbf_for_k_equal_20_is_4_comma_1(self):
         mtbf = MTBFTest.fit_ntds_log.get_mtbf(20)
         self.assertAlmostEqual(mtbf, 4.2, delta=0.1)
+
+    '''
+    def test_bc_mtbf_for_k_equal_20_with_regular_mtbf_formula_is_10_comma_8(self):
+        fit = ModelFitter().fit('barraza-contagion', 'ntds', initial_approx=(10, 0.01))
+        mtbf = fit.get_mtbf(20)
+        self.assertAlmostEqual(mtbf, 10.8, delta=0.1)
+    '''
+
+    def test_bc_mtbf_for_k_equal_20_with_conditional_mtbf_formula_is_10_comma_8(self):
+        fit = ModelFitter().fit('barraza-contagion', 'ntds', initial_approx=(10, 0.01), mtbf_formula='conditional')
+        mtbf = fit.get_mtbf(20)
+        self.assertAlmostEqual(mtbf, 10.8, delta=0.1)

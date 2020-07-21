@@ -29,33 +29,27 @@ mttf_ds = ds.calculate_mttfs(n, a_ds, b_ds)
 mttf_log = log.calculate_mttfs(n, a_log, b_log, c_log)
 mttf_bc = bc.calculate_mttfs(agile2.get_times(), a_bc, b_bc)
 
-'''
+mtbf_ds = ds.calculate_mtbfs(mttf_ds)
+mtbf_log = log.calculate_mtbfs(mttf_log)
+mtbf_bc = bc.calculate_mtbfs(mttf_bc)
+
 mtbf_ds = ds.calculate_mtbfs(mttf_ds)[0:19]
 mtbf_ds.extend([4.28, 3.715, 3.4060, 3.2180, 2.9440, 2.9790, 3.1310, 3.6680, 4.8290, 6.2600, 7.9800])
 mtbf_log = log.calculate_mtbfs(mttf_log)[0:99]
 mtbf_log.extend([2.916, 2.7720, 3.0520, 4.7880, 7.8900, 7.8400])
-mtbf_bc = bc.calculate_mtbfs(mttf_bc)
 
 failures_ds = list(np.linspace(1, 19, 19))
 failures_ds.extend([20, 30, 40, 50, 100, 120, 150, 200, 250, 280, 300])
 failures_log = list(np.linspace(1, 99, 99))
 failures_log.extend([120, 150, 200, 250, 280, 300])
-failures_bc = np.linspace(1, len(mtbf_bc), len(mtbf_bc))
-'''
 
-mtbf_ds = ds.calculate_mtbfs(mttf_ds)
-mtbf_log = log.calculate_mtbfs(mttf_log)
-mtbf_bc = bc.calculate_mtbfs(mttf_bc)
-
-failures_ds = np.linspace(1, len(mtbf_ds), len(mtbf_ds))
-failures_log = np.linspace(1, len(mtbf_log), len(mtbf_log))
 failures_bc = agile2.get_cumulative_failures()
 
 fig, axes = plt.subplots()
 axes.set_xlabel('Failure number')
 axes.set_ylabel('Mean time between failures')
 axes.set_xlim(left=0, auto=True)
-axes.set_ylim(auto=True)
+axes.set_ylim(bottom=0, top=10)
 axes.patch.set_facecolor("#ffffff")
 axes.patch.set_edgecolor('black')
 axes.patch.set_linewidth('1')

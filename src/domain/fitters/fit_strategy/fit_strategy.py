@@ -50,10 +50,10 @@ class FitStrategy(ABC):
         strategy = self.format_strategies.get(self.data.get_format())(self.data, self.model)
         return strategy.calculate_aic(*model_parameters)
 
-    def calculate_mttfs(self, *model_parameters):
+    def calculate_mttfs(self, optional_arguments, *model_parameters):
         return self.model.calculate_mttfs(self.data.get_cumulative_failures()[-1], *model_parameters)
 
-    def calculate_mtbfs(self, mttfs):
+    def calculate_mtbfs(self, optional_arguments, mttfs):
         return self.model.calculate_mtbfs(mttfs)
 
     def choose_format_strategy(self, format):

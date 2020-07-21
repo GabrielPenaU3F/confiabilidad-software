@@ -29,7 +29,7 @@ b_bc = 1.5923
 
 mttf_ds = ds.calculate_mttfs(n, a_ds, b_ds)
 mttf_log = log.calculate_mttfs(n, a_log, b_log, c_log)
-mttf_bc = bc.calculate_mttfs(agile1_data, a_bc, b_bc)
+mttf_bc = bc.calculate_mttfs(agile1.get_times(), a_bc, b_bc)
 
 mtbf_ds = ds.calculate_mtbfs(mttf_ds)
 mtbf_log = log.calculate_mtbfs(mttf_log)
