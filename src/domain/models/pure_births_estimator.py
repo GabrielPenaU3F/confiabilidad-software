@@ -42,7 +42,9 @@ class PureBirthsEstimator(ABC):
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, *parameters):
         pass
 
-    def calculate_mttfs(self, n_failures, *model_parameters):
+    def calculate_mttfs(self, *parameters):
+        n_failures = parameters[0]
+        model_parameters = parameters[1:]
         upper_limit = self.calculate_limit_for_mu(*model_parameters)
         mttfs = []
         wasnan = False
@@ -75,7 +77,7 @@ class PureBirthsEstimator(ABC):
     def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
         denominator = gamma.lower_incomplete_gamma(upper_limit, k)
         numerator = integrate.quad(lambda u:
-                                   (u * self.calculate_lambda(u, *model_parameters) *
+                                   (u * self.calculate_lambda(k, u, *model_parameters) *
                                     (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
                                     np.exp(- self.calculate_mean(u, *model_parameters))),
                                    0, +np.inf, limit=2000)[0]

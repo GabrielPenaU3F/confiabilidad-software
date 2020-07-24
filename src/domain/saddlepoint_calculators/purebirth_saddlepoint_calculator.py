@@ -6,7 +6,7 @@ from src.auxiliar_math.gamma.gamma import lower_incomplete_gamma
 from src.auxiliar_math.maximum import find_maximum
 
 
-class NHPPSaddlepointCalculator:
+class PureBirthSaddlepointCalculator:
 
     model_parameters = None
 

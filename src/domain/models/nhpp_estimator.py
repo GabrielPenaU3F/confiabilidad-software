@@ -4,6 +4,9 @@ from functools import partial
 import numpy as np
 import scipy.optimize as opt
 from colorama import Fore, Back
+from scipy import integrate
+
+from src.auxiliar_math.gamma import gamma
 from src.domain.models.pure_births_estimator import PureBirthsEstimator
 from src.exceptions.exceptions import InvalidFitException
 
@@ -124,4 +127,15 @@ class NHPPEstimator(PureBirthsEstimator):
                 raise InvalidFitException(
                     'ML equations returned an invalid solution. Try a different initial approximation')
 
-
+    def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
+        denominator = gamma.lower_incomplete_gamma(upper_limit, k)
+        numerator = integrate.quad(lambda u:
+                                   (u * self.calculate_lambda(u, *model_parameters) *
+                                    (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
+                                    np.exp(- self.calculate_mean(u, *model_parameters))),
+                                   0, +np.inf, limit=2000)[0]
+        try:
+            mttf = numerator / denominator
+        except OverflowError:
+            mttf = np.nan
+        return mttf

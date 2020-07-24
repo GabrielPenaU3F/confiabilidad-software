@@ -1,9 +1,9 @@
 import numpy as np
 
-from src.domain.saddlepoint_calculators.nhpp_saddlepoint_calculator import NHPPSaddlepointCalculator
+from src.domain.saddlepoint_calculators.purebirth_saddlepoint_calculator import PureBirthSaddlepointCalculator
 
 
-class GompertzSaddlepointCalculator(NHPPSaddlepointCalculator):
+class GompertzSaddlepointCalculator(PureBirthSaddlepointCalculator):
 
     def g_second(self, x, k, upper_limit):
         a, b, c = self.model_parameters
