@@ -4,9 +4,6 @@ from functools import partial
 import numpy as np
 import scipy.optimize as opt
 from colorama import Fore, Back
-from scipy import integrate
-
-from src.auxiliar_math.gamma import gamma
 from src.domain.models.pure_births_estimator import PureBirthsEstimator
 from src.exceptions.exceptions import InvalidFitException
 
@@ -16,7 +13,7 @@ class NHPPEstimator(PureBirthsEstimator):
     bounds = None
 
     def __init__(self, saddlepoint_calculator):
-        self.saddlepoint_calculator = saddlepoint_calculator
+        super().__init__(saddlepoint_calculator)
 
     @abstractmethod
     def calculate_mean(self, t, *model_parameters):
@@ -112,36 +109,6 @@ class NHPPEstimator(PureBirthsEstimator):
             delta_y_i_factorial = np.math.factorial(delta_y_i)
             sum += (delta_y_i * np.log(mu_ti - mu_ti_minus_1)) - np.math.log(delta_y_i_factorial)
         return sum - (mu_tn - mu_t0)
-
-    def calculate_mttfs(self, n_failures, *model_parameters):
-        upper_limit = self.calculate_limit_for_mu(*model_parameters)
-        mttfs = []
-        wasnan = False
-        for k in range(1, n_failures + 1):
-            if not wasnan:
-                mttf = self.calculate_exact_mttf_integral(k, upper_limit, *model_parameters)
-                if np.isnan(mttf):
-                    wasnan = True
-                    mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
-                        k, upper_limit, *model_parameters)
-            else:
-                mttf = self.saddlepoint_calculator.calculate_saddlepoint_mttf_approximation(
-                    k, upper_limit, *model_parameters)
-            mttfs.append(mttf)
-        return mttfs
-
-    def calculate_exact_mttf_integral(self, k, upper_limit, *model_parameters):
-        denominator = gamma.lower_incomplete_gamma(upper_limit, k)
-        numerator = integrate.quad(lambda u:
-                                   (u * self.calculate_lambda(u, *model_parameters) *
-                                    (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
-                                    np.exp(- self.calculate_mean(u, *model_parameters))),
-                                   0, +np.inf, limit=2000)[0]
-        try:
-            mttf = numerator / denominator
-        except OverflowError:
-            mttf = np.nan
-        return mttf
 
     def separate_time_data(self, times):
         t_0 = times[0]

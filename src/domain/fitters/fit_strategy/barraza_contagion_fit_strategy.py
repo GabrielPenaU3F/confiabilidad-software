@@ -9,9 +9,9 @@ class BarrazaContagionFitStrategy(FitStrategy):
         super().__init__(project_name, model)
 
     def calculate_mttfs(self, optional_arguments, *model_parameters):
-        mtbf_formula = optional_arguments.get_mtbf_formula()
+        mt_formula = optional_arguments.get_mt_formula()
         if self.data.get_format() == 'ttf':
-            return self.model.calculate_mttfs(mtbf_formula, self.data.get_data(), *model_parameters)
+            return self.model.calculate_mttfs(mt_formula, self.data.get_data(), *model_parameters)
         else:
             return None
 

@@ -59,6 +59,6 @@ class MTBFTest(unittest.TestCase):
     '''
 
     def test_bc_mtbf_for_k_equal_20_with_conditional_mtbf_formula_is_10_comma_8(self):
-        fit = ModelFitter().fit('barraza-contagion', 'ntds', initial_approx=(10, 0.01), mtbf_formula='conditional')
+        fit = ModelFitter().fit('barraza-contagion', 'ntds', initial_approx=(10, 0.01), mt_formula='conditional')
         mtbf = fit.get_mtbf(20)
         self.assertAlmostEqual(mtbf, 10.8, delta=0.1)

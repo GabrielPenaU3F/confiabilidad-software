@@ -12,7 +12,7 @@ class OptionalArguments:
         self.t0 = self.determine_t0(kwargs.get('t0'))
         self.mts_flag = self.determine_mts_flag(kwargs.get('mts'))
         self.initial_approx = self.determine_initial_approx(kwargs.get('initial_approx'))
-        self.mtbf_formula = self.determine_mtbf_formula(kwargs.get('mtbf_formula'))
+        self.mt_formula = self.determine_mt_formula(kwargs.get('mt_formula'))
 
     def get_initial_sample(self):
         return self.initial_sample
@@ -32,8 +32,8 @@ class OptionalArguments:
     def get_initial_approx(self):
         return self.initial_approx
 
-    def get_mtbf_formula(self):
-        return self.mtbf_formula
+    def get_mt_formula(self):
+        return self.mt_formula
 
     def determine_t0(self, t0):
         if t0 is not None:
@@ -100,10 +100,10 @@ class OptionalArguments:
     def set_initial_approx(self, initial_approx):
         self.initial_approx = initial_approx
 
-    def determine_mtbf_formula(self, mtbf_formula):
-        if mtbf_formula == 'conditional' or mtbf_formula == 'regular':
-            return mtbf_formula
-        elif mtbf_formula is None:
+    def determine_mt_formula(self, mt_formula):
+        if mt_formula == 'conditional' or mt_formula == 'regular':
+            return mt_formula
+        elif mt_formula is None:
             return 'regular'
         else:
             raise InvalidArgumentException('MTBF formula should be indicated as regular or conditional')
