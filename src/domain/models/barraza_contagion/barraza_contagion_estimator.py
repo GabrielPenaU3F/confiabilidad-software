@@ -17,6 +17,8 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
         saddlepoint_calculator = BarrazaContagionSaddlepointCalculator(self.calculate_mean, self.calculate_lambda)
         super().__init__(saddlepoint_calculator)
 
+    # b is also called gamma/rho
+    # a is also called rho
     def calculate_mean(self, t, *model_parameters):
         a, b = model_parameters
         parenthesis = 1 + np.multiply(a, t)

@@ -33,7 +33,7 @@ axes.patch.set_linewidth('1')
 axes.set_facecolor("#ffffff")
 axes.grid(color='black', linestyle='--', linewidth=0.5)
 axes.scatter(x_axis_data, real_tbf, linewidth=1, color='#263859', s=4.0,
-          label='Datos reales (Proyecto Ágil #4)')
+          label='Datos reales (Proyecto Ágil #3)')
 axes.plot(x_axis_data, ds_mtbf,
           linewidth=1, color='#ca3e47', linestyle='-', label='Delayed S-Shaped')
 axes.plot(x_axis_data, log_mtbf,
