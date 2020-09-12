@@ -4,7 +4,11 @@ from src.domain.models.barraza_contagion.barraza_contagion_estimator import Barr
 import numpy as np
 
 
+import matplotlib
 from matplotlib import pyplot as plt
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
 bc = BarrazaContagionEstimator()
 
 ntds = DataRepository.provide_project_data('ntds')
@@ -25,7 +29,7 @@ print("r2: ", coef_r2)
 
 plt.style.use('bmh')
 
-fig, axes = plt.subplots()
+fig, axes = plt.subplots(figsize=(8, 5))
 axes.set_xlabel('Time (days)')
 axes.set_ylabel('Number of failures')
 axes.set_xlim(left=0, auto=True)
@@ -39,5 +43,5 @@ axes.plot(ntds_times, ntds_cf, linewidth=1, color='black', linestyle='-',
           label='Real data (' + 'NTDS' + ')')
 axes.plot(ntds_times, mean_values_bc, linewidth=1, color='#e71414', linestyle='-', label='Proposed model')
 
-axes.legend()
+axes.legend(prop={'size': 13})
 plt.show()
