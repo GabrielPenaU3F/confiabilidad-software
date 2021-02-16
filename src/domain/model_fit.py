@@ -17,18 +17,22 @@ class ModelFit(Fit):
         self.ml_params = ml_params
         self.prr_lsq = fit_strategy.calculate_prr(*lsq_params)
         self.optional_arguments = optional_arguments
+
         if self.ml_params is not None:
             self.prr_ml = fit_strategy.calculate_prr(*ml_params)
             self.aic = fit_strategy.calculate_aic(*ml_params)
-            if optional_arguments.get_mts_flag() is True:
-                self.mttf = fit_strategy.calculate_mttfs(optional_arguments, *ml_params)
         else:
             self.prr_ml = None
             self.aic = None
-            if optional_arguments.get_mts_flag() is True:
-                self.mttf = fit_strategy.calculate_mttfs(optional_arguments, *lsq_params)
-        if self.mttf is not None:
-            self.mtbf = fit_strategy.calculate_mtbfs(optional_arguments, self.mttf)
+
+        if optional_arguments.get_mts_flag() is True:
+            mt_type = optional_arguments.get_mt_formula()
+            if mt_type == 'conditional':
+                self.mttf = fit_strategy.calculate_conditional_mttfs(*lsq_params)
+                self.mtbf = fit_strategy.calculate_conditional_mtbfs(*lsq_params)
+            else:
+                self.mttf = fit_strategy.calculate_regular_mttfs(*lsq_params)
+                self.mtbf = fit_strategy.calculate_regular_mtbfs(self.mttf)
 
     def show_results(self, **kwargs):
         if self.project_name is not None:

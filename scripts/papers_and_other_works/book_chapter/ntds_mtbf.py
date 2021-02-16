@@ -36,10 +36,10 @@ mttf_ds = ds.calculate_mttfs(n, a_ds, b_ds)
 mttf_log = log.calculate_mttfs(n, a_log, b_log, c_log)
 mttf_bc = bc.calculate_mttfs(ntds_data, a_bc, b_bc)
 
-mtbf_go = go.calculate_mtbfs(mttf_go)
-mtbf_ds = ds.calculate_mtbfs(mttf_ds)
-mtbf_log = log.calculate_mtbfs(mttf_log)
-mtbf_bc = bc.calculate_mtbfs(mttf_bc)
+mtbf_go = go.calculate_regular_mtbfs(mttf_go)
+mtbf_ds = ds.calculate_regular_mtbfs(mttf_ds)
+mtbf_log = log.calculate_regular_mtbfs(mttf_log)
+mtbf_bc = bc.calculate_regular_mtbfs(mttf_bc)
 
 failures = np.linspace(1, len(mtbf_go), len(mtbf_go))
 

@@ -54,25 +54,9 @@ class BarrazaContagionEstimator(PureBirthsEstimator):
     def grouped_fpd_ml_equations(self):
         return None
 
-    def calculate_mttfs(self, mt_formula, data, *model_parameters):
-        if mt_formula == 'conditional':
-            failure_times = data.get_times()
-            mttfs = []
-            mttfs.append(self.calculate_conditional_mtbf(failure_times[0], *model_parameters))
-            for k in range(1, len(failure_times)):
-                mttfs.append(mttfs[k-1] + self.calculate_conditional_mtbf(failure_times[k], *model_parameters))
-            return mttfs
-        elif mt_formula == 'regular':
-            n_failures = data.get_cumulative_failures()[-1]
-            return super().calculate_mttfs(n_failures, *model_parameters)
-
-    def calculate_mtbfs(self, mttfs):
-        return super().calculate_mtbfs(mttfs)
-
-    def calculate_conditional_mtbf(self, n_failure_time, *model_parameters):
+    def calculate_conditional_mtbf(self, n, t_n, *model_parameters):
         a, b = model_parameters
-        parenthesis = 1 + a * n_failure_time
-        return parenthesis / (a * (parenthesis**b - 1))
+        return (1 / a) * (1 + a * t_n) / (b * n)
 
     def calculate_prr(self, times, cumulative_failures, *model_parameters):
         estimated_failures = [self.calculate_mean(times[i], *model_parameters) for i in range(len(times))]

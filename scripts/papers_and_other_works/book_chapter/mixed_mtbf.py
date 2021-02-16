@@ -36,16 +36,16 @@ mttf_log = log.calculate_mttfs(n, a_log, b_log, c_log)[0:99]
 mttf_bc = bc.calculate_mttfs(mixed.get_times(), a_bc, b_bc)
 
 
-mtbf_go = go.calculate_mtbfs(mttf_go)
+mtbf_go = go.calculate_regular_mtbfs(mttf_go)
 mtbf_go.extend([0.1645, 0.1712, 0.1785, 0.1865, 0.1953, 0.205, 0.2155, 0.2273, 0.2405, 0.2553, 0.2672,
                 0.2910, 0.3130, 0.3390])
-mtbf_ds = ds.calculate_mtbfs(mttf_ds)
+mtbf_ds = ds.calculate_regular_mtbfs(mttf_ds)
 mtbf_ds.extend([0.1459, 0.1407, 0.1399, 0.1422, 0.1470, 0.1545, 0.1651, 0.1793, 0.1985,
                 0.2250, 0.2640, 0.3240, 0.4330, 0.6860])
-mtbf_log = log.calculate_mtbfs(mttf_log)
+mtbf_log = log.calculate_regular_mtbfs(mttf_log)
 mtbf_log.extend([0.2661, 0.215, 0.1864, 0.1699, 0.1570, 0.1566, 0.1572, 0.1628, 0.1743, 0.1943, 0.2242,
                  0.2980, 0.4760, 0.7410])
-mtbf_bc = bc.calculate_mtbfs(mttf_bc)[0:160]
+mtbf_bc = bc.calculate_regular_mtbfs(mttf_bc)[0:160]
 
 failures_go = list(np.linspace(1, 98, 98))
 failures_ds = list(np.linspace(1, 100, 100))

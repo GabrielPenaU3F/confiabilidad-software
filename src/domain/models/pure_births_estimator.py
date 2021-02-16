@@ -42,9 +42,8 @@ class PureBirthsEstimator(ABC):
     def estimate_grouped_fpd_parameters_by_maximum_likelihood(self, *parameters):
         pass
 
-    def calculate_mttfs(self, *parameters):
-        n_failures = parameters[0]
-        model_parameters = parameters[1:]
+    def calculate_regular_mttfs(self, data, *model_parameters):
+        n_failures = data.get_cumulative_failures()[-1]
         upper_limit = self.calculate_limit_for_mu(*model_parameters)
         mttfs = []
         wasnan = False
@@ -61,11 +60,28 @@ class PureBirthsEstimator(ABC):
             mttfs.append(mttf)
         return mttfs
 
-    def calculate_mtbfs(self, mttfs):
+    def calculate_conditional_mttfs(self, data, *model_parameters):
+        mtbfs = self.calculate_conditional_mtbfs(data, *model_parameters)
+        mttfs = np.cumsum(mtbfs)
+        return mttfs
+
+    def calculate_regular_mtbfs(self, mttfs):
         mtbfs = [mttfs[0]]
         for k in range(1, len(mttfs)):
             mtbfs.append(mttfs[k] - mttfs[k - 1])
         return mtbfs
+
+    def calculate_conditional_mtbfs(self, data, *model_parameters):
+        mtbfs = []
+        failure_times = data.get_times()
+        n_failures = data.get_cumulative_failures()
+        for i in range(len(n_failures)):
+            # This returns the mtbf between failures i and i+1
+            mtbfs.append(self.calculate_conditional_mtbf(n_failures[i], failure_times[i], *model_parameters))
+        return mtbfs
+
+    def calculate_conditional_mtbf(self, n, t_n, *model_parameters):
+        pass
 
     @abstractmethod
     def calculate_prr(self, *parameters):
@@ -78,8 +94,8 @@ class PureBirthsEstimator(ABC):
         denominator = gamma.lower_incomplete_gamma(upper_limit, k)
         numerator = integrate.quad(lambda u:
                                    (u * self.calculate_lambda(k, u, *model_parameters) *
-                                    (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
-                                    np.exp(- self.calculate_mean(u, *model_parameters))),
+                                   (self.calculate_mean(u, *model_parameters) ** (k - 1)) *
+                                   np.exp(- self.calculate_mean(u, *model_parameters))),
                                    0, +np.inf, limit=2000)[0]
         try:
             mttf = numerator / denominator
